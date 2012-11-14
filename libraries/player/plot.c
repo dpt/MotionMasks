@@ -232,8 +232,8 @@ static void blendarray(int length, const mmalpha_t *palphas, state_t *state)
 }
 
 static const mmdata_t *decode_blendarray(unsigned int  code,
-                                       const mmdata_t *p,
-                                       state_t      *state)
+                                         const mmdata_t *p,
+                                         state_t      *state)
 {
   int              length;
   const mmalpha_t *palphas;
@@ -291,65 +291,65 @@ static const mmdata_t *decode_unknown(unsigned int    code,
 
 static void setsource(source_t source1, source_t source2, state_t *state, int force)
 {
-    source_t  maxsource;
-    ptrdiff_t offset;
-    int       x, y;
-    source_t  s;
+  source_t  maxsource;
+  ptrdiff_t offset;
+  int       x, y;
+  source_t  s;
 
-    maxsource = (source_t) (state->nsources - 1);
-    
-    source1 = CLAMP(source1, 0, maxsource);
-    source2 = CLAMP(source2, 0, maxsource);
-    
-    if (!force && (state->sourceindexes[0] == source1 &&
-                   state->sourceindexes[1] == source2))
-    {
-        if (MMDEBUG)
-            debugf("setsource: sources remain unchanged");
-        return; /* no change */
-    }
-    
-    /* work out current screen coordinates */
-    
-    offset = state->surfaces[1] - (uint8_t *) state->sources[1]->base;
-    y = state->y;
-    x = (int) ((offset - y * state->sources[1]->rowbytes) >> state->log2bpp); // could hoist the log2bpp shifts out
-    
-    /* recalculate offsets */
-    
-    if (force || state->sourceindexes[0] != source1)
-    {
-        s = state->sourceindexes[0] = (source_t) source1;
-        state->surfaces[1] = (unsigned char *) state->sources[s]->base +
-        y * state->sources[s]->rowbytes +
-        (x << state->log2bpp);
-    }
-    if (force || state->sourceindexes[1] != source2)
-    {
-        s = state->sourceindexes[1] = (source_t) source2;
-        state->surfaces[2] = (unsigned char *) state->sources[s]->base +
-        y * state->sources[s]->rowbytes +
-        (x << state->log2bpp);
-    }
+  maxsource = (source_t) (state->nsources - 1);
+
+  source1 = CLAMP(source1, 0, maxsource);
+  source2 = CLAMP(source2, 0, maxsource);
+
+  if (!force && (state->sourceindexes[0] == source1 &&
+                 state->sourceindexes[1] == source2))
+  {
+    if (MMDEBUG)
+      debugf("setsource: sources remain unchanged");
+    return; /* no change */
+  }
+
+  /* work out current screen coordinates */
+
+  offset = state->surfaces[1] - (uint8_t *) state->sources[1]->base;
+  y = state->y;
+  x = (int) ((offset - y * state->sources[1]->rowbytes) >> state->log2bpp); // could hoist the log2bpp shifts out
+
+  /* recalculate offsets */
+
+  if (force || state->sourceindexes[0] != source1)
+  {
+    s = state->sourceindexes[0] = (source_t) source1;
+    state->surfaces[1] = (unsigned char *) state->sources[s]->base +
+                         y * state->sources[s]->rowbytes +
+                         (x << state->log2bpp);
+  }
+  if (force || state->sourceindexes[1] != source2)
+  {
+    s = state->sourceindexes[1] = (source_t) source2;
+    state->surfaces[2] = (unsigned char *) state->sources[s]->base +
+                         y * state->sources[s]->rowbytes +
+                         (x << state->log2bpp);
+  }
 }
 
 static const mmdata_t *decode_setsource(unsigned int    code,
                                         const mmdata_t *p,
                                         state_t        *state)
 {
-    source_t source1, source2;
-    
-    code = *p++;
-    
-    source1 = (code & MMSetSource_SOURCE1_MASK) >> MMSetSource_SOURCE1_SHIFT;
-    source2 = (code & MMSetSource_SOURCE2_MASK) >> MMSetSource_SOURCE2_SHIFT;
-    
-    if (MMDEBUG)
-        debugf("decode_setsource: %d, %d", source1, source2);
-    
-    setsource(source1, source2, state, 0 /* don't force */);
-    
-    return p;
+  source_t source1, source2;
+
+  code = *p++;
+
+  source1 = (code & MMSetSource_SOURCE1_MASK) >> MMSetSource_SOURCE1_SHIFT;
+  source2 = (code & MMSetSource_SOURCE2_MASK) >> MMSetSource_SOURCE2_SHIFT;
+
+  if (MMDEBUG)
+    debugf("decode_setsource: %d, %d", source1, source2);
+
+  setsource(source1, source2, state, 0 /* don't force */);
+
+  return p;
 }
 
 /* ----------------------------------------------------------------------- */
@@ -484,10 +484,10 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   /* clipped screen box gives me the screen offsets
    * this is the box of all the pixels we'll write on */
   screenskip = clippedscreenareabox; // taking local copy
-    
+
   if (MMDEBUG)
     debugf("screen: %d %d %d %d",
-      screenskip.x0, screenskip.y0, screenskip.x1, screenskip.y1);
+           screenskip.x0, screenskip.y0, screenskip.x1, screenskip.y1);
 
   clipped_width  = screenskip.x1 - screenskip.x0;
   clipped_height = screenskip.y1 - screenskip.y0;
@@ -498,9 +498,9 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
 
   if (MMDEBUG)
     debugf("image: %d %d", imageskip_x0, imageskip_y0);
-    
+
   /* calculate log2 BYTES-per-pixel for each surface */
-    
+
   state.log2bpp = pixelfmt_log2bpp(screen->format) - 3; /* bits -> bytes */
 
   /* calculate surface destination row addresses, merging destination and
@@ -509,59 +509,59 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   surfaces[0] = (unsigned char *) screen->base +
                 screenskip.y0 * screen->rowbytes +
                 (screenskip.x0 << state.log2bpp);
-  
-  /* do this only for the current two active surfaces */
- 
-    // setup only surface_A as that's all setsource uses to work out x coord from
-    
-    surfaces[1] = (unsigned char *) sources[1]->base +
-    imageskip_y0 * sources[1]->rowbytes +
-    (imageskip_x0 << state.log2bpp);
-    
-    state.surfaces[0] = surfaces[0];
-    state.surfaces[1] = surfaces[1];
-    //state.surfaces[2] = surfaces[2];
-    
-    state.y = imageskip_y0;
-    
-    // stuff we need for setsource
-    
-    state.sources  = sources;
-    state.nsources = nsources;
 
-    /* populate source index */
-    int fsource = frame->source;
-    setsource((fsource >> 0) & 0xF, (fsource >> 4) & 0xF, &state, 1 /* force */);
-    
-    // setsource only sets (current surface pointers) state.surfaces, so copy
-    surfaces[0] = state.surfaces[0];
-    surfaces[1] = state.surfaces[1];
-    surfaces[2] = state.surfaces[2];
-    
-    // row counters
-    
+  /* do this only for the current two active surfaces */
+
+  // setup only surface_A as that's all setsource uses to work out x coord from
+
+  surfaces[1] = (unsigned char *) sources[1]->base +
+                imageskip_y0 * sources[1]->rowbytes +
+                (imageskip_x0 << state.log2bpp);
+
+  state.surfaces[0] = surfaces[0];
+  state.surfaces[1] = surfaces[1];
+  //state.surfaces[2] = surfaces[2];
+
+  state.y = imageskip_y0;
+
+  // stuff we need for setsource
+
+  state.sources  = sources;
+  state.nsources = nsources;
+
+  /* populate source index */
+  int fsource = frame->source;
+  setsource((fsource >> 0) & 0xF, (fsource >> 4) & 0xF, &state, 1 /* force */);
+
+  // setsource only sets (current surface pointers) state.surfaces, so copy
+  surfaces[0] = state.surfaces[0];
+  surfaces[1] = state.surfaces[1];
+  surfaces[2] = state.surfaces[2];
+
+  // row counters
+
   rowend = frame->start + imageskip_y0 + clipped_height;
-   
+
   for (row = frame->start + imageskip_y0; row < rowend; row++)
   {
     state.skip = imageskip_x0; // reset skip counter
     state.plot = clipped_width;
-    
+
     /* copy surface pointers */
     state.surfaces[0] = surfaces[0];
     state.surfaces[1] = surfaces[1];
     state.surfaces[2] = surfaces[2];
-      
+
     /* increment surface pointers for next time */
     surfaces[0] += screen->rowbytes;
     surfaces[1] += sources[state.sourceindexes[0]]->rowbytes;
     surfaces[2] += sources[state.sourceindexes[1]]->rowbytes;
 
     state.y++; // only setsource needs this
-      
+
     assert(player->offsets[row] >= player->data);
     assert(player->offsets[row] < player->data + player->ndata);
-      
+
     decode_row(player->offsets[row], &state);
   }
 

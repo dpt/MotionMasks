@@ -79,18 +79,18 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
                    &player->height,
                    &player->nframes);
 
-    if (signature != format_ID)
-    {
-        err = mmerror_PLAYER_UNRECOGNISED;
-        goto failure;
-    }
-    
-    if (player->width <= 0 || player->height <= 0 || player->nframes <= 0)
-    {
-        err = mmerror_BAD_ARG;
-        goto failure;
-    }
-    
+  if (signature != format_ID)
+  {
+    err = mmerror_PLAYER_UNRECOGNISED;
+    goto failure;
+  }
+
+  if (player->width <= 0 || player->height <= 0 || player->nframes <= 0)
+  {
+    err = mmerror_BAD_ARG;
+    goto failure;
+  }
+
   debugf("width x height = %d x %d, nframes = %d\n",
          player->width,
          player->height,
@@ -123,7 +123,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
                      &frame->y,
                      &frame->source,
                      &frame->blendstyle);
-    
+
     if (frame->width <= 0 || frame->height <= 0)
     {
       err = mmerror_BAD_ARG;
@@ -157,7 +157,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
   {
     int n;
-          
+
     for (i = 0; i < totalheights; i += n)
     {
       stream_size_t remaining;
@@ -171,7 +171,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
       /* read up to the limit of the data we're expecting */
       n = MIN(totalheights - i, remaining / 2);
-    
+
       if (n < 1)
       {
         err = mmerror_PLAYER_TRUNCATED_INPUT;
@@ -185,7 +185,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
       for (j = i; j < i + n; j++)
       {
         uint16_t o;
-            
+
         s->buf += unpack(s->buf, "<S", &o);
         offsets[j] = (offset_t) o;
       }
