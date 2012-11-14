@@ -109,6 +109,13 @@
 		5551379916545786007F3565 /* clz8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = clz8.c; sourceTree = "<group>"; };
 		5551379B16545786007F3565 /* pack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pack.c; sourceTree = "<group>"; };
 		5551379C16545786007F3565 /* unpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unpack.c; sourceTree = "<group>"; };
+		555137F616545FBE007F3565 /* make.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = make.h; sourceTree = "<group>"; };
+		555137F916545FDD007F3565 /* create.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = create.c; sourceTree = "<group>"; };
+		555137FA16545FDD007F3565 /* destroy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = destroy.c; sourceTree = "<group>"; };
+		555137FB16545FDD007F3565 /* impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = impl.h; sourceTree = "<group>"; };
+		555137FC16545FDD007F3565 /* pack.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pack.c; sourceTree = "<group>"; };
+		555137FE16545FDD007F3565 /* rle.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = rle.c; sourceTree = "<group>"; };
+		5551380016545FDD007F3565 /* save.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = save.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +153,7 @@
 				5551375916545786007F3565 /* framebuf */,
 				5551375E16545786007F3565 /* geom */,
 				5551376016545786007F3565 /* io */,
+				555137F516545FBE007F3565 /* maker */,
 				5551376416545786007F3565 /* player */,
 				5551376616545786007F3565 /* plot */,
 				5551376C16545786007F3565 /* utils */,
@@ -232,6 +240,7 @@
 				5551377516545786007F3565 /* geom */,
 				5551377916545786007F3565 /* io */,
 				5551377E16545786007F3565 /* mm */,
+				555137F816545FDD007F3565 /* maker */,
 				5551378216545786007F3565 /* player */,
 				5551378816545786007F3565 /* plot */,
 				5551379416545786007F3565 /* utils */,
@@ -370,6 +379,27 @@
 				5551379C16545786007F3565 /* unpack.c */,
 			);
 			path = pack;
+			sourceTree = "<group>";
+		};
+		555137F516545FBE007F3565 /* maker */ = {
+			isa = PBXGroup;
+			children = (
+				555137F616545FBE007F3565 /* make.h */,
+			);
+			path = maker;
+			sourceTree = "<group>";
+		};
+		555137F816545FDD007F3565 /* maker */ = {
+			isa = PBXGroup;
+			children = (
+				555137F916545FDD007F3565 /* create.c */,
+				555137FA16545FDD007F3565 /* destroy.c */,
+				555137FB16545FDD007F3565 /* impl.h */,
+				555137FC16545FDD007F3565 /* pack.c */,
+				555137FE16545FDD007F3565 /* rle.c */,
+				5551380016545FDD007F3565 /* save.c */,
+			);
+			path = maker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -614,6 +644,7 @@
 				55513752165456FA007F3565 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
