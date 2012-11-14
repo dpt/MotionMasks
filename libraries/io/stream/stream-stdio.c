@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "base/error.h"
+#include "base/mmerror.h"
 
 #include "io/stream.h"
 

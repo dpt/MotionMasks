@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "base/error.h"
+#include "base/mmerror.h"
 
 #include "io/stream.h"
 

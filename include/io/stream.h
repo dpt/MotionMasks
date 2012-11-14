@@ -12,7 +12,7 @@
 #ifndef STREAM_H
 #define STREAM_H
 
-#include "base/error.h"
+#include "base/mmerror.h"
 
 #define mmerror_STREAM_BAD_SEEK   (mmerror_BASE_STREAM + 0)
 #define mmerror_STREAM_CANT_SEEK  (mmerror_BASE_STREAM + 1)
