@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-#include "base/error.h"
+#include "base/mmerror.h"
 #include "base/types.h"
 #include "base/debug.h"
 
@@ -10,7 +10,7 @@
 
 #include "maker/make.h"
 
-#include "mmtypes.h"
+#include "mm/types.h"
 
 #include "impl.h"
 
@@ -19,23 +19,23 @@
 mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
                                const bitmap_set_t *bitmaps)
 {
-  mmerror_t     err;
+  mmerror_t       err;
 
-  data_t       *data;
-  int           dataused;
-  int           dataallocated;
+  mmdata_t       *data;
+  int             dataused;
+  int             dataallocated;
 
-  int           noffsets;
-  offset_t     *offsets;
-  int           offsetsused;
+  int             noffsets;
+  mmoffset_t     *offsets;
+  int             offsetsused;
 
-  int           nframes;
-  frameindex_t *frames;
-  int           framesused;
+  int             nframes;
+  mmframeindex_t *frames;
+  int             framesused;
 
-  data_t       *datap;
+  mmdata_t       *datap;
 
-  int           bm;
+  int             bm;
 
   // ensure all bitmaps are same size, format, etc.
 

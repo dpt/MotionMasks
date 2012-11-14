@@ -7,22 +7,22 @@
 #include <string.h>
 
 #include "base/debug.h"
-#include "base/error.h"
+#include "base/mmerror.h"
 #include "base/types.h"
 
 #include "framebuf/pixelfmt.h"
-#include "encoding/codes.h"
+#include "mm/codes.h"
 #include "utils/array.h"
 #include "utils/minmax.h"
 
-#include "mmtypes.h"
+#include "mm/types.h"
 
 /* ----------------------------------------------------------------------- */
 
 typedef struct encstate
 {
-  data_t *dst;
-  data_t *dstend;
+  mmdata_t *dst;
+  mmdata_t *dstend;
 }
 encstate_t;
 
@@ -79,7 +79,7 @@ static mmerror_t emit_copy(encstate_t *state, int n, int source)
   return mmerror_OK;
 }
 
-static mmerror_t emit_blendconst(encstate_t *state, int n, alpha_t alpha)
+static mmerror_t emit_blendconst(encstate_t *state, int n, mmalpha_t alpha)
 {
   mmerror_t err;
 
@@ -113,9 +113,9 @@ static mmerror_t emit_blendconst(encstate_t *state, int n, alpha_t alpha)
   return mmerror_OK;
 }
 
-static mmerror_t emit_blendarray(encstate_t    *state,
-                                 int            n,
-                                 const alpha_t *alphas)
+static mmerror_t emit_blendarray(encstate_t      *state,
+                                 int              n,
+                                 const mmalpha_t *alphas)
 {
   mmerror_t err;
 
@@ -218,7 +218,7 @@ mmerror_t encode_row_y8(const void *vsrc,
         /* constant transparency: blend const */
         err = emit_blendconst(&state,
                               repeats_end - repeats_start,
-                              (alpha_t) first);
+                              (mmalpha_t) first);
         if (err)
           return err;
       }

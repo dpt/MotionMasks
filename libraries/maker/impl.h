@@ -5,19 +5,19 @@
 
 #include "base/types.h"
 
-#include "mmtypes.h"
+#include "mm/types.h"
 
 struct motionmaskmaker
 {
   int32_t           width, height;
 
-  frameindex_t     *frames;
+  mmframeindex_t   *frames;
   int32_t           nframes;
 
-  offset_t         *offsets;
+  mmoffset_t       *offsets;
   int32_t           noffsets;
 
-  data_t           *data;
+  mmdata_t         *data;
   int32_t           ndata;
 };
 

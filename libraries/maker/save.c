@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-#include "base/error.h"
+#include "base/mmerror.h"
 #include "base/debug.h"
 #include "base/types.h"
 
@@ -10,7 +10,7 @@
 
 #include "maker/make.h"
 
-#include "encoding/format.h"
+#include "mm/format.h"
 
 #include "impl.h"
 

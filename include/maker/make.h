@@ -6,7 +6,7 @@
 #ifndef MOTIONMASK_MAKER_H
 #define MOTIONMASK_MAKER_H
 
-#include "base/error.h"
+#include "base/mmerror.h"
 
 #include "framebuf/bitmap-set.h"
 
