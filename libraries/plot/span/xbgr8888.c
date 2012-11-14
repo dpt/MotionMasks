@@ -52,11 +52,11 @@ static pixelfmt_xbgr8888_t blend_pix_xbgr8888(pixelfmt_xbgr8888_t src1,
   return (r1 << RED_SHIFT) | (g1 << GREEN_SHIFT) | (b1 << BLUE_SHIFT) | X_MASK;
 }
 
-void span_xbgr8888_blendconst(void       *vdst,
-                              const void *vsrc1,
-                              const void *vsrc2,
-                              int         length,
-                              int         alpha)
+static void span_xbgr8888_blendconst(void       *vdst,
+                                     const void *vsrc1,
+                                     const void *vsrc2,
+                                     int         length,
+                                     int         alpha)
 {
   pixelfmt_xbgr8888_t       *dst  = vdst;
   const pixelfmt_xbgr8888_t *src1 = vsrc1;
@@ -72,11 +72,11 @@ void span_xbgr8888_blendconst(void       *vdst,
   }
 }
 
-void span_xbgr8888_blendarray(void          *vdst,
-                              const void    *vsrc1,
-                              const void    *vsrc2,
-                              int            length,
-                              const alpha_t *alphas)
+static void span_xbgr8888_blendarray(void            *vdst,
+                                     const void      *vsrc1,
+                                     const void      *vsrc2,
+                                     int              length,
+                                     const mmalpha_t *alphas)
 {
   pixelfmt_xbgr8888_t       *dst  = vdst;
   const pixelfmt_xbgr8888_t *src1 = vsrc1;
