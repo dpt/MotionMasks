@@ -5,7 +5,7 @@
 
 #include "framebuf/pixelfmt.h"
 
-#include "mmtypes.h"
+#include "mm/types.h"
 
 typedef void (span_copy_t)(void *dst, const void *src, int length);
 
@@ -15,11 +15,11 @@ typedef void (span_blendconst_t)(void       *dst,
                                  int         length,
                                  int         alpha);
 
-typedef void (span_blendarray_t)(void          *dst,
-                                 const void    *src1,
-                                 const void    *src2,
-                                 int            length,
-                                 const alpha_t *alphas);
+typedef void (span_blendarray_t)(void            *dst,
+                                 const void      *src1,
+                                 const void      *src2,
+                                 int              length,
+                                 const mmalpha_t *alphas);
 
 typedef struct span
 {
