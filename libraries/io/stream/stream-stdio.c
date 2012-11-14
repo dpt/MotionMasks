@@ -123,7 +123,7 @@ mmerror_t stream_stdio_create(FILE *f, int bufsz, stream_t **s)
     return mmerror_OOM;
 
   sf->base.buf     =
-  sf->base.end     = sf->buffer; /* force a fill on first use */
+    sf->base.end     = sf->buffer; /* force a fill on first use */
 
   sf->base.last    = mmerror_OK;
 

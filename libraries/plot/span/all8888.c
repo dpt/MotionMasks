@@ -6,8 +6,8 @@
 
 void span_all8888_copy(void *dst, const void *src, int length)
 {
-    if (dst == src) // screen-to-screen copy - nop
-        return;
+  if (dst == src) // screen-to-screen copy - nop
+    return;
 
-    memcpy(dst, src, length * 4);
+  memcpy(dst, src, length * 4);
 }
