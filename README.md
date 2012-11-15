@@ -12,6 +12,20 @@ This is a system for building and rendering RLE compressed masks/stencils which 
 
 The "Motion" part - multiple masks can be packed together providing for animated transitions.
 
+Source Code Organisation
+------------------------
+
+* Platform independent code lives in `include` and `libraries`.
+* `include` contains only public headers.
+* Platform-specific lives in `platform`.
+
+Building
+--------
+
+Open `platform/macos/MotionMasks/MotionMasks.xcodeproj`.  
+You'll need to adjust the file paths at the top of `PlotView.m`. Sorry about that. It's early days.  
+Run that.  
+
 Compression
 -----------
 
@@ -43,9 +57,13 @@ Pixel Formats
 -------------
 
 * `pixelfmt_t`
-* `span_t`
 
-...
+Implemented so far: rgbx8888 and xbgr8888.
+
+Pixel Handlers
+--------------
+
+* `span_t`
 
 Notes
 -----
@@ -55,11 +73,10 @@ Notes
 * Tested on 32-bit and 64-bit [Note: presently there are hacks in there for 64-bit.]
 * Intended to have critical pixel-blending portions coded in assembly for speed.
 * Intended for embedded use where no GPU available.
-* Generic code lives in `include`/`libraries`, platform-specific lives in `platform`.
-* Cocoa test app seems a painful way to get bitmaps on-screen.
+* Cocoa test app seems a painful way to get bitmaps on-screen. It's very slow.
 * Limits - two images per-pixel, sixteen source images which can be selected mid-stream.
 * Streams - abstracted loading mechanism.
-* Upside-down bitmaps (flipped rowbytes.)
+* It's easy to make upside-down bitmaps (just flip rowbytes and set the base pointer to the start of the last scanline.)
 
 Current Status
 --------------
@@ -77,11 +94,11 @@ The count of leading zeros of the initial byte is the unique identifier of the o
 Command          | Binary format                     | Description
 ---------------- | --------------------------------- | -----------------------------------------
 Copy             | `1sllllll`                        | Copy from source `s` up to 2^6 pixels.
-Blend const      | `01llllll aaaaaaaa`               | Blend in current style up to 2^6 pixels.
-Blend array      | `001lllll aaaaaaaa[len]`          | Blend in current style up to 2^5 pixels.
+Blend const      | `01llllll aaaaaaaa`               | Alpha blend in current style up to 2^6 pixels.
+Blend array      | `001lllll aaaaaaaa[len]`          | Alpha blend in current style up to 2^5 pixels.
 Long copy        | `0001slll llllllll`               | Copy from source `s` up to 2^11 pixels.
-Long blend const | `00001lll llllllll aaaaaaaa`      | Blend in current style up to 2^11 pixels.
-Long blend array | `000001ll llllllll aaaaaaaa[len]` | Blend in current style up to 2^10 pixels.
+Long blend const | `00001lll llllllll aaaaaaaa`      | Alpha blend in current style up to 2^11 pixels.
+Long blend array | `000001ll llllllll aaaaaaaa[len]` | Alpha blend in current style up to 2^10 pixels.
 Undefined        | `0000001u`                        | Reserved for future use.
 Set source       | `00000001 ttttssss`               | Set source images 0 and 1 to `s` and `t`.
 EOL              | `00000000`                        | End of line.
@@ -89,15 +106,25 @@ EOL              | `00000000`                        | End of line.
 To Do
 -----
 
-* Lots!
+* Lots and lots!
+* Build environments for non-OS X platforms!
 * Regression tests!
 * Offsets ought to be RLE'd! (They make up the bulk of the size of the Motion Mask).
 * Get some animated stuff going!
 * Improve this documentation!
 * Doxygenate the codebase!
 * SetXY command! (To allow source image positions to be set).
+* Porter-Duff!
+
+History
+-------
 
 Author
 ------
 
 David Thomas <dave@davespace.co.uk>
+
+Copyright
+---------
+
+Copyright © David Thomas, 2012. All Rights Reserved. [Licensing will be sorted out once the damn thing works].
