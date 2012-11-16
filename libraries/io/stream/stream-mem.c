@@ -44,7 +44,7 @@ static int stream_mem_get(stream_t *s)
   /* are we only called when buffer empty? */
   assert(sm->base.buf == sm->base.end);
 
-  return EOF;
+  return stream_EOF;
 }
 
 static stream_size_t stream_mem_length(stream_t *s)

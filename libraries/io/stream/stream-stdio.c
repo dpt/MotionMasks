@@ -49,7 +49,7 @@ static int stream_stdio_get(stream_t *s)
 
     read = fread(sf->buffer, 1, sf->bufsz, sf->file);
     if (read == 0 && feof(sf->file))
-      return EOF;
+      return stream_EOF;
 
     sf->base.buf = sf->buffer;
     sf->base.end = sf->buffer + read;
@@ -75,7 +75,7 @@ static stream_size_t stream_stdio_fill(stream_t *s, stream_size_t need)
   /* try to fill the buffer */
   read = fread(sf->buffer + remaining, 1, sf->bufsz - remaining, sf->file);
   if (read == 0 && feof(sf->file))
-    return EOF; /* encountered EOF but bytes may remain! */
+    return stream_EOF; /* encountered EOF but bytes may remain! */
 
   sf->base.buf = sf->buffer;
   sf->base.end = sf->buffer + remaining + read;
@@ -83,21 +83,26 @@ static stream_size_t stream_stdio_fill(stream_t *s, stream_size_t need)
   return stream_remaining(s); /* success */
 }
 
-static stream_size_t stream_stdio_length(stream_t *s)
+static stream_size_t stream_stdio_length_quick(stream_t *s)
 {
   stream_file_t *sf = (stream_file_t *) s;
 
-  if (sf->length < 0)
-  {
-    long int pos;
+  return (int) sf->length;
+}
 
-    /* cache the file's length */
+static stream_size_t stream_stdio_length(stream_t *s)
+{
+  stream_file_t *sf = (stream_file_t *) s;
+  long int       pos;
 
-    pos = ftell(sf->file);
-    fseek(sf->file, 0, SEEK_END);
-    sf->length = ftell(sf->file);
-    fseek(sf->file, pos, SEEK_SET);
-  }
+  /* cache the file's length */
+
+  pos = ftell(sf->file);
+  fseek(sf->file, 0, SEEK_END);
+  sf->length = ftell(sf->file);
+  fseek(sf->file, pos, SEEK_SET);
+
+  sf->base.length = stream_stdio_length_quick;
 
   return (int) sf->length;
 }
@@ -135,7 +140,7 @@ mmerror_t stream_stdio_create(FILE *f, int bufsz, stream_t **s)
   sf->base.destroy = stream_stdio_destroy;
 
   sf->file   = f;
-  sf->length = -1;
+  sf->length = 0;
   sf->bufsz  = bufsz;
 
   *s = &sf->base;

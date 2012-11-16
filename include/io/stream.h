@@ -28,6 +28,8 @@ stream_opcode_t;
 /** A type which holds a size or offset within a stream. */
 typedef size_t stream_size_t; // ideally make this 64-bit where supported
 
+#define stream_EOF ((stream_size_t) -1)
+
 typedef struct stream stream_t;
 
 typedef mmerror_t stream_op_t(stream_t        *s,

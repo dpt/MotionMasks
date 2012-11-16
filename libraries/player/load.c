@@ -163,7 +163,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
       stream_size_t remaining;
 
       remaining = stream_remaining_need_and_fill(s, 2);
-      if (remaining == EOF || remaining < 2) // mix of types
+      if (remaining == stream_EOF || remaining < 2) // mix of types
       {
         err = mmerror_PLAYER_TRUNCATED_INPUT;
         goto failure;
@@ -204,7 +204,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
     stream_size_t remaining;  // stream returns a ptrdiff_t actually
 
     remaining = stream_remaining_and_fill(s);
-    if (remaining == EOF) // a bit of a mix of types (EOF == -1, stream_size_t is unsigned...)
+    if (remaining == stream_EOF)
       break; /* EOF (we assume) */
 
     if (array_grow((void **) &data,
