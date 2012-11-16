@@ -54,7 +54,7 @@ mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
   {
     uint16_t o;
 
-    o = maker->offsets[i] - maker->data;
+    o = maker->offsets[i] - maker->data; // ptrdiff_t
     length += 2;
     fwrite(&o, 1, 2, f);
   }
@@ -66,7 +66,7 @@ mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
 
   fclose(f);
 
-  logf_info("motionmaskmaker_save: motion mask saved, %d bytes long", length);
+  logf_info("motionmaskmaker_save: motion mask saved, %zd bytes long", length);
 
   return mmerror_OK;
 }

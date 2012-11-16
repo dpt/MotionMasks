@@ -68,7 +68,7 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
 
     for (y = 0; y < bitmaps->height; y++)
     {
-      int used;
+      size_t used;
 
       offsets[y] = datap;
       offsetsused++;

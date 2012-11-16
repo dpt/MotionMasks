@@ -17,6 +17,8 @@
 
 #include "mm/types.h"
 
+#include "impl.h"
+
 /* ----------------------------------------------------------------------- */
 
 typedef struct encstate
@@ -163,8 +165,8 @@ static mmerror_t emit_stop(encstate_t *state)
 mmerror_t encode_row_y8(const void *vsrc,
                         int         nsrcpix,
                         uint8_t    *dst,
-                        int         ndstbytes,
-                        int        *dstused)
+                        size_t      ndstbytes,
+                        size_t     *dstused)
 {
   mmerror_t      err;
   encstate_t     state;

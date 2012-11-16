@@ -24,7 +24,7 @@ struct motionmaskmaker
 mmerror_t encode_row_y8(const void *vsrc,
                         int         nsrcpix,
                         uint8_t    *dst,
-                        int         ndstbytes,
-                        int        *dstused);
+                        size_t      ndstbytes,
+                        size_t     *dstused);
 
 #endif /* MAKER_IMPL_H */
