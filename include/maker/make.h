@@ -24,6 +24,6 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
 // load and save via estream?
 
 mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
-                               char              *filename);
+                               const char        *filename);
 
 #endif /* MOTIONMASK_MAKER_H */

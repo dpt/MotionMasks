@@ -15,7 +15,7 @@
 #include "impl.h"
 
 mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
-                               char              *filename)
+                               const char        *filename)
 {
   FILE    *f;
   uint8_t  header[format_HEADER_SIZE];
