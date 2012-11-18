@@ -62,7 +62,7 @@ stream_seek_t    stream_seek;
 stream_length_t  stream_length;
 stream_destroy_t stream_destroy;
 
-/* Get a byte from a stream. */
+/* Get a byte from a stream. Returns EOF (not stream_EOF) when EOF. */
 #define stream_getc(s) (((s)->buf != (s)->end) ? *(s)->buf++ : (s)->get(s))
 
 /* Put back the last byte gotten. */

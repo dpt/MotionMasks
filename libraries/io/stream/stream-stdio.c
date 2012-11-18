@@ -49,7 +49,7 @@ static int stream_stdio_get(stream_t *s)
 
     read = fread(sf->buffer, 1, sf->bufsz, sf->file);
     if (read == 0 && feof(sf->file))
-      return stream_EOF;
+      return EOF;
 
     sf->base.buf = sf->buffer;
     sf->base.end = sf->buffer + read;
