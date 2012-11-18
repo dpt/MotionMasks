@@ -244,7 +244,7 @@ mmerror_t encode_row_y8(const void *vsrc,
       {
         /* constant opacity: copy */
         err = emit_copy(&state,
-                        repeats_end - repeats_start,
+                        (int) (repeats_end - repeats_start),
                         first == 0xFF);
         if (err)
           return err;
@@ -253,7 +253,7 @@ mmerror_t encode_row_y8(const void *vsrc,
       {
         /* constant transparency: blend const */
         err = emit_blendconst(&state,
-                              repeats_end - repeats_start,
+                              (int) (repeats_end - repeats_start),
                               (mmalpha_t) first);
         if (err)
           return err;
@@ -264,7 +264,7 @@ mmerror_t encode_row_y8(const void *vsrc,
     {
       /* variable transparency: blend array */
       err = emit_blendarray(&state,
-                            literals_end - literals_start,
+                            (int) (literals_end - literals_start),
                             literals_start);
       if (err)
         return err;
