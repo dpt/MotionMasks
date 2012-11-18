@@ -20,6 +20,7 @@
 #define MMUndefined_ID                    6 /* not yet used */
 #define MMSetSource_ID                    7
 #define MMStop_ID                         8
+#define MMID_LIMIT                        9
 
 /* copy (short) */
 #define MMCopy_ID_BITS                    (MMCopy_ID + 1)
