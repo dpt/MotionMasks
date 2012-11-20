@@ -1,35 +1,44 @@
 Motion Masks
 ============
 
-Compositing driven by RLE-compressed alpha masks.
+Bitmap compositing driven by RLE-compressed alpha masks.
 
 Keywords: RLE alpha animation bitmap blend buffer clip clipping compact composite compressed framebuffer mask motion opacity stencil transition transparency wipe
 
 The Idea
 --------
 
-This is a system for building and rendering RLE compressed masks/stencils which can be used to composite images.
+This is a system for compositing images by means of compressed alpha masks. The compression is lightweight enough to enhance memory bandwidth.
 
-The "Motion" part - multiple masks can be packed together providing for animated transitions.
+Source images, typically 8bpp greyscale, are read in and compressed into an efficient format which specifies whether to copy or blend the respective source images.
+
+This improves matters because alpha masks are typically sparse in nature, with long runs of identical pixels.
+
+Multiple masks can be packed together providing for animated transitions and removing redundancy.
 
 Source Code Organisation
 ------------------------
 
 * Platform independent code lives in `include` and `libraries`.
 * `include` contains only public headers.
-* Platform-specific lives in `platform`.
+* `libraries` contains private headers and source code.
+* Platform-specific code lives in `platform`.
 
-Building
---------
+Building the Test App
+---------------------
 
 Open `platform/macos/MotionMasks/MotionMasks.xcodeproj`.  
-You'll need to adjust the file paths at the top of `PlotView.m`. Sorry about that. It's early days.  
-Run that.  
+You'll need to adjust the file paths at the top of `PlotView.m` to point to some 320x480 images. It's hardcoded at the moment. Sorry about that. It's early days. It'll get fixed.  
+Run that. It'll open up a window which composites as you move the mouse around.
 
 Compression
 -----------
 
-(This is how compression is intended to work. The present code is very basic).
+The compression method used is RLE. This is simple enough to not require any heavy grunt work while plotting, but small enough to allow memory bandwidth requirements to be reduced.
+
+### Method
+
+(The following steps are is how compression is __intended__ to work. The present code only performs a subset of these operations).
 
 1. Load a bunch of bitmaps.
 2. Number each scanline.
@@ -41,12 +50,16 @@ Compression
 Rendering
 ---------
 
-...
+This is just like a regular bitmap plot except that each row decodes a sequence of commands. The commands specify whether to plot, or blend between the corresponding two source image pixels and plot the result.
+
+Two source images are available concurrently. The copy command can select either, the blend commands implicitly use both.
+
+Other commands exist, such as one which selects the respective source images for copies and blends.
 
 Bitmaps & Screens
 -----------------
 
-The Motion Mask code provides its own abstractions for bitmaps, screens and pixel formats:
+The Motion Mask code provides its own abstractions for bitmaps, screens and pixel formats, rather than operating on OS-specific types:
 
 * `bitmap_t`
 * `screen_t`
@@ -56,14 +69,12 @@ There is also a `bitmap_set_t` which is just like a `bitmap_t` but provides for 
 Pixel Formats
 -------------
 
-* `pixelfmt_t`
-
-Implemented so far: rgbx8888 and xbgr8888.
+Pixel formats are specified with a `pixelfmt_t`. This enumeration has many pixels formats but only two are implemented so far: `rgbx8888` and `xbgr8888`.
 
 Pixel Handlers
 --------------
 
-* `span_t`
+The copying and blending of specific pixel formats are coded in a `span_t`.
 
 Notes
 -----
@@ -77,6 +88,7 @@ Notes
 * Limits - two images per-pixel, sixteen source images which can be selected mid-stream.
 * Streams - abstracted loading mechanism.
 * It's easy to make upside-down bitmaps (just flip rowbytes and set the base pointer to the start of the last scanline.)
+* 64K limit on data.
 
 Current Status
 --------------
@@ -86,6 +98,22 @@ Current Status
 
 There is an OS X Cocoa test app ("MotionMaskTest") in `platform/macos` which loads a PNG from a (presently hard coded) location. This is packed into a Motion Mask and written out to disc. It's then loaded back in and some JPEGs are loaded and displayed through the Motion Mask. The mouse can be moved around the window to draw at different offsets.
 
+File Format
+-----------
+
+### Header
+...
+
+### Frames
+...
+
+### Offsets
+...
+
+### Data
+...
+
+
 Binary Encoding
 ---------------
 
@@ -94,13 +122,13 @@ The count of leading zeros of the initial byte is the unique identifier of the o
 Command          | Binary format                     | Description
 ---------------- | --------------------------------- | -----------------------------------------
 Copy             | `1sllllll`                        | Copy from source `s` up to 2^6 pixels.
-Blend const      | `01llllll aaaaaaaa`               | Alpha blend in current style up to 2^6 pixels.
-Blend array      | `001lllll aaaaaaaa[len]`          | Alpha blend in current style up to 2^5 pixels.
+Blend const      | `01llllll aaaaaaaa`               | Alpha blend up to 2^6 pixels, constant alpha.
+Blend array      | `001lllll aaaaaaaa[len]`          | Alpha blend up to 2^5 pixels, variable alpha.
 Long copy        | `0001slll llllllll`               | Copy from source `s` up to 2^11 pixels.
-Long blend const | `00001lll llllllll aaaaaaaa`      | Alpha blend in current style up to 2^11 pixels.
-Long blend array | `000001ll llllllll aaaaaaaa[len]` | Alpha blend in current style up to 2^10 pixels.
+Long blend const | `00001lll llllllll aaaaaaaa`      | Alpha blend up to 2^11 pixels, constant alpha.
+Long blend array | `000001ll llllllll aaaaaaaa[len]` | Alpha blend up to 2^10 pixels, variable alpha.
 Undefined        | `0000001u`                        | Reserved for future use.
-Set source       | `00000001 ttttssss`               | Set source images 0 and 1 to `s` and `t`.
+Set source       | `00000001 ttttssss`               | Set source images 0 and 1 to `s` and `t`. (Source zero is the screen, source N is input image N-1).
 EOL              | `00000000`                        | End of line.
 
 To Do
@@ -115,6 +143,8 @@ To Do
 * Doxygenate the codebase!
 * SetXY command! (To allow source image positions to be set).
 * Porter-Duff!
+* A library to support building custom Motion Masks from code!
+* Ragged right hand edges (MotionMask don't need to be square).
 
 History
 -------
