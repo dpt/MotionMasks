@@ -8,8 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PlotView :
-NSView
+@interface PlotView : NSView
 {
   NSPoint mouseLocation;
 }

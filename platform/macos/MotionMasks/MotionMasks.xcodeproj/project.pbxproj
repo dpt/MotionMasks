@@ -69,6 +69,12 @@
 		55513864165463EB007F3565 /* clz8.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551379916545786007F3565 /* clz8.c */; };
 		55513865165463EB007F3565 /* pack.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551379B16545786007F3565 /* pack.c */; };
 		55513866165463EB007F3565 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551379C16545786007F3565 /* unpack.c */; };
+		55873E30165A500A00A47AE1 /* BitmapUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55873E2F165A500A00A47AE1 /* BitmapUtils.c */; };
+		55885B0E1659ADE000EAE252 /* BitmapDrawing.c in Sources */ = {isa = PBXBuildFile; fileRef = 55885B0D1659ADE000EAE252 /* BitmapDrawing.c */; };
+		55885B111659AE1200EAE252 /* Utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55885B101659AE1200EAE252 /* Utils.c */; };
+		55885B161659B06500EAE252 /* BitmapTransform.c in Sources */ = {isa = PBXBuildFile; fileRef = 55885B151659B06500EAE252 /* BitmapTransform.c */; };
+		55CC4D291659B26500916010 /* ImageLoaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC4D281659B26500916010 /* ImageLoaders.c */; };
+		55CC4D2E1659B2E800916010 /* ImageGenerators.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC4D2D1659B2E800916010 /* ImageGenerators.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +160,18 @@
 		55513826165461D8007F3565 /* PlotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlotView.h; sourceTree = "<group>"; };
 		55513827165461D8007F3565 /* PlotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlotView.m; sourceTree = "<group>"; };
 		55513828165461D8007F3565 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		55873E2F165A500A00A47AE1 /* BitmapUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BitmapUtils.c; sourceTree = "<group>"; };
+		55885B0D1659ADE000EAE252 /* BitmapDrawing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BitmapDrawing.c; sourceTree = "<group>"; };
+		55885B101659AE1200EAE252 /* Utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Utils.c; sourceTree = "<group>"; };
+		55885B121659AE3900EAE252 /* BitmapDrawing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmapDrawing.h; sourceTree = "<group>"; };
+		55885B131659AE4000EAE252 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		55885B141659B05E00EAE252 /* BitmapTransform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmapTransform.h; sourceTree = "<group>"; };
+		55885B151659B06500EAE252 /* BitmapTransform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BitmapTransform.c; sourceTree = "<group>"; };
+		55885B171659B0BB00EAE252 /* BitmapUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmapUtils.h; sourceTree = "<group>"; };
+		55CC4D281659B26500916010 /* ImageLoaders.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ImageLoaders.c; sourceTree = "<group>"; };
+		55CC4D2B1659B29400916010 /* ImageLoaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageLoaders.h; sourceTree = "<group>"; };
+		55CC4D2C1659B2DF00916010 /* ImageGenerators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageGenerators.h; sourceTree = "<group>"; };
+		55CC4D2D1659B2E800916010 /* ImageGenerators.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ImageGenerators.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -479,6 +497,18 @@
 				5551381C165460EF007F3565 /* AppDelegate.m */,
 				55513826165461D8007F3565 /* PlotView.h */,
 				55513827165461D8007F3565 /* PlotView.m */,
+				55885B171659B0BB00EAE252 /* BitmapUtils.h */,
+				55873E2F165A500A00A47AE1 /* BitmapUtils.c */,
+				55885B121659AE3900EAE252 /* BitmapDrawing.h */,
+				55885B0D1659ADE000EAE252 /* BitmapDrawing.c */,
+				55885B141659B05E00EAE252 /* BitmapTransform.h */,
+				55885B151659B06500EAE252 /* BitmapTransform.c */,
+				55CC4D2B1659B29400916010 /* ImageLoaders.h */,
+				55CC4D281659B26500916010 /* ImageLoaders.c */,
+				55CC4D2C1659B2DF00916010 /* ImageGenerators.h */,
+				55CC4D2D1659B2E800916010 /* ImageGenerators.c */,
+				55885B131659AE4000EAE252 /* Utils.h */,
+				55885B101659AE1200EAE252 /* Utils.c */,
 				55513810165460EF007F3565 /* Supporting Files */,
 			);
 			path = MotionMaskTest;
@@ -653,6 +683,12 @@
 				55513816165460EF007F3565 /* main.m in Sources */,
 				5551381D165460EF007F3565 /* AppDelegate.m in Sources */,
 				5551382A165461D8007F3565 /* PlotView.m in Sources */,
+				55885B0E1659ADE000EAE252 /* BitmapDrawing.c in Sources */,
+				55885B111659AE1200EAE252 /* Utils.c in Sources */,
+				55885B161659B06500EAE252 /* BitmapTransform.c in Sources */,
+				55CC4D291659B26500916010 /* ImageLoaders.c in Sources */,
+				55CC4D2E1659B2E800916010 /* ImageGenerators.c in Sources */,
+				55873E30165A500A00A47AE1 /* BitmapUtils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -847,6 +883,7 @@
 				55513823165460EF007F3565 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

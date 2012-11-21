@@ -1,118 +1,106 @@
+// sloppy slapdash slipshot test app for momasks
+
+#import <Foundation/NSTimer.h>
+
 #import "PlotView.h"
 
-#include "player/play.h"
-#include "maker/make.h"
+#import "BitmapDrawing.h"
+#import "BitmapTransform.h"
+#import "BitmapUtils.h"
+#import "ImageLoaders.h"
+#import "ImageGenerators.h"
+#import "Utils.h"
+
+#import "player/play.h"
+#import "maker/make.h"
 
 // TODO
 // slow update speed - maybe using OpenGL would be a better idea than Cocoa (more noticable when window is large)
 // free objects (leaking stuff presently)
 
 // DONE
-// images getting drawn on non-whole pixel boundarys [fixed - round mouse coords down to integers]
+// images getting drawn on non-whole pixel boundaries [fixed - round mouse coords down to integers]
 // mystery blue left hand column [it's gone]
 // image not updating - caching first run and never refreshing [fixed - recreate objects on each draw op :-( ]
 
 // -----------------------------------------------------------------------------
 
-static const int screenX = 80, screenY = 80; // where to plot
-static const int screenWidth = 320 * 2, screenHeight = 480;
+// Path to source images.
+#define PATH "/Users/dave/Google Drive/"
+
+// Define this to load images, as opposed to generating them.
+#define LOAD_IMAGES
+
+// -----------------------------------------------------------------------------
+
+static const int imageWidth = 320, imageHeight = 480;
+
+static const int screenX = 32, screenY = 32; // where to plot
+static const int screenWidth = imageWidth * 2, screenHeight = imageHeight;
 static const int screenBPC = 8;
 static const int screenBPP = 4 * screenBPC; // bits per pixel
-static const int screenRowBytes = ((screenWidth * screenBPP + 127) & ~127) >> 3; // aligning to a 16-byte boundary (can be less)
-static const size_t screenBufferBytes = screenRowBytes * screenHeight;
+static const size_t screenBytesPerRow   = ROWBYTES16ALIGNED(screenWidth, screenBPP);
+static const size_t screenBytesPerImage = screenBytesPerRow * screenHeight;
 
-static const char motionMaskFilename[] = "tmp.momask"; // "/Users/dave/Dropbox/Projects/MoMask2/TestMask,ffd";
+static const char motionMaskFilename[] = "tmp.momask";
+
+#ifdef LOAD_IMAGES
 
 static const char *sourceImageFilenames[] =
 {
-  "/Users/dave/Google Drive/a.jpg",
-  "/Users/dave/Google Drive/b.jpg",
-  "/Users/dave/Google Drive/c.jpg"
+    PATH "a.jpg",
+    PATH "b.jpg",
+    PATH "c.jpg",
+    PATH "d.jpg",
+    PATH "e.jpg",
 };
-static const int nSourceImages = 3; // NELEMS(sourceImageFilenames);
+
+#endif
+
+static const int nSourceImages = 5; // NELEMS(sourceImageFilenames);
 
 // -----------------------------------------------------------------------------
 
 static const char *makerSourceImageFilenames[] =
 {
-  "/Users/dave/Google Drive/m.png"
+//    PATH "mm1.png",
+//    PATH "mm2.png",
+//    PATH "mm3.png"
+    PATH "output-0000.png",
+    PATH "output-0001.png",
+    PATH "output-0002.png",
+    PATH "output-0003.png",
+    PATH "output-0004.png",
+    PATH "output-0005.png",
+    PATH "output-0006.png",
+    PATH "output-0007.png",
+    PATH "output-0008.png",
+    PATH "output-0009.png",
 };
-static const int nMakerSourceImageFilenames = 1;
+static const int nMakerSourceImageFilenames = 10; // NELEMS(makerSourceImageFilenames);
 
 // -----------------------------------------------------------------------------
 
-static motionmaskplayer_t  *motionMaskPlayer;
-static bitmap_t             sourceBitmaps[nSourceImages];
-static const bitmap_t      *sourceBitmapList[nSourceImages];
-static screen_t             screen;
+static motionmaskplayer_t *motionMaskPlayer;
 
-static CGImageRef           sourceImageRefs[nSourceImages];
-static CFDataRef            sourceDataRef[nSourceImages];
-static CGImageRef           screenImageRef;
+static bitmap_t            sourceBitmaps[nSourceImages];
+static const bitmap_t     *sourceBitmapList[nSourceImages];
 
-static CGDataProviderRef    screenDataProviderRef;
-static CGColorSpaceRef      colorSpaceRef;
+static screen_t            screen;
 
-static NSImage             *drawImage;
+static CGImageRef          sourceImages[nSourceImages];
+static CFDataRef           sourceData[nSourceImages];
+
+static CGImageRef          screenImage;
+static CGDataProviderRef   screenDataProvider;
+
+static CGColorSpaceRef     colourSpace;
+
+static int                 x,y;
 
 // -----------------------------------------------------------------------------
 
 @implementation PlotView
-
-// -----------------------------------------------------------------------------
-
--(CGImageRef)newJPEGFromFile:(const char *)filename
-{
-  CGDataProviderRef filenameDataProvider;
-  CGImageRef        imageRef;
-  
-  filenameDataProvider = CGDataProviderCreateWithFilename(filename);
-  
-  imageRef = CGImageCreateWithJPEGDataProvider(filenameDataProvider,
-                                               NULL,
-                                               false,
-                                               kCGRenderingIntentDefault);
-  
-  CGDataProviderRelease(filenameDataProvider);
-  
-  return imageRef;
-}
-
--(CGImageRef)newPNGFromFile:(const char *)filename
-{
-  CGDataProviderRef filenameDataProvider;
-  CGImageRef        imageRef;
-  
-  filenameDataProvider = CGDataProviderCreateWithFilename(filename);
-  
-  imageRef = CGImageCreateWithPNGDataProvider(filenameDataProvider,
-                                              NULL,
-                                              false,
-                                              kCGRenderingIntentDefault);
-  
-  CGDataProviderRelease(filenameDataProvider);
-  
-  return imageRef;
-}
-
-// -----------------------------------------------------------------------------
-
-static CFDataRef copyImagePixels(CGImageRef imageRef)
-{
-  return CGDataProviderCopyData(CGImageGetDataProvider(imageRef));
-}
-
-//static void fillWithCheckerboard(uint8_t *base, uint32_t pixel)
-//{
-//  unsigned int *bufi;
-//  int           x,y;
-//  
-//  // draw a checkerboard
-//  bufi = (unsigned int *) base;
-//  for (y = 0; y < screenHeight; y++)
-//    for (x = 0; x < screenWidth; x++)
-//      bufi[(y * screenRowBytes) / 4 + x] = (x & 1) == (y & 1) ? 0x00000000 : pixel;
-//}
 
 // -----------------------------------------------------------------------------
 
@@ -122,169 +110,158 @@ static pixelfmt_t bitmapInfoToPixelfmt(CGBitmapInfo bitmapInfo)
   {
     case kCGImageAlphaNone:
       return pixelfmt_y8;
-      
-    case kCGImageAlphaNoneSkipLast: // RGBX
+    case kCGImageAlphaPremultipliedLast:  /* For example, premultiplied RGBA */
+      return pixelfmt_rgba8888;
+    case kCGImageAlphaPremultipliedFirst: /* For example, premultiplied ARGB */
+      return pixelfmt_argb8888;
+    case kCGImageAlphaLast:               /* For example, non-premultiplied RGBA */
+      return pixelfmt_rgba8888;
+    case kCGImageAlphaFirst:              /* For example, non-premultiplied ARGB */
+      return pixelfmt_argb8888;
+    case kCGImageAlphaNoneSkipLast:       /* For example, RBGX. */
       return pixelfmt_rgbx8888;
-      
-    case kCGImageAlphaNoneSkipFirst: // XRGB
+    case kCGImageAlphaNoneSkipFirst:      /* For example, XRGB. */
       return pixelfmt_xrgb8888;
-      
+    case kCGImageAlphaOnly:               /* No color data, alpha data only */
+      break;
     default:
-      NSLog(@"Unexpected CGBitmapInfo format.");
-      return pixelfmt_unknown;
+      break;
   }
+  
+  NSLog(@"Unexpected CGBitmapInfo format: %d.", bitmapInfo);
+  return pixelfmt_unknown;
 }
 
+// update this to match above, or factor out both
 static CGBitmapInfo PixelfmtTobitmapInfo(pixelfmt_t pixelfmt)
 {
   switch (pixelfmt)
   {
     case pixelfmt_y8:
       return kCGImageAlphaNone;
-      
     case pixelfmt_rgbx8888:
       return kCGImageAlphaNoneSkipLast; // RGBX
-      
     case pixelfmt_xrgb8888:
       return kCGImageAlphaNoneSkipFirst; // XRGB
-      
     default:
-      NSLog(@"Unexpected pixelfmt_t format.");
-      return 0;
+      break;
   }
+  
+  NSLog(@"Unexpected pixelfmt_t format: %d.", pixelfmt);
+  return 0;
 }
 
 // -----------------------------------------------------------------------------
 
-- (CGImageRef) newGreyscaleCopy:(CGImageRef) image
+- (void) testMotionMaskCreate:(const char *)filename
 {
-  size_t          width, height;
-  size_t          bytesPerRow;
-  void           *pixels;
-  CGColorSpaceRef colorSpaceRef;
-  CGContextRef    contextRef;
-  CGImageRef      imageRef;
-
-  width  = CGImageGetWidth(image);
-  height = CGImageGetHeight(image);
+  mmerror_t          mmerr;
+  int                i;
+  CGImageRef         makerSource[nMakerSourceImageFilenames];
+  CGBitmapInfo       bitmapInfo;
+  pixelfmt_t         pixelfmt;
+  bitmap_set_t       makerBitmaps;
+  CFDataRef          pixels[nMakerSourceImageFilenames];
+  void              *makerBitmapBases[nMakerSourceImageFilenames];
+  motionmaskmaker_t *maker;
   
-  bytesPerRow = ((width * 8 + 127) & ~127u) >> 3;
+  mmerr = motionmaskmaker_create(&maker);
+  if (mmerr)
+    goto failure;
   
-  pixels = malloc(bytesPerRow * height);
-  if (pixels == NULL)
-    return NULL;
-
-  colorSpaceRef = CGColorSpaceCreateDeviceGray();
-  
-  contextRef = CGBitmapContextCreate(pixels,
-                                     width,
-                                     height,
-                                     8,
-                                     bytesPerRow,
-                                     colorSpaceRef,
-                                     kCGBitmapByteOrderDefault | kCGImageAlphaNone);
-  
-  CGContextDrawImage(contextRef, CGRectMake(0, 0, width, height), image);
-
-  imageRef = CGBitmapContextCreateImage(contextRef);
-  
-  CGContextRelease(contextRef);
-  
-  CGColorSpaceRelease(colorSpaceRef);
-  
-  free(pixels);
-
-  return imageRef;
-}
-
--(void)awakeFromNib
-{
-  NSTrackingArea *trackingArea;
-  mmerror_t       mmerr;
-  int             i;
-  
-  // bounds will become stale if the window size changes (and it does)
-  // i've just pumped them up to 10000,10000
-  trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(0, 0, 10000, 10000)
-                                              options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
-                                                owner:self
-                                             userInfo:nil];
-  [self addTrackingArea:trackingArea];
-  
-  [trackingArea release];
-  
-  
-  /*char buf[1000];
-  getcwd(buf, 1000);
-  NSLog(@"CWD is %s", buf);*/
-  
-  
-  
-  CGBitmapInfo bitmapInfo;
-  pixelfmt_t   pixelfmt;
-  CFDataRef    pixels;
-  
-
-
-  
-  //
+  for (i = 0; i < nMakerSourceImageFilenames; i++)
   {
-    motionmaskmaker_t *maker;
-    CGImageRef         makerSource[1];
-    void              *makerBitmapBases[1];
-    bitmap_set_t       makerBitmaps;
+    makerSource[i] = createCGImageFromPNGFile(makerSourceImageFilenames[i]);
     
-    mmerr = motionmaskmaker_create(&maker);
-    if (mmerr)
-      goto failure;
-    
-    makerSource[0] = [self newPNGFromFile:makerSourceImageFilenames[0]];
-    
-    bitmapInfo = CGImageGetBitmapInfo(makerSource[0]);
+    bitmapInfo = CGImageGetBitmapInfo(makerSource[i]);
     pixelfmt = bitmapInfoToPixelfmt(bitmapInfo);
     if (pixelfmt == pixelfmt_unknown)
+    {
+      NSLog(@"testMotionMaskCreate: Unknown pixelfmt.");
       return;
+    }
+    
+    // bodge pixelfmt to be something we can currently cope with
+    
+    if (pixelfmt == pixelfmt_rgba8888)
+      pixelfmt = pixelfmt_rgbx8888;
+    if (pixelfmt == pixelfmt_abgr8888)
+      pixelfmt = pixelfmt_xbgr8888;
+    
+    // turn the image into greyscale if it's anything else
     
     if (pixelfmt != pixelfmt_y8)
     {
-      CGImageRef greycopy;
+      CGImageRef greyCopy;
       
-      greycopy = [self newGreyscaleCopy:makerSource[0]];
+      greyCopy = BitmapTransform_createGreyscaleCopy(makerSource[i]);
       
-      CGImageRelease(makerSource[0]);
+      CGImageRelease(makerSource[i]);
       
-      makerSource[0] = greycopy;
+      makerSource[i] = greyCopy;
       
-      bitmapInfo = CGImageGetBitmapInfo(makerSource[0]);
+      bitmapInfo = CGImageGetBitmapInfo(makerSource[i]);
       pixelfmt = bitmapInfoToPixelfmt(bitmapInfo);
       if (pixelfmt == pixelfmt_unknown)
         return;
     }
-
-    makerBitmaps.width    = (int) CGImageGetWidth(makerSource[0]);
-    makerBitmaps.height   = (int) CGImageGetHeight(makerSource[0]);
-    makerBitmaps.format   = pixelfmt;
-    makerBitmaps.rowbytes = (int) CGImageGetBytesPerRow(makerSource[0]);
-    makerBitmaps.nbases   = 1;
-    makerBitmaps.bases    = makerBitmapBases;
     
-    pixels = copyImagePixels(makerSource[0]); // this creates a copy which will need freeing later
-
-    makerBitmapBases[0] = (void *) CFDataGetBytePtr(pixels);
+    pixels[i] = copyImagePixels(makerSource[i]);
     
-    mmerr = motionmaskmaker_pack(maker, &makerBitmaps);
-    if (mmerr)
-      goto failure;
+    assert(pixels[i]);
     
-    mmerr = motionmaskmaker_save(maker, "tmp.momask");
-    if (mmerr)
-      goto failure;
-
-    motionmaskmaker_destroy(maker);
-    maker = NULL;
+    makerBitmapBases[i] = (void *) CFDataGetBytePtr(pixels[i]);
   }
   
+  makerBitmaps.width    = (int) CGImageGetWidth(makerSource[0]);
+  makerBitmaps.height   = (int) CGImageGetHeight(makerSource[0]);
+  makerBitmaps.format   = pixelfmt;
+  makerBitmaps.rowbytes = (int) CGImageGetBytesPerRow(makerSource[0]);
+  makerBitmaps.nbases   = nMakerSourceImageFilenames;
+  makerBitmaps.bases    = makerBitmapBases;
   
+  mmerr = motionmaskmaker_pack(maker, &makerBitmaps);
+  if (mmerr)
+    goto failure;
+  
+  mmerr = motionmaskmaker_save(maker, filename);
+  if (mmerr)
+    goto failure;
+  
+  motionmaskmaker_destroy(maker);
+  maker = NULL;
+  
+failure:
+  
+  for (i = 0; i < nMakerSourceImageFilenames; i++)
+    if (pixels[i])
+      CFRelease(pixels[i]);
+}
+
+-(void)setupMotionMaskPlot:(const char *)filename
+{
+#ifndef LOAD_IMAGES
+  static const struct
+  {
+    pixelfmt_rgbx8888_t start, end;
+    int                 direction;
+  }
+  gradients[nSourceImages] =
+  {
+    { 0x00000000, 0x000000FF, 1 },
+    { 0x00000000, 0x0000FF00, 0 },
+    { 0x00000000, 0x0000FFFF, 1 },
+    { 0x00000000, 0x00FF0000, 0 },
+    { 0x00000000, 0x00FF00FF, 1 },
+    // { 0x00000000, 0x00FFFF00, 0 },
+  };
+#endif
+  
+  mmerror_t    mmerr;
+  int          i;
+  CGBitmapInfo bitmapInfo;
+  pixelfmt_t   pixelfmt;
+  CFDataRef    pixels;
   
   // load mm
   
@@ -292,32 +269,41 @@ static CGBitmapInfo PixelfmtTobitmapInfo(pixelfmt_t pixelfmt)
   if (mmerr)
     goto failure;
   
-  mmerr = motionmaskplayer_load(motionMaskPlayer,
-                                motionMaskFilename);
+  mmerr = motionmaskplayer_load(motionMaskPlayer, filename);
   if (mmerr)
     goto failure;
   
-  
   // set up sources
-  // we could check that they're the same depth and dimensions but we can ignore that and use this as a test for motionmask interface itself (it ought to check)
+  
+  // we could check that they're the same depth and dimensions but we can
+  // ignore that and use this as a test for motionmask interface itself (it
+  // ought to check)
   
   for (i = 0; i < nSourceImages; i++)
   {
-    sourceImageRefs[i] = [self newJPEGFromFile:sourceImageFilenames[i]];
-    
-    bitmapInfo = CGImageGetBitmapInfo(sourceImageRefs[i]);
+#ifdef LOAD_IMAGES
+    sourceImages[i] = createCGImageFromJPEGFile(sourceImageFilenames[i]);
+#else
+    sourceImages[i] = createCGImageFromGradient(imageWidth,
+                                                imageHeight,
+                                                gradients[i].start,
+                                                gradients[i].end,
+                                                gradients[i].direction);
+#endif
+
+    bitmapInfo = CGImageGetBitmapInfo(sourceImages[i]);
     pixelfmt = bitmapInfoToPixelfmt(bitmapInfo);
     if (pixelfmt == pixelfmt_unknown)
       return;
     
-    pixels = copyImagePixels(sourceImageRefs[i]); // this creates a copy which will need freeing later
+    pixels = copyImagePixels(sourceImages[i]); // FIXME: this creates a copy which will need freeing later
     
-    sourceDataRef[i] = pixels;
+    sourceData[i] = pixels;
     
-    sourceBitmaps[i].width    = (int) CGImageGetWidth(sourceImageRefs[i]);
-    sourceBitmaps[i].height   = (int) CGImageGetHeight(sourceImageRefs[i]);
+    sourceBitmaps[i].width    = (int) CGImageGetWidth(sourceImages[i]);
+    sourceBitmaps[i].height   = (int) CGImageGetHeight(sourceImages[i]);
     sourceBitmaps[i].format   = pixelfmt;
-    sourceBitmaps[i].rowbytes = (int) CGImageGetBytesPerRow(sourceImageRefs[i]);
+    sourceBitmaps[i].rowbytes = (int) CGImageGetBytesPerRow(sourceImages[i]);
     sourceBitmaps[i].base     = (void *) CFDataGetBytePtr(pixels);
     
     sourceBitmapList[i] = &sourceBitmaps[i];
@@ -328,14 +314,14 @@ static CGBitmapInfo PixelfmtTobitmapInfo(pixelfmt_t pixelfmt)
   {
     uint8_t *rawScreen;
     
-    rawScreen = malloc(screenBufferBytes);
+    rawScreen = malloc(screenBytesPerImage);
     if (rawScreen == NULL)
       goto failure;
     
     screen.width    = screenWidth;
     screen.height   = screenHeight;
     screen.format   = pixelfmt;
-    screen.rowbytes = screenRowBytes;
+    screen.rowbytes = screenBytesPerRow;
     screen.clip.x0  = 0;
     screen.clip.y0  = 0;
     screen.clip.x1  = screen.width;
@@ -343,17 +329,15 @@ static CGBitmapInfo PixelfmtTobitmapInfo(pixelfmt_t pixelfmt)
     screen.base     = rawScreen;
   }
   
-  // setup objects we need for plotting
+  // setup objects we need for CGImageCreate
   
-  screenDataProviderRef = CGDataProviderCreateWithData(NULL,
-                                                       screen.base,
-                                                       screenRowBytes,
-                                                       NULL);
+  screenDataProvider = CGDataProviderCreateWithData(NULL,
+                                                    screen.base,
+                                                    screenBytesPerImage,
+                                                    NULL);
   
-  colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+  colourSpace = CGColorSpaceCreateDeviceRGB();
   
-  drawImage = [NSImage alloc];
-
   return;
   
   
@@ -364,7 +348,110 @@ failure:
   return;
 }
 
+-(void)animate
+{
+  mmerror_t mmerr;
+  int       i;
+  
+  /* clear the screen */
+  
+  memset32(screen.base, 0x00808080, screenBytesPerImage >> 2);
+  
+  /* plot the motion mask */
+  
+  {
+    static int frame = 0;
+    static int rotateSources = 0;
+    
+    if (rotateSources)
+    {
+      const bitmap_t *tmp;
+      int             k;
+      
+      // rotate the source bitmap list such that the final image shown is used as the next start image
+      
+      tmp = sourceBitmapList[0];
+      
+      for (k = 0; k < nSourceImages - 1; k++)
+        sourceBitmapList[k] = sourceBitmapList[k + 1];
+      
+      sourceBitmapList[k] = tmp;
+      
+      rotateSources = 0;
+    }
+    
+    for (i = 0; i < 1; i++) /* loop for benchmarking */
+    {
+      mmerr = motionmaskplayer_plot(motionMaskPlayer,
+                                    sourceBitmapList,
+                                    nSourceImages,
+                                    &screen,
+                                    (int) mouseLocation.x,
+                                    screenHeight - (int) mouseLocation.y,
+                                    frame);
+      if (mmerr)
+        return;
+    }
+    
+    if (++frame >= nMakerSourceImageFilenames)
+    {
+      frame = 0;
+      rotateSources = 1;
+    }
+  }
+  
+  /* redraw just the region we've invalidated */
+  
+  [self setNeedsDisplayInRect:NSMakeRect(screenX,
+                                         screenY,
+                                         screenWidth,
+                                         screenHeight)];
+  // [self displayIfNeeded];
+}
+
+-(void)setTracking
+{
+  NSTrackingArea *trackingArea;
+  
+  // bounds will become stale if the window size changes (and it does)
+  // i've just pumped them up to 10000,10000
+  trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(0, 0, 10000, 10000)
+                                              options:(NSTrackingMouseEnteredAndExited |
+                                                       NSTrackingMouseMoved |
+                                                       NSTrackingActiveInKeyWindow)
+                                                owner:self
+                                             userInfo:nil];
+  [self addTrackingArea:trackingArea];
+  
+  [trackingArea release];
+}
+
+-(void)setTimer
+{
+  [NSTimer scheduledTimerWithTimeInterval:(1.0 / 30) target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+}
+
+-(void)onTick:(NSTimer *)timer
+{
+  (void) timer;
+  
+  [self animate];
+}
+
+// -----------------------------------------------------------------------------
+
 // previously was implementing initWithFrame: but this is not called for interface builder objects
+-(void)awakeFromNib
+{
+  /*char buf[1000];
+   getcwd(buf, 1000);
+   NSLog(@"CWD is %s", buf);*/
+  
+  [self setTracking];
+  [self setTimer];
+  [self testMotionMaskCreate:motionMaskFilename];
+  [self setupMotionMaskPlot:motionMaskFilename];
+}
 
 -(void)mouseEntered:(NSEvent *)theEvent
 {
@@ -384,66 +471,53 @@ failure:
 
 -(void)mouseMoved:(NSEvent *)theEvent
 {
-  mmerror_t mmerr;
-  
-  // get mouse location, avoiding subpixel coordinates
+  /* get mouse location, rounding off subpixel coordinates */
   
   mouseLocation = [self convertPoint:[theEvent locationInWindow]
                             fromView:nil];
-  mouseLocation.x = floor(mouseLocation.x) - screenX;
-  mouseLocation.y = floor(mouseLocation.y) - screenY;
-  
-  mmerr = motionmaskplayer_plot(motionMaskPlayer,
-                                sourceBitmapList,
-                                nSourceImages,
-                                &screen,
-                                (int) mouseLocation.x, screenHeight - (int) mouseLocation.y,
-                                0 /* frame */);
-  if (mmerr)
-    return;
-  
-  // redraw just the region we've invalidated
-  [self setNeedsDisplayInRect:NSMakeRect(screenX,
-                                         screenY,
-                                         screenX + screenWidth,
-                                         screenY + screenHeight)];
-  // [self displayIfNeeded];
+  x = (int) floor(mouseLocation.x) - screenX;
+  y = (int) floor(mouseLocation.y) - screenY;
+
+  //[self animate];
 }
 
 -(void)drawRect:(NSRect)dirtyRect
 {
+  CGRect r;
+  
   (void) dirtyRect;
   
-  // this looks like a lot of work just to plot a bitmap
-  
-  screenImageRef = CGImageCreate(screen.width, screen.height,
-                                 screenBPC, screenBPP,
-                                 screen.rowbytes,
-                                 colorSpaceRef,
-                                 PixelfmtTobitmapInfo(screen.format),
-                                 screenDataProviderRef,
-                                 NULL, // decode array
-                                 NO, // should interpolate
-                                 kCGRenderingIntentDefault);
+  r = CGRectMake(screenX, screenY, screenWidth, screenHeight);
 
-  [drawImage initWithCGImage:screenImageRef size:NSZeroSize]; // NSZeroSize -> use dims of cgimage
+  // this looks like more work than is necessary just to plot a bitmap
+  // can't i just kick the CGImage to update its bitmap?
   
-  [drawImage drawAtPoint:NSMakePoint(screenX, screenY)
-                fromRect:NSMakeRect(0, 0, screenWidth, screenHeight)
-               operation:NSCompositeSourceOver
-                fraction:1];
+  screenImage = CGImageCreate(screen.width, screen.height,
+                              screenBPC, screenBPP,
+                              screen.rowbytes,
+                              colourSpace,
+                              PixelfmtTobitmapInfo(screen.format),
+                              screenDataProvider,
+                              NULL, // decode array
+                              NO, // should interpolate
+                              kCGRenderingIntentDefault);
   
-  // [drawImage recache];
+  CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort],
+                     r,
+                     screenImage);
+  
+  CGImageRelease(screenImage);
+  screenImage = NULL;
 }
 
 -(void)dealloc
 {
-  [drawImage release];
+  // free all sourcedatas
   
-  CGDataProviderRelease(screenDataProviderRef);
+  CGDataProviderRelease(screenDataProvider);
   
-  CGColorSpaceRelease(colorSpaceRef);
-
+  CGColorSpaceRelease(colourSpace);
+  
   [super dealloc];
 }
 
