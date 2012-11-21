@@ -390,6 +390,10 @@ static void decode_row(const mmdata_t *data, state_t *state)
     }
 
     data = decoders[clz](ctl, data, state);
+
+    /* quit if we've finished early */
+    if (unlikely(state->plot <= 0)) 
+      break;
   }
 }
 
