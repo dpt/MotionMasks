@@ -429,7 +429,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
     return mmerror_BAD_ARG;
   }
 
-  if (unlikely(frameidx < 0 || frameidx > player->nframes))
+  if (unlikely(frameidx < 0 || frameidx >= player->nframes))
   {
     logf_error("Invalid frame index (%d)\n", frameidx);
     return mmerror_BAD_ARG;
