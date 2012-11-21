@@ -15,24 +15,23 @@
 {
   NSWindow *plotWindow;
   PlotView *plotView;
-  NSImage  *sourceImage;
 }
 
 @property (assign) IBOutlet NSWindow *plotWindow;
 @property (assign) IBOutlet PlotView *plotView;
-@property (retain) NSImage *sourceImage;
 
 @end
 
 @implementation AppDelegate
 
-@synthesize plotWindow, plotView, sourceImage;
+@synthesize plotWindow, plotView;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
   (void) aNotification;
   
-  [plotWindow setFrame: NSMakeRect(0, 0, 800, 600) display:YES];
+  [plotWindow setFrame:NSMakeRect(0, 0, 800, 600) display:YES];
+  //[plotView setBounds:NSMakeRect(64, 64, 800, 600)];
   [[plotWindow standardWindowButton:NSWindowCloseButton] setEnabled:NO];
 }
 
