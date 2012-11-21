@@ -42,8 +42,8 @@ mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
     length += pack(frame, "5si",
                    maker->width, maker->height,
                    0, 0,
-                   0x3221, /* sources */
-                   0x12212332 /* blend styles (NYI) */);
+                   0x01, /* sources */
+                   0xdeadbeef /* was blend styles (NYI) */);
 
     fwrite(frame, 1, format_FRAME_SIZE, f);
   }
