@@ -184,7 +184,7 @@ static mmerror_t emit_stop(encstate_t *state)
 {
   state->stats[MMStop_ID].hits++;
   
-  return emit(state, MMStop_ID, 1);
+  return emit(state, MMStop_VAL, 1);
 }
 
 /* ----------------------------------------------------------------------- */
