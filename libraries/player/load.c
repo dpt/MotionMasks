@@ -132,12 +132,13 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
     frame->start = start;
 
-    debugf("frame %d: width x height = %d x %d, x,y = %d,%d\n",
+    debugf("frame %d: width x height = %d x %d, x,y = %d,%d, source = %x\n",
            i,
            frame->width,
            frame->height,
            frame->x,
-           frame->y);
+           frame->y,
+           frame->source);
 
     start += player->height;
   }
