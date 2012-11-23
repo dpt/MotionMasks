@@ -26,10 +26,10 @@
 // -----------------------------------------------------------------------------
 
 // Path to source images.
-#define PATH "/Users/dave/Google Drive/"
+#define PATH "/Users/dave/Dropbox/Projects/github/MotionMasks/"
 
 // Define this to load images, as opposed to generating them.
-#define LOAD_IMAGES
+//#define LOAD_IMAGES
 
 // -----------------------------------------------------------------------------
 
@@ -48,11 +48,11 @@ static const char motionMaskFilename[] = "tmp.momask";
 
 static const char *sourceImageFilenames[] =
 {
-    PATH "a.jpg",
-    PATH "b.jpg",
-    PATH "c.jpg",
-    PATH "d.jpg",
-    PATH "e.jpg",
+  PATH "a.jpg",
+  PATH "b.jpg",
+  PATH "c.jpg",
+  PATH "d.jpg",
+  PATH "e.jpg",
 };
 
 #endif
@@ -63,21 +63,31 @@ static const int nSourceImages = 5; // NELEMS(sourceImageFilenames);
 
 static const char *makerSourceImageFilenames[] =
 {
-//    PATH "mm1.png",
-//    PATH "mm2.png",
-//    PATH "mm3.png"
-    PATH "output-0000.png",
-    PATH "output-0001.png",
-    PATH "output-0002.png",
-    PATH "output-0003.png",
-    PATH "output-0004.png",
-    PATH "output-0005.png",
-    PATH "output-0006.png",
-    PATH "output-0007.png",
-    PATH "output-0008.png",
-    PATH "output-0009.png",
+  //    PATH "mm1.png",
+  //    PATH "mm2.png",
+  //    PATH "mm3.png"
+  PATH "output-0001.png",
+  PATH "output-0002.png",
+  PATH "output-0003.png",
+  PATH "output-0004.png",
+  PATH "output-0005.png",
+  PATH "output-0006.png",
+  PATH "output-0007.png",
+  PATH "output-0008.png",
+  PATH "output-0009.png",
+  PATH "output-0010.png",
+  PATH "output-0011.png",
+  PATH "output-0012.png",
+  PATH "output-0013.png",
+  PATH "output-0014.png",
+  PATH "output-0015.png",
+  PATH "output-0016.png",
+  PATH "output-0017.png",
+  PATH "output-0018.png",
+  PATH "output-0019.png",
+  PATH "output-0020.png",
 };
-static const int nMakerSourceImageFilenames = 10; // NELEMS(makerSourceImageFilenames);
+static const int nMakerSourceImageFilenames = 20; // NELEMS(makerSourceImageFilenames);
 
 // -----------------------------------------------------------------------------
 
@@ -153,9 +163,9 @@ static CGBitmapInfo PixelfmtTobitmapInfo(pixelfmt_t pixelfmt)
 
 // -----------------------------------------------------------------------------
 
-- (void) testMotionMaskCreate:(const char *)filename
+-(mmerror_t)testMotionMaskCreate:(const char *)filename
 {
-  mmerror_t          mmerr;
+  mmerror_t          mmerr = mmerror_OK;
   int                i;
   CGImageRef         makerSource[nMakerSourceImageFilenames];
   CGBitmapInfo       bitmapInfo;
@@ -171,6 +181,8 @@ static CGBitmapInfo PixelfmtTobitmapInfo(pixelfmt_t pixelfmt)
   
   for (i = 0; i < nMakerSourceImageFilenames; i++)
   {
+    NSLog(@"loading %s", makerSourceImageFilenames[i]);
+    
     makerSource[i] = createCGImageFromPNGFile(makerSourceImageFilenames[i]);
     
     bitmapInfo = CGImageGetBitmapInfo(makerSource[i]);
@@ -178,7 +190,7 @@ static CGBitmapInfo PixelfmtTobitmapInfo(pixelfmt_t pixelfmt)
     if (pixelfmt == pixelfmt_unknown)
     {
       NSLog(@"testMotionMaskCreate: Unknown pixelfmt.");
-      return;
+      return mmerror_BAD_ARG;
     }
     
     // bodge pixelfmt to be something we can currently cope with
@@ -203,11 +215,10 @@ static CGBitmapInfo PixelfmtTobitmapInfo(pixelfmt_t pixelfmt)
       bitmapInfo = CGImageGetBitmapInfo(makerSource[i]);
       pixelfmt = bitmapInfoToPixelfmt(bitmapInfo);
       if (pixelfmt == pixelfmt_unknown)
-        return;
+        return mmerror_BAD_ARG;
     }
     
     pixels[i] = copyImagePixels(makerSource[i]);
-    
     assert(pixels[i]);
     
     makerBitmapBases[i] = (void *) CFDataGetBytePtr(pixels[i]);
@@ -228,17 +239,21 @@ static CGBitmapInfo PixelfmtTobitmapInfo(pixelfmt_t pixelfmt)
   if (mmerr)
     goto failure;
   
-  motionmaskmaker_destroy(maker);
-  maker = NULL;
+  mmerr = mmerror_OK;
   
 failure:
   
   for (i = 0; i < nMakerSourceImageFilenames; i++)
     if (pixels[i])
       CFRelease(pixels[i]);
+  
+  motionmaskmaker_destroy(maker);
+  maker = NULL;
+  
+  return mmerr;
 }
 
--(void)setupMotionMaskPlot:(const char *)filename
+-(mmerror_t)setupMotionMaskPlot:(const char *)filename
 {
 #ifndef LOAD_IMAGES
   static const struct
@@ -261,7 +276,6 @@ failure:
   int          i;
   CGBitmapInfo bitmapInfo;
   pixelfmt_t   pixelfmt;
-  CFDataRef    pixels;
   
   // load mm
   
@@ -290,21 +304,27 @@ failure:
                                                 gradients[i].end,
                                                 gradients[i].direction);
 #endif
-
+    
     bitmapInfo = CGImageGetBitmapInfo(sourceImages[i]);
     pixelfmt = bitmapInfoToPixelfmt(bitmapInfo);
     if (pixelfmt == pixelfmt_unknown)
-      return;
+    {
+      mmerr = mmerror_BAD_ARG;
+      goto failure;
+    }
     
-    pixels = copyImagePixels(sourceImages[i]); // FIXME: this creates a copy which will need freeing later
-    
-    sourceData[i] = pixels;
+    sourceData[i] = copyImagePixels(sourceImages[i]);
+    if (sourceData[i] == NULL)
+    {
+      mmerr = mmerror_BAD_ARG;
+      goto failure;
+    }
     
     sourceBitmaps[i].width    = (int) CGImageGetWidth(sourceImages[i]);
     sourceBitmaps[i].height   = (int) CGImageGetHeight(sourceImages[i]);
     sourceBitmaps[i].format   = pixelfmt;
     sourceBitmaps[i].rowbytes = (int) CGImageGetBytesPerRow(sourceImages[i]);
-    sourceBitmaps[i].base     = (void *) CFDataGetBytePtr(pixels);
+    sourceBitmaps[i].base     = (void *) CFDataGetBytePtr(sourceData[i]);
     
     sourceBitmapList[i] = &sourceBitmaps[i];
   }
@@ -316,7 +336,10 @@ failure:
     
     rawScreen = malloc(screenBytesPerImage);
     if (rawScreen == NULL)
+    {
+      mmerr = mmerror_OOM;
       goto failure;
+    }
     
     screen.width    = screenWidth;
     screen.height   = screenHeight;
@@ -338,14 +361,14 @@ failure:
   
   colourSpace = CGColorSpaceCreateDeviceRGB();
   
-  return;
+  return mmerror_OK;
   
   
 failure:
   
-  NSLog(@"awakeFromNib: failure: mmerr=%d", mmerr);
+  NSLog(@"setupMotionMaskPlot: failure: mmerr=%d", mmerr);
   
-  return;
+  return mmerr;
 }
 
 -(void)animate
@@ -428,7 +451,7 @@ failure:
 
 -(void)setTimer
 {
-  [NSTimer scheduledTimerWithTimeInterval:(1.0 / 30) target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+  [NSTimer scheduledTimerWithTimeInterval:(1.0 / 30 /* fps */) target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
 }
 
 -(void)onTick:(NSTimer *)timer
@@ -443,14 +466,31 @@ failure:
 // previously was implementing initWithFrame: but this is not called for interface builder objects
 -(void)awakeFromNib
 {
+  mmerror_t mmerr;
+  
   /*char buf[1000];
    getcwd(buf, 1000);
    NSLog(@"CWD is %s", buf);*/
   
+  remove(motionMaskFilename);
+  
   [self setTracking];
   [self setTimer];
-  [self testMotionMaskCreate:motionMaskFilename];
-  [self setupMotionMaskPlot:motionMaskFilename];
+  mmerr = [self testMotionMaskCreate:motionMaskFilename];
+  if (mmerr)
+    goto failure;
+  
+  mmerr = [self setupMotionMaskPlot:motionMaskFilename];
+  if (mmerr)
+    goto failure;
+  
+  return;
+  
+failure:
+  
+  NSLog(@"mmerr=%d in awakeFromNib", mmerr);
+  
+  [NSApp terminate: nil];
 }
 
 -(void)mouseEntered:(NSEvent *)theEvent
@@ -477,7 +517,7 @@ failure:
                             fromView:nil];
   x = (int) floor(mouseLocation.x) - screenX;
   y = (int) floor(mouseLocation.y) - screenY;
-
+  
   //[self animate];
 }
 
@@ -488,7 +528,7 @@ failure:
   (void) dirtyRect;
   
   r = CGRectMake(screenX, screenY, screenWidth, screenHeight);
-
+  
   // this looks like more work than is necessary just to plot a bitmap
   // can't i just kick the CGImage to update its bitmap?
   
@@ -512,7 +552,13 @@ failure:
 
 -(void)dealloc
 {
-  // free all sourcedatas
+  int i;
+  
+  for (i = 0; i < nSourceImages; i++)
+  {
+    CGImageRelease(sourceImages[i]);
+    sourceImages[i] = NULL;
+  }
   
   CGDataProviderRelease(screenDataProvider);
   
