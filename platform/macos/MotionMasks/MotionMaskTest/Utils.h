@@ -11,6 +11,8 @@
 
 #include <stdint.h>
 
+#define NELEMS(a) ((int)(sizeof(a) / sizeof((a)[0])))
+
 void memset32(uint32_t *dest, uint32_t val, int len);
 
 #endif
