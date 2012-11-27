@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5530840B166389700011DF33 /* MMMaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530840A166389700011DF33 /* MMMaker.c */; };
+		5530840E166389B00011DF33 /* MMPlayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530840D166389B00011DF33 /* MMPlayer.c */; };
+		55460F15166020FD000D8974 /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55460F14166020FC000D8974 /* GLView.m */; };
+		55460F20166048DC000D8974 /* MyOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55460F1F166048DC000D8974 /* MyOpenGLView.m */; };
 		5551379D16545786007F3565 /* debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551375516545786007F3565 /* debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5551379E16545786007F3565 /* mmerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551375616545786007F3565 /* mmerror.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5551379F16545786007F3565 /* suppress.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551375716545786007F3565 /* suppress.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -73,8 +77,11 @@
 		55885B0E1659ADE000EAE252 /* BitmapDrawing.c in Sources */ = {isa = PBXBuildFile; fileRef = 55885B0D1659ADE000EAE252 /* BitmapDrawing.c */; };
 		55885B111659AE1200EAE252 /* Utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55885B101659AE1200EAE252 /* Utils.c */; };
 		55885B161659B06500EAE252 /* BitmapTransform.c in Sources */ = {isa = PBXBuildFile; fileRef = 55885B151659B06500EAE252 /* BitmapTransform.c */; };
+		559183E0166160B000A08055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559183DF166160B000A08055 /* OpenGL.framework */; };
+		559183E716627C7B00A08055 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559183E616627C7B00A08055 /* GLUT.framework */; };
 		55CC4D291659B26500916010 /* ImageLoaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC4D281659B26500916010 /* ImageLoaders.c */; };
 		55CC4D2E1659B2E800916010 /* ImageGenerators.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC4D2D1659B2E800916010 /* ImageGenerators.c */; };
+		55F2A70F16655F5F0099FDED /* MMCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F2A70E16655F5F0099FDED /* MMCommon.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +95,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5504B6491663A7FF00213CDD /* MMCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMCommon.h; sourceTree = "<group>"; };
+		55308408166387550011DF33 /* MMMaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMMaker.h; sourceTree = "<group>"; };
+		5530840A166389700011DF33 /* MMMaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MMMaker.c; sourceTree = "<group>"; };
+		5530840C1663899E0011DF33 /* MMPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMPlayer.h; sourceTree = "<group>"; };
+		5530840D166389B00011DF33 /* MMPlayer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MMPlayer.c; sourceTree = "<group>"; };
+		55460F13166020FC000D8974 /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
+		55460F14166020FC000D8974 /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
+		55460F1E166048DC000D8974 /* MyOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOpenGLView.h; sourceTree = "<group>"; };
+		55460F1F166048DC000D8974 /* MyOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenGLView.m; sourceTree = "<group>"; };
 		5551374C165456FA007F3565 /* libMotionMasks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMotionMasks.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5551375516545786007F3565 /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
 		5551375616545786007F3565 /* mmerror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmerror.h; sourceTree = "<group>"; };
@@ -168,10 +184,13 @@
 		55885B141659B05E00EAE252 /* BitmapTransform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmapTransform.h; sourceTree = "<group>"; };
 		55885B151659B06500EAE252 /* BitmapTransform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BitmapTransform.c; sourceTree = "<group>"; };
 		55885B171659B0BB00EAE252 /* BitmapUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmapUtils.h; sourceTree = "<group>"; };
+		559183DF166160B000A08055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		559183E616627C7B00A08055 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		55CC4D281659B26500916010 /* ImageLoaders.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ImageLoaders.c; sourceTree = "<group>"; };
 		55CC4D2B1659B29400916010 /* ImageLoaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageLoaders.h; sourceTree = "<group>"; };
 		55CC4D2C1659B2DF00916010 /* ImageGenerators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageGenerators.h; sourceTree = "<group>"; };
 		55CC4D2D1659B2E800916010 /* ImageGenerators.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ImageGenerators.c; sourceTree = "<group>"; };
+		55F2A70E16655F5F0099FDED /* MMCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MMCommon.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +206,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5551380A165460EF007F3565 /* Cocoa.framework in Frameworks */,
+				559183E0166160B000A08055 /* OpenGL.framework in Frameworks */,
+				559183E716627C7B00A08055 /* GLUT.framework in Frameworks */,
 				5551382C1654632C007F3565 /* libMotionMasks.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -194,9 +215,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5530840F166389BA0011DF33 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				55885B171659B0BB00EAE252 /* BitmapUtils.h */,
+				55873E2F165A500A00A47AE1 /* BitmapUtils.c */,
+				55885B121659AE3900EAE252 /* BitmapDrawing.h */,
+				55885B0D1659ADE000EAE252 /* BitmapDrawing.c */,
+				55885B141659B05E00EAE252 /* BitmapTransform.h */,
+				55885B151659B06500EAE252 /* BitmapTransform.c */,
+				55CC4D2B1659B29400916010 /* ImageLoaders.h */,
+				55CC4D281659B26500916010 /* ImageLoaders.c */,
+				55CC4D2C1659B2DF00916010 /* ImageGenerators.h */,
+				55CC4D2D1659B2E800916010 /* ImageGenerators.c */,
+				55885B131659AE4000EAE252 /* Utils.h */,
+				55885B101659AE1200EAE252 /* Utils.c */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		55308410166389CC0011DF33 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				5504B6491663A7FF00213CDD /* MMCommon.h */,
+				55F2A70E16655F5F0099FDED /* MMCommon.c */,
+				55308408166387550011DF33 /* MMMaker.h */,
+				5530840A166389700011DF33 /* MMMaker.c */,
+				5530840C1663899E0011DF33 /* MMPlayer.h */,
+				5530840D166389B00011DF33 /* MMPlayer.c */,
+			);
+			name = Test;
+			sourceTree = "<group>";
+		};
+		55308411166389DE0011DF33 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				5551381B165460EF007F3565 /* AppDelegate.h */,
+				5551381C165460EF007F3565 /* AppDelegate.m */,
+				55513826165461D8007F3565 /* PlotView.h */,
+				55513827165461D8007F3565 /* PlotView.m */,
+				55460F13166020FC000D8974 /* GLView.h */,
+				55460F14166020FC000D8974 /* GLView.m */,
+				55460F1E166048DC000D8974 /* MyOpenGLView.h */,
+				55460F1F166048DC000D8974 /* MyOpenGLView.m */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 		55513741165456FA007F3565 = {
 			isa = PBXGroup;
 			children = (
+				559183E616627C7B00A08055 /* GLUT.framework */,
 				5551375316545786007F3565 /* include */,
 				5551377216545786007F3565 /* libraries */,
 				5551380F165460EF007F3565 /* MotionMaskTest */,
@@ -474,6 +543,7 @@
 			isa = PBXGroup;
 			children = (
 				55513809165460EF007F3565 /* Cocoa.framework */,
+				559183DF166160B000A08055 /* OpenGL.framework */,
 				5551380B165460EF007F3565 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -492,23 +562,10 @@
 		5551380F165460EF007F3565 /* MotionMaskTest */ = {
 			isa = PBXGroup;
 			children = (
+				55308411166389DE0011DF33 /* UI */,
+				55308410166389CC0011DF33 /* Test */,
+				5530840F166389BA0011DF33 /* Support */,
 				55513828165461D8007F3565 /* MainMenu.xib */,
-				5551381B165460EF007F3565 /* AppDelegate.h */,
-				5551381C165460EF007F3565 /* AppDelegate.m */,
-				55513826165461D8007F3565 /* PlotView.h */,
-				55513827165461D8007F3565 /* PlotView.m */,
-				55885B171659B0BB00EAE252 /* BitmapUtils.h */,
-				55873E2F165A500A00A47AE1 /* BitmapUtils.c */,
-				55885B121659AE3900EAE252 /* BitmapDrawing.h */,
-				55885B0D1659ADE000EAE252 /* BitmapDrawing.c */,
-				55885B141659B05E00EAE252 /* BitmapTransform.h */,
-				55885B151659B06500EAE252 /* BitmapTransform.c */,
-				55CC4D2B1659B29400916010 /* ImageLoaders.h */,
-				55CC4D281659B26500916010 /* ImageLoaders.c */,
-				55CC4D2C1659B2DF00916010 /* ImageGenerators.h */,
-				55CC4D2D1659B2E800916010 /* ImageGenerators.c */,
-				55885B131659AE4000EAE252 /* Utils.h */,
-				55885B101659AE1200EAE252 /* Utils.c */,
 				55513810165460EF007F3565 /* Supporting Files */,
 			);
 			path = MotionMaskTest;
@@ -689,6 +746,11 @@
 				55CC4D291659B26500916010 /* ImageLoaders.c in Sources */,
 				55CC4D2E1659B2E800916010 /* ImageGenerators.c in Sources */,
 				55873E30165A500A00A47AE1 /* BitmapUtils.c in Sources */,
+				55460F15166020FD000D8974 /* GLView.m in Sources */,
+				55460F20166048DC000D8974 /* MyOpenGLView.m in Sources */,
+				5530840B166389700011DF33 /* MMMaker.c in Sources */,
+				5530840E166389B00011DF33 /* MMPlayer.c in Sources */,
+				55F2A70F16655F5F0099FDED /* MMCommon.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,7 +828,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				RUN_CLANG_STATIC_ANALYZER = YES;
+				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -808,7 +870,7 @@
 					"\"$(SRCROOT)/../../../libraries\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				RUN_CLANG_STATIC_ANALYZER = YES;
+				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
 			};
 			name = Release;
