@@ -8,7 +8,7 @@
 #include "base/mmerror.h"
 #include "base/suppress.h"
 
-#include "types.h"
+#include "mm/types.h"
 #include "mm/codes.h"
 #include "framebuf/pixelfmt.h"
 #include "plot/span-registry.h"
@@ -392,7 +392,7 @@ static void decode_row(const mmdata_t *data, state_t *state)
     data = decoders[clz](ctl, data, state);
 
     /* quit if we've finished early */
-    if (unlikely(state->plot <= 0)) 
+    if (unlikely(state->plot <= 0))
       break;
   }
 }
