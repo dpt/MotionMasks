@@ -27,25 +27,24 @@ Source Code Organisation
 Building the Test App
 ---------------------
 
-Open `platform/macos/MotionMasks/MotionMasks.xcodeproj`.  
-You'll need to adjust the file paths at the top of `PlotView.m` to point to some 320x480 images. It's hardcoded at the moment. Sorry about that. It's early days. It'll get fixed.  
-Run that. It'll open up a window which composites as you move the mouse around.
+The core is generic, but the test app only exists for OS X presently.
+
+* Open `platform/macos/MotionMasks/MotionMasks.xcodeproj`.  
+* You'll need to adjust the file paths at the top of `MMCommon.h` to point to some 320x480 images. It's hardcoded at the moment. Sorry about that. It's early days. It'll get fixed. Maybe.
+* Run that. It'll open up a window which composites as you move the mouse around.
 
 Compression
 -----------
 
 The compression method used is RLE. This is simple enough to not require any heavy grunt work while plotting, but small enough to allow memory bandwidth requirements to be reduced.
 
-### Method
+### Compression Method
 
-(The following steps are is how compression is __intended__ to work. The present code only performs a subset of these operations).
-
-1. Load a bunch of bitmaps.
-2. Number each scanline.
-3. Hash each scanline.
-4. Remove duplicates.
-5. Compress each unique scanline.
-6. Write out offsets which point to unique scanlines.
+1. All of the input bitmaps are loaded.
+2. Each scanline is numbered and hashed then recorded in an array.
+3. The array is sorted into (hash, bitmap index, scanline index) order.
+4. Duplicates scanlines are discarded.
+5. Non-duplicates are encoded and packed into a data buffer, offsets retained.
 
 Rendering
 ---------
@@ -93,7 +92,7 @@ Notes
 Current Status
 --------------
 
-* Compression is very basic, but functions.
+* Compression works.
 * Rendering works.
 
 There is an OS X Cocoa test app ("MotionMaskTest") in `platform/macos` which loads a PNG from a (presently hard coded) location. This is packed into a Motion Mask and written out to disc. It's then loaded back in and some JPEGs are loaded and displayed through the Motion Mask. The mouse can be moved around the window to draw at different offsets.
@@ -138,16 +137,23 @@ To Do
 * Build environments for non-OS X platforms!
 * Regression tests!
 * Offsets ought to be RLE'd! (They make up the bulk of the size of the Motion Mask).
-* Get some animated stuff going!
 * Improve this documentation!
 * Doxygenate the codebase!
 * SetXY command! (To allow source image positions to be set).
 * Porter-Duff!
 * A library to support building custom Motion Masks from code!
-* Ragged right hand edges (MotionMask don't need to be square).
+* Ragged right hand edges! (Motion Masks don't _need_ to be square)
 
 History
 -------
+
+* Get some animated stuff going! [done]
+
+Other Projects with Similar Features
+------------------------------------
+
+* [Allegro](http://alleg.sourceforge.net/) has RLE sprites.
+* [SDL](http://www.libsdl.org/) has `SDL_RLEACCEL` to accelerate colour-keyed and alpha blits.
 
 Author
 ------
