@@ -9,7 +9,6 @@
 #include "plot/span-rgbx8888.h"
 
 #include "all8888.h"
-#include "rgbx8888.h"
 
 #define RED_SHIFT   0
 #define GREEN_SHIFT 8
