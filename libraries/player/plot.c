@@ -311,9 +311,9 @@ static void setsource(source_t source1, source_t source2, state_t *state, int fo
 
   /* work out current screen coordinates */
 
-  offset = state->surfaces[1] - (uint8_t *) state->sources[1]->base;
+  offset = state->surfaces[1] - (uint8_t *) state->sources[0]->base;
   y = state->y;
-  x = (int) ((offset - y * state->sources[1]->rowbytes) >> state->log2bpp); // could hoist the log2bpp shifts out
+  x = (int) ((offset - y * state->sources[0]->rowbytes) >> state->log2bpp); // could hoist the log2bpp shifts out
 
   /* recalculate offsets */
 
@@ -518,8 +518,8 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
 
   // setup only surface_A as that's all setsource uses to work out x coord from
 
-  surfaces[1] = (unsigned char *) sources[1]->base +
-                imageskip_y0 * sources[1]->rowbytes +
+  surfaces[1] = (unsigned char *) sources[0]->base +
+                imageskip_y0 * sources[0]->rowbytes +
                 (imageskip_x0 << state.log2bpp);
 
   state.surfaces[0] = surfaces[0];
