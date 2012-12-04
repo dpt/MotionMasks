@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5530840B166389700011DF33 /* MMMaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530840A166389700011DF33 /* MMMaker.c */; };
 		5530840E166389B00011DF33 /* MMPlayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530840D166389B00011DF33 /* MMPlayer.c */; };
+		5535B0C2166CD9BC0013C297 /* bgrx8888.c in Sources */ = {isa = PBXBuildFile; fileRef = 5535B0C1166CD9BC0013C297 /* bgrx8888.c */; };
+		5535B0C5166CD9C60013C297 /* span-bgrx8888.h in Headers */ = {isa = PBXBuildFile; fileRef = 5535B0C4166CD9C60013C297 /* span-bgrx8888.h */; };
 		55460F15166020FD000D8974 /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55460F14166020FC000D8974 /* GLView.m */; };
 		55460F20166048DC000D8974 /* MyOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55460F1F166048DC000D8974 /* MyOpenGLView.m */; };
 		5551379D16545786007F3565 /* debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551375516545786007F3565 /* debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -38,8 +40,6 @@
 		555137BC16545786007F3565 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551378116545786007F3565 /* types.h */; settings = {ATTRIBUTES = (); }; };
 		555137BF16545786007F3565 /* impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551378516545786007F3565 /* impl.h */; settings = {ATTRIBUTES = (); }; };
 		555137C316545786007F3565 /* all8888.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551378B16545786007F3565 /* all8888.h */; settings = {ATTRIBUTES = (); }; };
-		555137C616545786007F3565 /* rgbx8888.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551378E16545786007F3565 /* rgbx8888.h */; settings = {ATTRIBUTES = (); }; };
-		555137C816545786007F3565 /* xbgr8888.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551379016545786007F3565 /* xbgr8888.h */; settings = {ATTRIBUTES = (); }; };
 		555137CA16545786007F3565 /* regdata.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551379316545786007F3565 /* regdata.h */; settings = {ATTRIBUTES = (); }; };
 		5551380A165460EF007F3565 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55513809165460EF007F3565 /* Cocoa.framework */; };
 		55513814165460EF007F3565 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55513812165460EF007F3565 /* InfoPlist.strings */; };
@@ -100,6 +100,8 @@
 		5530840A166389700011DF33 /* MMMaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MMMaker.c; sourceTree = "<group>"; };
 		5530840C1663899E0011DF33 /* MMPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMPlayer.h; sourceTree = "<group>"; };
 		5530840D166389B00011DF33 /* MMPlayer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MMPlayer.c; sourceTree = "<group>"; };
+		5535B0C1166CD9BC0013C297 /* bgrx8888.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bgrx8888.c; sourceTree = "<group>"; };
+		5535B0C4166CD9C60013C297 /* span-bgrx8888.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "span-bgrx8888.h"; sourceTree = "<group>"; };
 		55460F13166020FC000D8974 /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
 		55460F14166020FC000D8974 /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
 		55460F1E166048DC000D8974 /* MyOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOpenGLView.h; sourceTree = "<group>"; };
@@ -144,9 +146,7 @@
 		5551378A16545786007F3565 /* all8888.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = all8888.c; sourceTree = "<group>"; };
 		5551378B16545786007F3565 /* all8888.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = all8888.h; sourceTree = "<group>"; };
 		5551378D16545786007F3565 /* rgbx8888.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rgbx8888.c; sourceTree = "<group>"; };
-		5551378E16545786007F3565 /* rgbx8888.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rgbx8888.h; sourceTree = "<group>"; };
 		5551378F16545786007F3565 /* xbgr8888.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xbgr8888.c; sourceTree = "<group>"; };
-		5551379016545786007F3565 /* xbgr8888.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbgr8888.h; sourceTree = "<group>"; };
 		5551379216545786007F3565 /* get.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = get.c; sourceTree = "<group>"; };
 		5551379316545786007F3565 /* regdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regdata.h; sourceTree = "<group>"; };
 		5551379616545786007F3565 /* grow.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = grow.c; sourceTree = "<group>"; };
@@ -351,6 +351,7 @@
 			isa = PBXGroup;
 			children = (
 				5551376716545786007F3565 /* span-registry.h */,
+				5535B0C4166CD9C60013C297 /* span-bgrx8888.h */,
 				5551376916545786007F3565 /* span-rgbx8888.h */,
 				5551376A16545786007F3565 /* span-xbgr8888.h */,
 				5551376B16545786007F3565 /* span.h */,
@@ -463,12 +464,11 @@
 		5551378916545786007F3565 /* span */ = {
 			isa = PBXGroup;
 			children = (
-				5551378A16545786007F3565 /* all8888.c */,
 				5551378B16545786007F3565 /* all8888.h */,
+				5551378A16545786007F3565 /* all8888.c */,
+				5535B0C1166CD9BC0013C297 /* bgrx8888.c */,
 				5551378D16545786007F3565 /* rgbx8888.c */,
-				5551378E16545786007F3565 /* rgbx8888.h */,
 				5551378F16545786007F3565 /* xbgr8888.c */,
-				5551379016545786007F3565 /* xbgr8888.h */,
 			);
 			path = span;
 			sourceTree = "<group>";
@@ -617,9 +617,8 @@
 				555137BC16545786007F3565 /* types.h in Headers */,
 				555137BF16545786007F3565 /* impl.h in Headers */,
 				555137C316545786007F3565 /* all8888.h in Headers */,
-				555137C616545786007F3565 /* rgbx8888.h in Headers */,
-				555137C816545786007F3565 /* xbgr8888.h in Headers */,
 				555137CA16545786007F3565 /* regdata.h in Headers */,
+				5535B0C5166CD9C60013C297 /* span-bgrx8888.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -730,6 +729,7 @@
 				55513864165463EB007F3565 /* clz8.c in Sources */,
 				55513865165463EB007F3565 /* pack.c in Sources */,
 				55513866165463EB007F3565 /* unpack.c in Sources */,
+				5535B0C2166CD9BC0013C297 /* bgrx8888.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
