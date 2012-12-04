@@ -452,7 +452,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   {
     if (unlikely(sources[i]->format != screen->format))
     {
-      logf_error("Source pixel format doesn't match screen (source %d).", i);
+      logf_error("Source pixel format doesn't match screen (source %d, %d != %d).", i, sources[i]->format, screen->format);
       return mmerror_BAD_ARG;
     }
   }
