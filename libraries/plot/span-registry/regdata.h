@@ -3,6 +3,7 @@
 #ifndef SPAN_REGISTRY_REGDATA_H
 #define SPAN_REGISTRY_REGDATA_H
 
+#include "plot/span-bgrx8888.h"
 #include "plot/span-rgbx8888.h"
 #include "plot/span-xbgr8888.h"
 
@@ -10,8 +11,9 @@
  * spans into the binary. */
 static const span_t *spans[] =
 {
+  &span_bgrx8888,
   &span_rgbx8888,
-  &span_xbgr8888
+  &span_xbgr8888,
 };
 
 static const int nspans = 2;
