@@ -67,7 +67,7 @@ static mmerror_t emit_copy(encstate_t *state, int n, int source)
     {
       code = MMCopy_VAL |
              (source << MMCopy_SOURCE_SHIFT) |
-             (length & (MMCopy_LENGTH_MAX - 1));
+             (length & MMCopy_LENGTH_MASK);
       codelength = 1;
       
       state->stats[MMCopy_ID].hits++;
@@ -75,9 +75,11 @@ static mmerror_t emit_copy(encstate_t *state, int n, int source)
     }
     else
     {
+      /* CopyLong encodes runs 2^6+ pixels long */
+      
       code = (MMCopyLong_VAL << 8) |
              (source << MMCopyLong_SOURCE_SHIFT) |
-             (length & (MMCopyLong_LENGTH_MAX - 1));
+             ((length - MMCopyLong_LENGTH_MIN) & MMCopyLong_LENGTH_MASK);
       codelength = 2;
       
       state->stats[MMCopyLong_ID].hits++;
@@ -108,7 +110,7 @@ static mmerror_t emit_blendconst(encstate_t *state, int n, mmalpha_t alpha)
     if (length <= MMBlendConst_LENGTH_MAX)
     {
       code = MMBlendConst_VAL |
-             (length & (MMBlendConst_LENGTH_MAX - 1));
+             (length & MMBlendConst_LENGTH_MASK);
       codelength = 1;
       
       state->stats[MMBlendConst_ID].hits++;
@@ -116,8 +118,10 @@ static mmerror_t emit_blendconst(encstate_t *state, int n, mmalpha_t alpha)
     }
     else
     {
+      /* BlendConstLong encodes runs 2^6+ pixels long */
+      
       code = (MMBlendConstLong_VAL << 8) |
-             (length & (MMBlendConstLong_LENGTH_MAX - 1));
+             ((length - MMBlendConstLong_LENGTH_MIN) & MMBlendConstLong_LENGTH_MASK);
       codelength = 2;
       
       state->stats[MMBlendConstLong_ID].hits++;
@@ -159,8 +163,10 @@ static mmerror_t emit_blendarray(encstate_t      *state,
     }
     else
     {
+      /* BlendArrayLong encodes runs 2^5+ pixels long */
+      
       code = (MMBlendArrayLong_VAL << 8) |
-             (length & (MMBlendArrayLong_LENGTH_MAX - 1));
+             ((length - MMBlendArrayLong_LENGTH_MIN) & MMBlendArray_LENGTH_MASK);
       codelength = 2;
       
       state->stats[MMBlendArrayLong_ID].hits++;

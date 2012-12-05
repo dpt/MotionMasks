@@ -120,12 +120,12 @@ The count of leading zeros of the initial byte is the unique identifier of the o
 
 Command          | Binary format                     | Description
 ---------------- | --------------------------------- | -----------------------------------------
-Copy             | `1sllllll`                        | Copy from source `s` up to 2^6 pixels.
-Blend const      | `01llllll aaaaaaaa`               | Alpha blend up to 2^6 pixels, constant alpha.
-Blend array      | `001lllll aaaaaaaa[len]`          | Alpha blend up to 2^5 pixels, variable alpha.
-Long copy        | `0001slll llllllll`               | Copy from source `s` up to 2^11 pixels.
-Long blend const | `00001lll llllllll aaaaaaaa`      | Alpha blend up to 2^11 pixels, constant alpha.
-Long blend array | `000001ll llllllll aaaaaaaa[len]` | Alpha blend up to 2^10 pixels, variable alpha.
+Copy             | `1sllllll`                        | Copy from source `s` 1..64 pixels.
+Blend const      | `01llllll aaaaaaaa`               | Alpha blend 1..64 pixels, constant alpha.
+Blend array      | `001lllll aaaaaaaa[len]`          | Alpha blend 1..32 pixels, variable alpha.
+Long copy        | `0001slll llllllll`               | Copy from source `s` 65..2112 pixels.
+Long blend const | `00001lll llllllll aaaaaaaa`      | Alpha blend 65..2112 pixels, constant alpha.
+Long blend array | `000001ll llllllll aaaaaaaa[len]` | Alpha blend 33..1056 pixels, variable alpha.
 Undefined        | `0000001u`                        | Reserved for future use.
 Set source       | `00000001 ttttssss`               | Set source images 0 and 1 to `s` and `t`. (Source zero is the screen, source N is input image N-1).
 EOL              | `00000000`                        | End of line.

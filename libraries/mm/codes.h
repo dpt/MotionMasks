@@ -62,7 +62,8 @@
 #define MMCopyLong_LENGTH_BITS            (MMCopyLong_WIDTH - MMCopyLong_SOURCE_BITS - MMCopyLong_ID_BITS)
 #define MMCopyLong_LENGTH_SHIFT           0
 #define MMCopyLong_LENGTH_MASK            (MASK(MMCopyLong_LENGTH_BITS) << MMCopyLong_LENGTH_SHIFT)
-#define MMCopyLong_LENGTH_MAX             (1 << MMCopyLong_LENGTH_BITS)
+#define MMCopyLong_LENGTH_MIN             (MMCopy_LENGTH_MAX + 1)
+#define MMCopyLong_LENGTH_MAX             ((1 << MMCopyLong_LENGTH_BITS) - 1 + MMCopyLong_LENGTH_MIN)
 
 /* blend const (long) */
 #define MMBlendConstLong_ID_BITS          (MMBlendConstLong_ID + 1)
@@ -71,7 +72,8 @@
 #define MMBlendConstLong_LENGTH_BITS      (MMBlendConstLong_WIDTH - MMBlendConstLong_ID_BITS)
 #define MMBlendConstLong_LENGTH_SHIFT     0
 #define MMBlendConstLong_LENGTH_MASK      (MASK(MMBlendConstLong_LENGTH_BITS) << MMBlendConstLong_LENGTH_SHIFT)
-#define MMBlendConstLong_LENGTH_MAX       (1 << MMBlendConstLong_LENGTH_BITS)
+#define MMBlendConstLong_LENGTH_MIN       (MMBlendConst_LENGTH_MAX + 1)
+#define MMBlendConstLong_LENGTH_MAX       ((1 << MMBlendConstLong_LENGTH_BITS) - 1 + MMBlendConstLong_LENGTH_MIN)
 
 /* blend array (long) */
 #define MMBlendArrayLong_ID_BITS          (MMBlendArrayLong_ID + 1)
@@ -80,7 +82,8 @@
 #define MMBlendArrayLong_LENGTH_BITS      (MMBlendArrayLong_WIDTH - MMBlendArrayLong_ID_BITS)
 #define MMBlendArrayLong_LENGTH_SHIFT     0
 #define MMBlendArrayLong_LENGTH_MASK      (MASK(MMBlendArrayLong_LENGTH_BITS) << MMBlendArrayLong_LENGTH_SHIFT)
-#define MMBlendArrayLong_LENGTH_MAX       (1 << MMBlendArrayLong_LENGTH_BITS)
+#define MMBlendArrayLong_LENGTH_MIN       (MMBlendArray_LENGTH_MAX + 1)
+#define MMBlendArrayLong_LENGTH_MAX       ((1 << MMBlendArrayLong_LENGTH_BITS) - 1 + MMBlendArrayLong_LENGTH_MIN)
 
 /* set source */
 #define MMSetSource_ID_BITS               (MMSetSource_ID + 1)

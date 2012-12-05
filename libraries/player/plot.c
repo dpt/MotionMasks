@@ -123,7 +123,7 @@ static const mmdata_t *decode_copylong(unsigned int  code,
   source = (code & MMCopyLong_SOURCE_MASK) >> MMCopyLong_SOURCE_SHIFT;
 
   length = (code & MMCopyLong_LENGTH_MASK) >> MMCopyLong_LENGTH_SHIFT;
-  length = ZEROIS2N(length, MMCopyLong_LENGTH_BITS);
+  length += MMCopyLong_LENGTH_MIN;
 
   if (MMDEBUG)
     debugf("decode_copylong: source %d, length %d", source, length);
@@ -191,7 +191,7 @@ static const mmdata_t *decode_blendconstlong(unsigned int  code,
   code = (code << 8) | *p++;
 
   length = (code & MMBlendConstLong_LENGTH_MASK) >> MMBlendConstLong_LENGTH_SHIFT;
-  length = ZEROIS2N(length, MMBlendConstLong_LENGTH_BITS);
+  length += MMBlendConstLong_LENGTH_MIN;
 
   alpha  = *p++;
 
@@ -261,7 +261,7 @@ static const mmdata_t *decode_blendarraylong(unsigned int    code,
   code = (code << 8) | *p++;
 
   length  = (code & MMBlendArrayLong_LENGTH_MASK) >> MMBlendArrayLong_LENGTH_SHIFT;
-  length  = ZEROIS2N(length, MMBlendArrayLong_LENGTH_BITS);
+  length += MMBlendArrayLong_LENGTH_MIN;
 
   palphas = p;
 
