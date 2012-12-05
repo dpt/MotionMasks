@@ -1,5 +1,6 @@
 # Object files
 *.o
+*.odbg
 
 # Libraries
 *.lib
@@ -18,6 +19,9 @@
 
 # Temporaries
 *.orig
+
+# Dependencies
+*.d
 
 # Mac OS X
 *.DS_Store
