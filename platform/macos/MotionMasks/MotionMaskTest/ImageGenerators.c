@@ -20,10 +20,10 @@
 
 static void releaseDataCallback(void *info, const void *data, size_t size)
 {
-    (void) info;
-    (void) size;
-    
-    free((void *) data);
+  (void) info;
+  (void) size;
+
+  free((void *) data);
 }
 
 CGImageRef createCGImageFromGradient(int                 width,
@@ -43,26 +43,26 @@ CGImageRef createCGImageFromGradient(int                 width,
   CGColorSpaceRef    rgbColourSpace;
   CGDataProviderRef  dataProvider;
   CGImageRef         image;
-  
+
   bpp           = 32;
   bytesPerRow   = ROWBYTES16ALIGNED(width, bpp);
   bytesPerImage = bytesPerRow * height;
-  
+
   base = malloc(bytesPerImage);
   if (base == NULL)
     return NULL;
-  
+
   setupGradient32bpp(start, end);
-  drawGradient = (direction == 0) ? drawXGradient32bpp : drawYGradient32bpp;  
+  drawGradient = (direction == 0) ? drawXGradient32bpp : drawYGradient32bpp;
   drawGradient(base, width, bytesPerRow, height);
-    
+
   rgbColourSpace = CGColorSpaceCreateDeviceRGB();
-  
+
   dataProvider = CGDataProviderCreateWithData(NULL,
                                               base,
                                               bytesPerImage,
                                               releaseDataCallback);
-  
+
   image = CGImageCreate(width, height,
                         8, bpp,
                         bytesPerRow,
@@ -72,10 +72,10 @@ CGImageRef createCGImageFromGradient(int                 width,
                         NULL, // decode array
                         false, // should interpolate
                         kCGRenderingIntentDefault);
-    
+
   CGDataProviderRelease(dataProvider);
-  
+
   CGColorSpaceRelease(rgbColourSpace);
-  
+
   return image;
 }

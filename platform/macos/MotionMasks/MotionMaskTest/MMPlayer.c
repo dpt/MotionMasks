@@ -58,12 +58,12 @@ struct MMPlayer
 {
   motionmaskplayer_t *motionMaskPlayer;
   int                 width, height;
-  
+
   screen_t            screen;
-  
+
   bitmap_t            sourceBitmaps[nSourceImages];
   const bitmap_t     *sourceBitmapList[nSourceImages];
-  
+
   CGImageRef          sourceImages[nSourceImages];
   CFDataRef           sourceData[nSourceImages];
 };
@@ -73,31 +73,31 @@ struct MMPlayer
 mmerror_t MMPlayer_create(MMPlayer_t **ptester)
 {
   MMPlayer_t *tester;
-  
+
   tester = calloc(1, sizeof(*tester));
   if (tester == NULL)
     return mmerror_OOM;
-  
+
   *ptester = tester;
-  
+
   return mmerror_OK;
 }
 
 void MMPlayer_destroy(MMPlayer_t *doomed)
 {
   int i;
-  
+
   if (doomed == NULL)
     return;
-  
+
   free(doomed->screen.base);
-  
+
   for (i = 0; i < nSourceImages; i++)
   {
     CGImageRelease(doomed->sourceImages[i]);
     doomed->sourceImages[i] = NULL;
   }
-  
+
   free(doomed);
 }
 
@@ -130,7 +130,7 @@ mmerror_t MMPlayer_setup(MMPlayer_t *tester,
     { 0x00000000, 0x00FF00FF, 1 },
   };
 #endif
-  
+
   mmerror_t     mmerr;
   MMPlayer_t    newt;
   uint8_t      *rawScreen;
@@ -138,33 +138,33 @@ mmerror_t MMPlayer_setup(MMPlayer_t *tester,
   CGBitmapInfo  bitmapInfo;
   pixelfmt_t    pixelfmt;
   int           rowbytes;
-  
+
   newt = *tester;
-  
+
   // load motion mask
-  
+
   mmerr = motionmaskplayer_create(&newt.motionMaskPlayer);
   if (mmerr)
     goto failure;
-  
+
   mmerr = motionmaskplayer_load(newt.motionMaskPlayer, filename);
   if (mmerr)
     goto failure;
-  
+
   motionmaskplayer_get_dimensions(newt.motionMaskPlayer,
                                   &newt.width, &newt.height);
-  
+
   // set up screen
-  
+
   rowbytes = ROWBYTES16ALIGNED(width, 32);
-  
+
   rawScreen = malloc(height * rowbytes);
   if (rawScreen == NULL)
   {
     mmerr = mmerror_OOM;
     goto failure;
   }
-  
+
   newt.screen.width    = width;
   newt.screen.height   = height;
   newt.screen.format   = pixelfmt_rgbx8888;
@@ -174,13 +174,13 @@ mmerror_t MMPlayer_setup(MMPlayer_t *tester,
   newt.screen.clip.x1  = newt.screen.width;
   newt.screen.clip.y1  = newt.screen.height;
   newt.screen.base     = rawScreen;
-  
+
   // set up sources
-  
+
   // we could check that they're the same depth and dimensions but we can
   // ignore that and use this as a test for motionmask interface itself (it
   // ought to check)
-  
+
   for (i = 0; i < nSourceImages; i++)
   {
 #ifdef LOAD_IMAGES
@@ -192,7 +192,7 @@ mmerror_t MMPlayer_setup(MMPlayer_t *tester,
                                                      gradients[i].end,
                                                      gradients[i].direction);
 #endif
-    
+
     bitmapInfo = CGImageGetBitmapInfo(newt.sourceImages[i]);
     pixelfmt = bitmapInfoToPixelfmt(bitmapInfo);
     if (pixelfmt == pixelfmt_unknown)
@@ -200,80 +200,80 @@ mmerror_t MMPlayer_setup(MMPlayer_t *tester,
       mmerr = mmerror_BAD_ARG;
       goto failure;
     }
-    
+
     newt.sourceData[i] = copyImagePixels(newt.sourceImages[i]);
     if (newt.sourceData[i] == NULL)
     {
       mmerr = mmerror_BAD_ARG;
       goto failure;
     }
-    
+
     newt.sourceBitmaps[i].width    = (int) CGImageGetWidth(newt.sourceImages[i]);
     newt.sourceBitmaps[i].height   = (int) CGImageGetHeight(newt.sourceImages[i]);
     newt.sourceBitmaps[i].format   = pixelfmt;
     newt.sourceBitmaps[i].rowbytes = (int) CGImageGetBytesPerRow(newt.sourceImages[i]);
     newt.sourceBitmaps[i].base     = (void *) CFDataGetBytePtr(newt.sourceData[i]);
   }
-  
+
   *tester = newt;
-  
+
   /* fixup pointers */
-  
+
   for (i = 0; i < nSourceImages; i++)
     tester->sourceBitmapList[i] = &tester->sourceBitmaps[i];
-  
+
   return mmerror_OK;
-  
-  
+
+
 failure:
-  
+
   // FIXME: cleanup 'newt'
-  
+
   fprintf(stderr, "setupMotionMaskPlot: failure: mmerr=%d", mmerr);
-  
+
   return mmerr;
 }
 
 mmerror_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
 {
   static const pixelfmt_rgbx8888_t backgroundColour = 0x00808080;
-  
+
   static int totalframes = 0;
-  
+
   mmerror_t mmerr;
   int       i;
   int       maxframes = motionmaskplayer_get_frames(tester->motionMaskPlayer);
-  
+
   /* clear the screen */
-  
+
   memset_pattern4(tester->screen.base,
                   &backgroundColour,
                   tester->screen.height * tester->screen.rowbytes);
-  
+
   /* plot the motion mask */
-  
+
   {
     static int frame         = 0;
     static int rotateSources = 0;
-    
+
     if (rotateSources)
     {
       const bitmap_t *tmp;
       int             k;
-      
+
       /* rotate the source bitmap list such that the final image shown is used as the next start image */
-      
+
       tmp = tester->sourceBitmapList[0];
-      
+
       /* could memmove instead of loop here */
       for (k = 0; k < nSourceImages - 1; k++)
         tester->sourceBitmapList[k] = tester->sourceBitmapList[k + 1];
-      
+
       tester->sourceBitmapList[k] = tmp;
-      
+
       rotateSources = 0;
     }
-    
+
     for (i = 0; i < 1000; i++) /* loop for benchmarking */
     {
       mmerr = motionmaskplayer_plot(tester->motionMaskPlayer,
@@ -285,19 +285,19 @@ mmerror_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
                                     frame);
       if (mmerr)
         return mmerr;
-      
+
       totalframes++;
     }
-    
+
     if (++frame >= maxframes)
     {
       frame = 0;
       rotateSources = 1;
     }
   }
-  
+
   if ((totalframes % 100) == 0)
     printf("%d frames drawn\n", totalframes);
-  
+
   return mmerror_OK;
 }

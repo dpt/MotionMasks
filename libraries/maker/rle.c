@@ -25,7 +25,7 @@ typedef struct encstate
 {
   mmdata_t *dst;
   mmdata_t *dstend;
-  
+
   struct
   {
     int     hits;
@@ -69,19 +69,19 @@ static mmerror_t emit_copy(encstate_t *state, int n, int source)
              (source << MMCopy_SOURCE_SHIFT) |
              (length & MMCopy_LENGTH_MASK);
       codelength = 1;
-      
+
       state->stats[MMCopy_ID].hits++;
       state->stats[MMCopy_ID].pixels += length;
     }
     else
     {
       /* CopyLong encodes runs 2^6+ pixels long */
-      
+
       code = (MMCopyLong_VAL << 8) |
              (source << MMCopyLong_SOURCE_SHIFT) |
              ((length - MMCopyLong_LENGTH_MIN) & MMCopyLong_LENGTH_MASK);
       codelength = 2;
-      
+
       state->stats[MMCopyLong_ID].hits++;
       state->stats[MMCopyLong_ID].pixels += length;
     }
@@ -112,18 +112,18 @@ static mmerror_t emit_blendconst(encstate_t *state, int n, mmalpha_t alpha)
       code = MMBlendConst_VAL |
              (length & MMBlendConst_LENGTH_MASK);
       codelength = 1;
-      
+
       state->stats[MMBlendConst_ID].hits++;
       state->stats[MMBlendConst_ID].pixels += length;
     }
     else
     {
       /* BlendConstLong encodes runs 2^6+ pixels long */
-      
+
       code = (MMBlendConstLong_VAL << 8) |
              ((length - MMBlendConstLong_LENGTH_MIN) & MMBlendConstLong_LENGTH_MASK);
       codelength = 2;
-      
+
       state->stats[MMBlendConstLong_ID].hits++;
       state->stats[MMBlendConstLong_ID].pixels += length;
     }
@@ -157,18 +157,18 @@ static mmerror_t emit_blendarray(encstate_t      *state,
       code = MMBlendArray_VAL |
              (length & (MMBlendArray_LENGTH_MAX - 1));
       codelength = 1;
-      
+
       state->stats[MMBlendArray_ID].hits++;
       state->stats[MMBlendArray_ID].pixels += length;
     }
     else
     {
       /* BlendArrayLong encodes runs 2^5+ pixels long */
-      
+
       code = (MMBlendArrayLong_VAL << 8) |
              ((length - MMBlendArrayLong_LENGTH_MIN) & MMBlendArray_LENGTH_MASK);
       codelength = 2;
-      
+
       state->stats[MMBlendArrayLong_ID].hits++;
       state->stats[MMBlendArrayLong_ID].pixels += length;
     }
@@ -189,7 +189,7 @@ static mmerror_t emit_blendarray(encstate_t      *state,
 static mmerror_t emit_stop(encstate_t *state)
 {
   state->stats[MMStop_ID].hits++;
-  
+
   return emit(state, MMStop_VAL, 1);
 }
 
@@ -209,7 +209,7 @@ mmerror_t encode_row_y8(const void *vsrc,
 
   state.dst    = dst;
   state.dstend = dst + ndstbytes;
-  
+
   for (i = 0; i < MMID_LIMIT; i++)
   {
     state.stats[i].hits   = 0;

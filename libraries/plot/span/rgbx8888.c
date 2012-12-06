@@ -22,8 +22,8 @@ SPAN_ALL8888_BLEND_ARRAY(span_rgbx8888_blendarray, pixelfmt_rgbx8888_t)
 
 const span_t span_rgbx8888 =
 {
-    pixelfmt_rgbx8888,
-    span_all8888_copy,
-    span_rgbx8888_blendconst,
-    span_rgbx8888_blendarray,
+  pixelfmt_rgbx8888,
+  span_all8888_copy,
+  span_rgbx8888_blendconst,
+  span_rgbx8888_blendarray,
 };

@@ -25,19 +25,19 @@ CGImageRef BitmapTransform_createGreyscaleCopy(CGImageRef sourceImage)
   CGColorSpaceRef  greyColourSpace;
   CGContextRef     context;
   CGImageRef       greyscaleImage;
-  
+
   width         = CGImageGetWidth(sourceImage);
   height        = CGImageGetHeight(sourceImage);
   bpp           = 8;
   bytesPerRow   = ROWBYTES16ALIGNED(width, bpp);
   bytesPerImage = bytesPerRow * height;
-  
+
   pixels = malloc(bytesPerImage);
   if (pixels == NULL)
     return NULL;
-  
+
   greyColourSpace = CGColorSpaceCreateDeviceGray();
-  
+
   context = CGBitmapContextCreate(pixels,
                                   width,
                                   height,
@@ -45,16 +45,16 @@ CGImageRef BitmapTransform_createGreyscaleCopy(CGImageRef sourceImage)
                                   bytesPerRow,
                                   greyColourSpace,
                                   kCGBitmapByteOrderDefault | kCGImageAlphaNone);
-  
+
   CGContextDrawImage(context, CGRectMake(0, 0, width, height), sourceImage);
-  
+
   greyscaleImage = CGBitmapContextCreateImage(context);
-  
+
   CGContextRelease(context);
-  
+
   CGColorSpaceRelease(greyColourSpace);
-  
+
   free(pixels);
-  
+
   return greyscaleImage;
 }

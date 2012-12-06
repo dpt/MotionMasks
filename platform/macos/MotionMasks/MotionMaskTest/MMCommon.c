@@ -20,17 +20,17 @@ static int         refs;
 mmerror_t MMCommon_Player_instance(MMPlayer_t **pplayer)
 {
   mmerror_t err;
-  
+
   if (player == NULL)
   {
     err = MMPlayer_create(&player);
     if (err)
       return err;
   }
-  
+
   *pplayer = player;
   refs++;
-  
+
   return mmerror_OK;
 }
 
@@ -38,10 +38,10 @@ void MMCommon_Player_destroy(void)
 {
   if (refs == 0)
     return;
-  
+
   if (--refs > 0)
     return;
-  
+
   MMPlayer_destroy(player);
   player = NULL;
 }

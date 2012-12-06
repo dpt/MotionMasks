@@ -39,7 +39,7 @@ void setupGradient32bpp(uint32_t startColour, uint32_t endColour)
 {
   uint32_t *p;
   int       i;
-  
+
   p = gradientTable32bpp;
   for (i = 0; i < 256; i++)
     *p++ = startColour + i * (endColour - startColour) / (256 - 1);
@@ -53,11 +53,11 @@ void drawXGradient32bpp(uint32_t *base,
   uint32_t *p;
   int       x;
   int       y;
-  
+
   p = base;
   for (x = 0; x < width; x++)
     *p++ = gradientTable32bpp[x * 255 / (width - 1)];
-  
+
   p = base + (bytesPerRow >> 2);
   for (y = 1; y < height; y++)
   {
@@ -72,7 +72,7 @@ void drawYGradient32bpp(uint32_t *base,
                         int       height)
 {
   int y;
-  
+
   for (y = 0; y < height; y++)
   {
     memset32(base, gradientTable32bpp[y * 256 / height], width);

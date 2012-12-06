@@ -13,10 +13,10 @@
 
 // draw a checkerboard
 void fillWithCheckerboard32bpp(uint8_t *base,
-                          int      width,
-                          size_t   bytesPerRow,
-                          int      height,
-                          uint32_t pixel);
+                               int      width,
+                               size_t   bytesPerRow,
+                               int      height,
+                               uint32_t pixel);
 
 // build temporary structure needed for gradient rendering
 void setupGradient32bpp(uint32_t startColour,
