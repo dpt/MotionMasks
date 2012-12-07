@@ -518,14 +518,12 @@ DECLARE_UNPACKER(vunpack_be, 7, 6, 5, 4, 3, 2, 1, 0)
 
 #define NATIVE_UNPACKER vunpack_le
 
-size_t unpack(const unsigned char *buf, const char *fmt, ...)
+size_t vunpack(const unsigned char *buf, const char *fmt, va_list args)
 {
-  va_list  args;
-  size_t   c;
   size_t (*unpacker)(const unsigned char *, const char *, va_list);
-
+  
   unpacker = NATIVE_UNPACKER;
-
+  
   if (*fmt == '<')
   {
     unpacker = vunpack_le;
@@ -537,12 +535,19 @@ size_t unpack(const unsigned char *buf, const char *fmt, ...)
     fmt++;
   }
 
+  return unpacker(buf, fmt, args);
+}
+
+size_t unpack(const unsigned char *buf, const char *fmt, ...)
+{
+  va_list args;
+  size_t  c;
+
   va_start(args, fmt);
 
-  c = unpacker(buf, fmt, args);
+  c = vunpack(buf, fmt, args);
 
   va_end(args);
 
   return c;
 }
-

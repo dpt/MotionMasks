@@ -117,4 +117,9 @@ size_t pack(unsigned char *outbuf, const char *fmt, ...);
  */
 size_t unpack(const unsigned char *inbuf, const char *fmt, ...);
 
+/**
+ * Variant of unpack() which accepts a va_list.
+ */
+size_t vunpack(const unsigned char *buf, const char *fmt, va_list args);
+
 #endif /* UTILS_PACK_H */

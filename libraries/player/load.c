@@ -1,6 +1,7 @@
 /* load.c */
 
 #include <assert.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,6 +23,25 @@
 #include "mm/codes.h"
 #include "mm/format.h"
 #include "impl.h"
+
+static mmerror_t unpackfromstream(stream_t   *s,
+                                  size_t      size,
+                                  const char *format,
+                                  ...)
+{
+  va_list args;
+  
+  if (stream_remaining_need_and_fill(s, size) < size)
+    return mmerror_PLAYER_TRUNCATED_INPUT;
+
+  va_start(args, format);
+  
+  s->buf += vunpack(s->buf, format, args);
+  
+  va_end(args);
+  
+  return mmerror_OK;
+}
 
 mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
                                 const char         *filename)
@@ -61,23 +81,18 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
   f = NULL; /* 'f' is now owned by the stream code */
 
-
+  
   /* read file header */
-
-  // this code looks like evidence for adding a stream_unpack function
-
-  if (stream_remaining_need_and_fill(s, format_HEADER_SIZE) < format_HEADER_SIZE)
-  {
-    err = mmerror_PLAYER_TRUNCATED_INPUT;
+  
+  err = unpackfromstream(s,
+                         format_HEADER_SIZE,
+                         "<i2hii",
+                         &signature,
+                         &player->width,
+                         &player->height,
+                         &player->nframes);
+  if (err)
     goto failure;
-  }
-
-  s->buf += unpack(s->buf,
-                   "<i2hii",
-                   &signature,
-                   &player->width,
-                   &player->height,
-                   &player->nframes);
 
   if (signature != format_ID)
   {
@@ -109,20 +124,17 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
   {
     frame_t *frame = &frames[i];
 
-    if (stream_remaining_need_and_fill(s, format_FRAME_SIZE) < format_FRAME_SIZE)
-    {
-      err = mmerror_PLAYER_TRUNCATED_INPUT;
+    err = unpackfromstream(s,
+                           format_FRAME_SIZE,
+                           "<4hiSI",
+                           &frame->width,
+                           &frame->height,
+                           &frame->x,
+                           &frame->y,
+                           &frame->source,
+                           &frame->blendstyle);
+    if (err)
       goto failure;
-    }
-
-    s->buf += unpack(s->buf,
-                     "<4hiSI",
-                     &frame->width,
-                     &frame->height,
-                     &frame->x,
-                     &frame->y,
-                     &frame->source,
-                     &frame->blendstyle);
 
     if (frame->width <= 0 || frame->height <= 0)
     {
