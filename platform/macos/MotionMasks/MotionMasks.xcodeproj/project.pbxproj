@@ -266,14 +266,17 @@
 		55513741165456FA007F3565 = {
 			isa = PBXGroup;
 			children = (
-				559183E616627C7B00A08055 /* GLUT.framework */,
 				5551375316545786007F3565 /* include */,
 				5551377216545786007F3565 /* libraries */,
 				5551380F165460EF007F3565 /* MotionMaskTest */,
 				55513808165460EF007F3565 /* Frameworks */,
 				5551374D165456FA007F3565 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 8;
+			usesTabs = 0;
+			wrapsLines = 0;
 		};
 		5551374D165456FA007F3565 /* Products */ = {
 			isa = PBXGroup;
@@ -546,6 +549,7 @@
 			children = (
 				55513809165460EF007F3565 /* Cocoa.framework */,
 				559183DF166160B000A08055 /* OpenGL.framework */,
+				559183E616627C7B00A08055 /* GLUT.framework */,
 				5551380B165460EF007F3565 /* Other Frameworks */,
 			);
 			name = Frameworks;
