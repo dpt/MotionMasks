@@ -8,8 +8,11 @@
 #include "framebuf/bitmap.h"
 #include "framebuf/screen.h"
 
-#define mmerror_PLAYER_TRUNCATED_INPUT (mmerror_BASE_PLAYER + 0)
-#define mmerror_PLAYER_UNRECOGNISED    (mmerror_BASE_PLAYER + 1)
+#define mmerror_PLAYER_TRUNCATED_INPUT    (mmerror_BASE_PLAYER + 0)
+#define mmerror_PLAYER_BAD_SIGNATURE      (mmerror_BASE_PLAYER + 1)
+#define mmerror_PLAYER_INVALID_DIMENSIONS (mmerror_BASE_PLAYER + 2)
+#define mmerror_PLAYER_INVALID_FRAME_DIMENSIONS (mmerror_BASE_PLAYER + 3)
+#define mmerror_PLAYER_BAD_OFFSET         (mmerror_BASE_PLAYER + 4)
 
 typedef struct motionmaskplayer motionmaskplayer_t;
 

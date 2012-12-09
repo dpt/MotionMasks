@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -81,7 +82,6 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
   f = NULL; /* 'f' is now owned by the stream code */
 
-  
   /* read file header */
   
   err = unpackfromstream(s,
@@ -96,21 +96,22 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
   if (signature != format_ID)
   {
-    err = mmerror_PLAYER_UNRECOGNISED;
+    debugf("header has bad signature");
+    err = mmerror_PLAYER_BAD_SIGNATURE;
     goto failure;
   }
 
-  if (player->width <= 0 || player->height <= 0 || player->nframes <= 0)
-  {
-    err = mmerror_BAD_ARG;
-    goto failure;
-  }
-
-  debugf("width x height = %d x %d, nframes = %d\n",
+  debugf("header: width x height = %d x %d, nframes = %d",
          player->width,
          player->height,
          player->nframes);
 
+  if (player->width <= 0 || player->height <= 0 || player->nframes <= 0)
+  {
+    debugf("header has invalid dimensions");
+    err = mmerror_PLAYER_INVALID_DIMENSIONS;
+    goto failure;
+  }
 
   /* read frames */
 
@@ -136,21 +137,23 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
     if (err)
       goto failure;
 
-    if (frame->width <= 0 || frame->height <= 0)
-    {
-      err = mmerror_BAD_ARG;
-      goto failure;
-    }
-
-    frame->start = start;
-
-    debugf("frame %d: width x height = %d x %d, x,y = %d,%d, source = %x\n",
+    debugf("frame %d: width x height = %d x %d, x,y = %d,%d, source = %x",
            i,
            frame->width,
            frame->height,
            frame->x,
            frame->y,
            frame->source);
+
+    if (frame->width <= 0 || frame->height <= 0)
+    {
+      err = mmerror_PLAYER_INVALID_FRAME_DIMENSIONS;
+      goto failure;
+    }
+
+    // FIXME: Expand checks for x,y and source fields.
+
+    frame->start = start;
 
     start += player->height;
   }
@@ -192,7 +195,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
     }
   }
 
-  /* suck in the data chunk directly */
+  /* read data chunk */
 
   data          = NULL;
   dataused      = 0;
@@ -231,25 +234,25 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
                    &dataallocated))
     goto oom;
 
-
   /* fix up offsets table now we know where 'data' lives */
 
   for (i = 0; i < totalheights; i++)
-    offsets[i] = data + (size_t) offsets[i];
-
-
-  /* verify the offsets (as a truncated data chunk cannot be detected earlier
-   * on) */
-
-  for (i = 0; i < totalheights; i++)
   {
-    if (offsets[i] < data || offsets[i] > data + dataused)
+    mmoffset_t o;
+
+    o = offsets[i];
+    
+    /* verify the offsets (as a truncated data chunk cannot be detected earlier
+     * on) */
+    if (o >= (mmoffset_t) dataused)
     {
       debugf("offset %d out of range\n", i);
-      break;
+      err = mmerror_PLAYER_BAD_OFFSET;
+      goto failure;
     }
+    
+    offsets[i] = data + (ptrdiff_t) o;
   }
-
 
   stream_destroy(s);
 
