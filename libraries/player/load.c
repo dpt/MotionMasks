@@ -182,27 +182,18 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
         goto failure;
       }
 
-      /* read up to the limit of the data we're expecting */
+      /* read up to the limit of the size of data we're anticipating */
       n = MIN(totalheights - i, remaining / 2);
-
       if (n < 1)
       {
         err = mmerror_PLAYER_TRUNCATED_INPUT;
         goto failure;
       }
 
-#if 1
-      // s->buf += unpack(s->buf, "<*hI", n, offsets + i); // 32-bit pointers
-      s->buf += unpack(s->buf, "<*hQ", n, offsets + i); // 64-bit pointers
-#else
-      for (j = i; j < i + n; j++)
-      {
-        uint16_t o;
-
-        s->buf += unpack(s->buf, "<S", &o);
-        offsets[j] = (offset_t) o;
-      }
-#endif
+      // FIXME: Need an unpack() type to unpack into a pointer (i.e. 'I' or 'Q'
+      // dependent on platform bit size).
+      // s->buf += unpack(s->buf, "<*hI", n, offsets + i); // for 32-bit pointers
+      s->buf += unpack(s->buf, "<*hQ", n, offsets + i); // for 64-bit pointers
     }
   }
 
