@@ -156,11 +156,6 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
   }
 
   totalheights = start;
-  if (totalheights < player->nframes)
-  {
-    err = mmerror_PLAYER_TRUNCATED_INPUT; // not accurate
-    goto failure;
-  }
 
   /* unpack offsets. we'll need to work over them again later. */
 
