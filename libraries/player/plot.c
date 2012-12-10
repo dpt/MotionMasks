@@ -410,6 +410,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   box_t          screenbox;
   box_t          areabox;
   unsigned char *surfaces[MAXSURFACES]; // can do [nsources] in C99
+  int            fsource;
   int            i;
   int            row;
   int            rowend;
@@ -534,7 +535,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   state.nsources = nsources;
 
   /* populate source index */
-  int fsource = frame->source;
+  fsource = frame->source;
   setsource((fsource >> 0) & 0xF, (fsource >> 4) & 0xF, &state, 1 /* force */);
 
   // setsource only sets (current surface pointers) state.surfaces, so copy
