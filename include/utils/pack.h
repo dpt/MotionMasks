@@ -16,6 +16,9 @@
 #ifndef UTILS_PACK_H
 #define UTILS_PACK_H
 
+#include <stdarg.h>
+#include <stddef.h>
+
 /**
  * Structure packing.
  *
