@@ -1,6 +1,7 @@
 # Object files
 *.o
 *.odbg
+*.obj
 
 # Libraries
 *.lib
@@ -34,6 +35,13 @@
 *.xcuserstate
 project.xcworkspace/
 xcuserdata/
+
+# Visual Studio
+*.idb
+*.pdb
+*.vcproj
+*.vcproj.*.user
+BuildLog.htm
 
 # Backup files
 *~.nib
