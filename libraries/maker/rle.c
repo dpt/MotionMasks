@@ -31,7 +31,7 @@ typedef struct encstate
     int     hits;
     int     pixels;
   }
-  stats[9];
+  stats[MMID_LIMIT];
 }
 encstate_t;
 
