@@ -187,7 +187,7 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
 
     a = &info[indices[ia]];
 
-    assert(a->prime == -1); /* we ought to never hit a prime here */
+    assert(a->prime == -1); /* we ought to never hit a dupe here */
 
     ndupes = 1;
 
