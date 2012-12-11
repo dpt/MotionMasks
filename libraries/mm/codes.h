@@ -17,10 +17,9 @@
 #define MMCopyLong_ID                     3
 #define MMBlendConstLong_ID               4
 #define MMBlendArrayLong_ID               5
-#define MMUndefined_ID                    6 /* not yet used */
-#define MMSetSource_ID                    7
-#define MMStop_ID                         8
-#define MMID_LIMIT                        9
+#define MMSetSource_ID                    6
+#define MMStop_ID                         7
+#define MMID_LIMIT                        8
 
 /* copy (short) */
 #define MMCopy_ID_BITS                    (MMCopy_ID + 1)
