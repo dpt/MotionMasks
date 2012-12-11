@@ -21,6 +21,19 @@
 #define MMStop_ID                         7
 #define MMID_LIMIT                        8
 
+// FIXME: This should go in a .c file.
+static const char *MMCodeNames[MMID_LIMIT] =
+{
+  "MMCopy",
+  "MMBlendConst",
+  "MMBlendArray",
+  "MMCopyLong",
+  "MMBlendConstLong",
+  "MMBlendArrayLong",
+  "MMSetSource",
+  "MMStop",
+};
+
 /* copy (short) */
 #define MMCopy_ID_BITS                    (MMCopy_ID + 1)
 #define MMCopy_VAL                        VAL(MMCopy_ID)

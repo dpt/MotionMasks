@@ -6,6 +6,7 @@
 #include "base/types.h"
 
 #include "mm/types.h"
+#include "mm/codes.h"
 
 struct motionmaskmaker
 {
@@ -21,10 +22,33 @@ struct motionmaskmaker
   int32_t           ndata;
 };
 
-mmerror_t encode_row_y8(const void *vsrc,
+/* ----------------------------------------------------------------------- */
+
+typedef struct encstate
+{
+  mmdata_t *dst;
+  mmdata_t *dstend;
+  
+  struct
+  {
+    int     hits;
+    int     pixels;
+  }
+  stats[MMID_LIMIT];
+}
+encstate_t;
+
+/* ----------------------------------------------------------------------- */
+
+void encode_start(encstate_t *state);
+
+mmerror_t encode_row_y8(encstate_t *state,
+                        const void *vsrc,
                         int         nsrcpix,
                         uint8_t    *dst,
                         size_t      ndstbytes,
                         size_t     *dstused);
+
+void encode_stop(encstate_t *state);
 
 #endif /* MAKER_IMPL_H */

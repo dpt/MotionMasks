@@ -21,22 +21,6 @@
 
 /* ----------------------------------------------------------------------- */
 
-typedef struct encstate
-{
-  mmdata_t *dst;
-  mmdata_t *dstend;
-
-  struct
-  {
-    int     hits;
-    int     pixels;
-  }
-  stats[MMID_LIMIT];
-}
-encstate_t;
-
-/* ----------------------------------------------------------------------- */
-
 static mmerror_t emit(encstate_t *state, uint32_t code, int codelength)
 {
   if (state->dst == state->dstend)
@@ -195,26 +179,30 @@ static mmerror_t emit_stop(encstate_t *state)
 
 /* ----------------------------------------------------------------------- */
 
-mmerror_t encode_row_y8(const void *vsrc,
+void encode_start(encstate_t *state)
+{
+  int i;
+  
+  for (i = 0; i < MMID_LIMIT; i++)
+  {
+    state->stats[i].hits   = 0;
+    state->stats[i].pixels = 0;
+  }
+}
+
+mmerror_t encode_row_y8(encstate_t *state,
+                        const void *vsrc,
                         int         nsrcpix,
                         uint8_t    *dst,
                         size_t      ndstbytes,
                         size_t     *dstused)
 {
   mmerror_t      err;
-  encstate_t     state;
-  int            i;
   const uint8_t *src = vsrc;
   const uint8_t *end = src + nsrcpix;
 
-  state.dst    = dst;
-  state.dstend = dst + ndstbytes;
-
-  for (i = 0; i < MMID_LIMIT; i++)
-  {
-    state.stats[i].hits   = 0;
-    state.stats[i].pixels = 0;
-  }
+  state->dst    = dst;
+  state->dstend = dst + ndstbytes;
 
   do
   {
@@ -249,7 +237,7 @@ mmerror_t encode_row_y8(const void *vsrc,
       if (first == 0x00 || first == 0xFF)
       {
         /* constant opacity: copy */
-        err = emit_copy(&state,
+        err = emit_copy(state,
                         (int) (repeats_end - repeats_start),
                         first == 0xFF);
         if (err)
@@ -258,7 +246,7 @@ mmerror_t encode_row_y8(const void *vsrc,
       else
       {
         /* constant transparency: blend const */
-        err = emit_blendconst(&state,
+        err = emit_blendconst(state,
                               (int) (repeats_end - repeats_start),
                               (mmalpha_t) first);
         if (err)
@@ -269,7 +257,7 @@ mmerror_t encode_row_y8(const void *vsrc,
     if (literals_start != literals_end)
     {
       /* variable transparency: blend array */
-      err = emit_blendarray(&state,
+      err = emit_blendarray(state,
                             (int) (literals_end - literals_start),
                             literals_start);
       if (err)
@@ -278,12 +266,29 @@ mmerror_t encode_row_y8(const void *vsrc,
   }
   while (src < end);
 
-  emit_stop(&state);
+  emit_stop(state);
 
   if (dstused)
-    *dstused = state.dst - dst;
+    *dstused = state->dst - dst;
 
   return mmerror_OK;
+}
+
+void encode_stop(encstate_t *state)
+{
+#ifndef NDEBUG
+  int i;
+  
+  for (i = 0; i < MMID_LIMIT; i++)
+  {
+    debugf("encode_stop: code %d (%s): used %d times, totalling %d pixels, average %.2f pixels/run",
+           i,
+           MMCodeNames[i],
+           state->stats[i].hits,
+           state->stats[i].pixels,
+           (double) state->stats[i].pixels / state->stats[i].hits);
+  }
+#endif
 }
 
 /*

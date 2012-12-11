@@ -120,6 +120,8 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
   int              *indices = NULL;
   int               i;
   int               ndupes;
+  
+  encstate_t        encstate;
 
   if (bitmaps->width  == 0 ||
       bitmaps->height == 0 ||
@@ -248,6 +250,8 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
     goto oom;
 
   datap = data;
+  
+  encode_start(&encstate);
 
   for (bm = 0; bm < bitmaps->nbases; bm++)
   {
@@ -272,7 +276,8 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
       {
         size_t used;
 
-        err = encode_row_y8(base,
+        err = encode_row_y8(&encstate,
+                            base,
                             bitmaps->width,
                             datap,
                             dataallocated - dataused,
@@ -299,6 +304,8 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
       base += bitmaps->rowbytes;
     }
   }
+  
+  encode_stop(&encstate);
 
   free(info);
   info = NULL;
