@@ -15,6 +15,7 @@
 #include "maker/make.h"
 
 #include "mm/types.h"
+#include "mm/codes.h"
 
 #include "impl.h"
 
@@ -284,7 +285,7 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
         if (err)
           goto failure;
 
-        assert(datap[used - 1] == 0x00);
+        assert(datap[used - 1] == MMStop_VAL);
 
         sli->encoded  = datap;
         sli->nencoded = used;
