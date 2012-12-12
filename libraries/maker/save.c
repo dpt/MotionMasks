@@ -39,11 +39,10 @@ mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
   {
     uint8_t frame[format_FRAME_SIZE];
 
-    length += pack(frame, "5si",
+    length += pack(frame, "5s",
                    maker->width, maker->height,
                    0, 0,
-                   0x10, /* sources (A = 0, B = 1) */
-                   0xdeadbeef /* was blend styles (NYI) */);
+                   0x10 /* sources (A = 0, B = 1) */);
 
     fwrite(frame, 1, format_FRAME_SIZE, f);
   }

@@ -127,13 +127,12 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
     err = unpackfromstream(s,
                            format_FRAME_SIZE,
-                           "<4hiSI",
+                           "<4hiS",
                            &frame->width,
                            &frame->height,
                            &frame->x,
                            &frame->y,
-                           &frame->source,
-                           &frame->blendstyle);
+                           &frame->source);
     if (err)
       goto failure;
 

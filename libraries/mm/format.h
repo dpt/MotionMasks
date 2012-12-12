@@ -7,6 +7,6 @@
 #define format_ID               0x316B4D4D /* "MMk1" */
 
 #define format_HEADER_SIZE      12
-#define format_FRAME_SIZE       14
+#define format_FRAME_SIZE       10
 
 #endif /* MM_FORMAT_H */
