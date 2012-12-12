@@ -11,7 +11,7 @@ typedef int mmerror_t;
 
 #define mmerror_OK                0
 #define mmerror_OOM               1 /* out of memory */
-#define mmerror_FNF               2 /* file not found */
+#define mmerror_FILE_NOT_FOUND    2
 #define mmerror_BAD_ARG           3
 #define mmerror_BUFFER_OVERFLOW   4
 

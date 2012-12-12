@@ -72,7 +72,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
   f = fopen(filename, "rb");
   if (f == NULL)
   {
-    err = mmerror_FNF;
+    err = mmerror_FILE_NOT_FOUND;
     goto failure;
   }
 
