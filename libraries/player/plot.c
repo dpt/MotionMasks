@@ -410,7 +410,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   box_t          screenbox;
   box_t          areabox;
   unsigned char *surfaces[MAXSURFACES]; // can do [nsources] in C99
-  int            fsource;
+  uint8_t        fsource;
   int            i;
   int            row;
   int            rowend;

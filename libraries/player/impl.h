@@ -13,7 +13,7 @@ typedef struct frame
 {
   int32_t           width, height;
   int32_t           x, y;
-  uint16_t          source;     /* 0xSS - two 4-bit sources */
+  uint8_t           source;     /* 0xSS - two 4-bit sources */
   int32_t           start;      /* index of start entry in 'offsets' */
 }
 frame_t;

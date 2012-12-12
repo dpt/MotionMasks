@@ -127,7 +127,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
     err = unpackfromstream(s,
                            format_FRAME_SIZE,
-                           "<4hiS",
+                           "<4hiC",
                            &frame->width,
                            &frame->height,
                            &frame->x,

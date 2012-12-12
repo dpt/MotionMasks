@@ -39,7 +39,7 @@ mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
   {
     uint8_t frame[format_FRAME_SIZE];
 
-    length += pack(frame, "5s",
+    length += pack(frame, "4sc",
                    maker->width, maker->height,
                    0, 0,
                    0x10 /* sources (A = 0, B = 1) */);
