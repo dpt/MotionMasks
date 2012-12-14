@@ -8,13 +8,15 @@ Keywords: RLE alpha animation bitmap blend buffer clip clipping compact composit
 The Idea
 --------
 
-This is a system for compositing images by means of compressed alpha masks. The compression is lightweight enough to enhance memory bandwidth.
+Let's say you have two static images and you want to create an animated transition between them. For example, a fade or a wipe. To describe each frame of the animation you could use a third image to specify at every pixel which source image to use. The "lowest" pixel value would mean the first image, the "highest" pixel value the second. Other pixel values would output a blend of the two respective input pixels.
 
-Source images, typically 8bpp greyscale, are read in and compressed into an efficient format which specifies whether to copy or blend the respective source images.
+Of course, this is will be wasteful: the animation's frames are likely to be 'sparse', containing long runs of identical intensity but few 'edge' pixels. 
 
-This improves matters because alpha masks are typically sparse in nature, with long runs of identical pixels.
+The sparseness of individual scanlines means that they are ideal for adaptive RLE compression. This saves space and when rendering would save waiting over and over for RAM fetches. The compression, in effect, makes use of wasted CPU cycles to provide faster RAM access.
 
-Multiple masks can be packed together providing for animated transitions and removing redundancy.
+Additionally, many entire scanlines will be identical, especially when considering all frames in the animation. We can therefore factor out identical scanlines by considering a frame to be compressed scanlines indirected through a table of offsets.
+
+Now with our offsets and compressed scanlines we can render the animation by stepping through the offsets and plotting pixels as directed by the compressed scanline data.
 
 Source Code Organisation
 ------------------------
