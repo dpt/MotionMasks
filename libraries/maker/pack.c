@@ -123,9 +123,9 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
   
   encstate_t        encstate;
 
-  if (bitmaps->width  == 0 ||
-      bitmaps->height == 0 ||
-      bitmaps->nbases == 0)
+  if (bitmaps->width  <= 0 ||
+      bitmaps->height <= 0 ||
+      bitmaps->nbases <= 0)
     return mmerror_BAD_ARG; /* no input bitmaps specified */
 
   /* populate 'info' table with scanline info for all scanlines */

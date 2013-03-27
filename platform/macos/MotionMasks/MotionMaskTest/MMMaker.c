@@ -69,13 +69,16 @@ mmerror_t MMMaker_make(const char *filename)
   void              *makerBitmapBases[nMakerSourceImageFilenames];
   motionmaskmaker_t *maker;
 
-  if (nMakerSourceImageFilenames == 0)
+  if (nMakerSourceImageFilenames <= 0)
     return mmerror_BAD_ARG;
+  
+  for (i = 0; i < nMakerSourceImageFilenames; i++)
+    pixels[i] = NULL;
 
   mmerr = motionmaskmaker_create(&maker);
   if (mmerr)
     goto failure;
-
+  
   for (i = 0; i < nMakerSourceImageFilenames; i++)
   {
     printf("loading %s", makerSourceImageFilenames[i]);
