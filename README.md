@@ -8,32 +8,35 @@ Keywords: RLE alpha animation bitmap blend buffer clip clipping compact composit
 The Idea
 --------
 
-Let's say you have two static images and you want to create an animated transition between them. For example, a fade or a wipe. To describe each frame of the animation you could use a third image to specify at every pixel which source image to use. The "lowest" pixel value would mean the first image, the "highest" pixel value the second. Other pixel values would output a blend of the two respective input pixels.
+Let's say you have two static images:
 
-Of course, this is will be wasteful: the animation's frames are likely to be 'sparse', containing long runs of identical intensity but few 'edge' pixels. 
+![Two static images.](docs/inputs.png)
+
+and you want to create an animated transition between them. For example, a fade:
+
+![Fade.](docs/fade.png)
+
+or a wipe:
+
+![Wipe.](docs/wipe.png)
+
+To describe each frame of the animation you could use a third image to specify at every pixel which source image to use. The "lowest" pixel value would mean select the corresponding pixel from the first image, the "highest" pixel value would mean select from the second image. Other pixel values would output a blend of the two respective input pixels.
+
+Using green to represent "high" and black for "low", the masks for our fade example would be:
+
+![Fade mask.](docs/fademask.png)
+
+and our wipe:
+
+![Wipe mask.](docs/wipemask.png)
+
+Of course, this is will be wasteful: the animation's frames are likely to be 'sparse', containing long runs of identical intensity but few 'edge' pixels.
 
 The sparseness of individual scanlines means that they are ideal for adaptive RLE compression. This saves space and when rendering would save waiting over and over for RAM fetches. The compression, in effect, makes use of wasted CPU cycles to provide faster RAM access.
 
 Additionally, many entire scanlines will be identical, especially when considering all frames in the animation. We can therefore factor out identical scanlines by considering a frame to be compressed scanlines indirected through a table of offsets.
 
 Now with our offsets and compressed scanlines we can render the animation by stepping through the offsets and plotting pixels as directed by the compressed scanline data.
-
-Source Code Organisation
-------------------------
-
-* Platform independent code lives in `include` and `libraries`.
-* `include` contains only public headers.
-* `libraries` contains private headers and source code.
-* Platform-specific code lives in `platform`.
-
-Building the Test App
----------------------
-
-The core is generic, but the test app only exists for OS X presently.
-
-* Open `platform/macos/MotionMasks/MotionMasks.xcodeproj`.  
-* You'll need to adjust the file paths at the top of `MMCommon.h` to point to some 320x480 images. It's hardcoded at the moment. Sorry about that. It's early days. It'll get fixed. Maybe.
-* Run that. It'll open up a window which composites as you move the mouse around.
 
 Compression
 -----------
@@ -76,6 +79,23 @@ Pixel Handlers
 --------------
 
 The copying and blending of specific pixel formats are coded in a `span_t`.
+
+Source Code Organisation
+------------------------
+
+* Platform independent code lives in `include` and `libraries`.
+* `include` contains only public headers.
+* `libraries` contains private headers and source code.
+* Platform-specific code lives in `platform`.
+
+Building the Test App
+---------------------
+
+The core is generic, but the test app only exists for OS X presently.
+
+* Open `platform/macos/MotionMasks/MotionMasks.xcodeproj`.  
+* You'll need to adjust the file paths at the top of `MMCommon.h` to point to some 320x480 images. It's hardcoded at the moment. Sorry about that. It's early days. It'll get fixed. Maybe.
+* Run that. It'll open up a window which composites as you move the mouse around.
 
 Notes
 -----
@@ -164,4 +184,6 @@ David Thomas <dave@davespace.co.uk>
 Copyright
 ---------
 
-Copyright © David Thomas, 2012. All Rights Reserved. [Licensing will be sorted out once the damn thing works].
+Copyright © David Thomas, 2012. All Rights Reserved.
+
+[Licensing will be sorted out once the damn thing works].
