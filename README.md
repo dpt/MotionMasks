@@ -140,15 +140,22 @@ Binary Encoding
 
 The count of leading zeros of the initial byte is the unique identifier of the operation.
 
+Syntax:
+
+* `L` is a length bit,
+* `A` is an alpha bit,
+* `T` and `S` are source index bits,
+* `x` is undefined.
+
 Command          | Binary format                     | Description
 ---------------- | --------------------------------- | -----------------------------------------
-Copy             | `1sllllll`                        | Copy from source `s` 1..64 pixels.
-Blend const      | `01llllll aaaaaaaa`               | Alpha blend 1..64 pixels, constant alpha.
-Blend array      | `001lllll aaaaaaaa[len]`          | Alpha blend 1..32 pixels, variable alpha.
-Long copy        | `0001slll llllllll`               | Copy from source `s` 65..2112 pixels.
-Long blend const | `00001lll llllllll aaaaaaaa`      | Alpha blend 65..2112 pixels, constant alpha.
-Long blend array | `000001ll llllllll aaaaaaaa[len]` | Alpha blend 33..1056 pixels, variable alpha.
-Set source       | `0000001u ttttssss`               | Set source images 0 and 1 to `s` and `t`. (Source zero is the screen, source N is input image N-1). `u` bit is undefined.
+Copy             | `1SLLLLLL`                        | Copy from source `S` 1..64 pixels.
+Blend const      | `01LLLLLL AAAAAAAA`               | Alpha blend 1..64 pixels with constant alpha.
+Blend array      | `001LLLLL AAAAAAAA[len]`          | Alpha blend 1..32 pixels with variable alpha.
+Long copy        | `0001SLLL LLLLLLLL`               | Copy from source `S` 65..2112 pixels.
+Long blend const | `00001LLL LLLLLLLL AAAAAAAA`      | Alpha blend 65..2112 pixels with constant alpha.
+Long blend array | `000001LL LLLLLLLL AAAAAAAA[len]` | Alpha blend 33..1056 pixels with variable alpha.
+Set source       | `0000001x TTTTSSSS`               | Set source images 0 and 1 to `S` and `T`. (Source zero is the screen, source N is input image N-1).
 EOL              | `00000001`                        | End of line.
 
 To Do
