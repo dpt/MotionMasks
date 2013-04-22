@@ -187,10 +187,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
         goto failure;
       }
 
-      // FIXME: Need an unpack() type to unpack into a pointer (i.e. 'I' or 'Q'
-      // dependent on platform bit size).
-      // s->buf += unpack(s->buf, "<*hI", n, offsets + i); // for 32-bit pointers
-      s->buf += unpack(s->buf, "<*hQ", n, offsets + i); // for 64-bit pointers
+      s->buf += unpack(s->buf, "<*hP", n, offsets + i);
     }
   }
 

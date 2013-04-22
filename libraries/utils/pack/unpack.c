@@ -29,6 +29,14 @@
 #define DST_q 7
 #define NDST  8
 
+#if defined(__LP64__) || defined(_WIN64)
+#define PTRCHR_32
+#define PTRCHR_64 case 'P':
+#else
+#define PTRCHR_32 case 'P':
+#define PTRCHR_64
+#endif
+
 #define MERGE(dst, src) (((dst) << 2) + (src))
 
 /* Declare a function which unpacks. */
@@ -74,8 +82,8 @@ static size_t name(const unsigned char *buf, const char *fmt, va_list args) \
       {                                                                  \
       case 'C': dst = DST_C; break;                                      \
       case 'S': dst = DST_S; break;                                      \
-      case 'I': dst = DST_I; break;                                      \
-      case 'Q': dst = DST_Q; break;                                      \
+      case 'I': PTRCHR_32 dst = DST_I; break;                            \
+      case 'Q': PTRCHR_64 dst = DST_Q; break;                            \
       case 'c': dst = DST_c; break;                                      \
       case 's': dst = DST_s; break;                                      \
       case 'i': dst = DST_i; break;                                      \
@@ -331,8 +339,8 @@ static size_t name(const unsigned char *buf, const char *fmt, va_list args) \
       {                                                                  \
       case 'C': dst = DST_C; break;                                      \
       case 'S': dst = DST_S; break;                                      \
-      case 'I': dst = DST_I; break;                                      \
-      case 'Q': dst = DST_Q; break;                                      \
+      case 'I': PTRCHR_32 dst = DST_I; break;                            \
+      case 'Q': PTRCHR_64 dst = DST_Q; break;                            \
       case 'c': dst = DST_c; break;                                      \
       case 's': dst = DST_s; break;                                      \
       case 'i': dst = DST_i; break;                                      \
