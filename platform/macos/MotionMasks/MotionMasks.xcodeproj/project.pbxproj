@@ -13,6 +13,7 @@
 		5535B0C5166CD9C60013C297 /* span-bgrx8888.h in Headers */ = {isa = PBXBuildFile; fileRef = 5535B0C4166CD9C60013C297 /* span-bgrx8888.h */; };
 		55460F15166020FD000D8974 /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55460F14166020FC000D8974 /* GLView.m */; };
 		55460F20166048DC000D8974 /* MyOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55460F1F166048DC000D8974 /* MyOpenGLView.m */; };
+		554A2A7017672DCC0081B625 /* codes.c in Sources */ = {isa = PBXBuildFile; fileRef = 554A2A6F17672DCC0081B625 /* codes.c */; };
 		5551379D16545786007F3565 /* debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551375516545786007F3565 /* debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5551379E16545786007F3565 /* mmerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551375616545786007F3565 /* mmerror.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5551379F16545786007F3565 /* suppress.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551375716545786007F3565 /* suppress.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -107,6 +108,7 @@
 		55460F14166020FC000D8974 /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
 		55460F1E166048DC000D8974 /* MyOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOpenGLView.h; sourceTree = "<group>"; };
 		55460F1F166048DC000D8974 /* MyOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenGLView.m; sourceTree = "<group>"; };
+		554A2A6F17672DCC0081B625 /* codes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = codes.c; sourceTree = "<group>"; };
 		5551374C165456FA007F3565 /* libMotionMasks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMotionMasks.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5551375516545786007F3565 /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
 		5551375616545786007F3565 /* mmerror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmerror.h; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 				5551377F16545786007F3565 /* codes.h */,
 				5551378016545786007F3565 /* format.h */,
 				5551378116545786007F3565 /* types.h */,
+				554A2A6F17672DCC0081B625 /* codes.c */,
 			);
 			path = mm;
 			sourceTree = "<group>";
@@ -736,6 +739,7 @@
 				55513865165463EB007F3565 /* pack.c in Sources */,
 				55513866165463EB007F3565 /* unpack.c in Sources */,
 				5535B0C2166CD9BC0013C297 /* bgrx8888.c in Sources */,
+				554A2A7017672DCC0081B625 /* codes.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

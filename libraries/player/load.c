@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdarg.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -166,28 +167,35 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
     goto oom;
 
   {
-    int n;
+    int consumedoffsets;
 
-    for (i = 0; i < totalheights; i += n)
+    for (i = 0; i < totalheights; i += consumedoffsets)
     {
-      stream_size_t remaining;
+      stream_size_t availablebytes;
+      stream_size_t availableoffsets;
+      int32_t       maxavailableoffsets;
 
-      remaining = stream_remaining_need_and_fill(s, 2);
-      if (remaining == stream_EOF || remaining < 2)
+      availablebytes = stream_remaining_need_and_fill(s, 2);
+      if (availablebytes == stream_EOF || availablebytes < 2)
       {
         err = mmerror_PLAYER_TRUNCATED_INPUT;
         goto failure;
       }
+
+      availableoffsets = availablebytes / 2;
 
       /* read up to the limit of the size of data we're anticipating */
-      n = MIN(totalheights - i, remaining / 2);
-      if (n < 1)
+      maxavailableoffsets = availableoffsets > INT32_MAX ?
+                            INT32_MAX : (int32_t) availablebytes;
+
+      consumedoffsets = MIN(totalheights - i, maxavailableoffsets);
+      if (consumedoffsets < 1)
       {
         err = mmerror_PLAYER_TRUNCATED_INPUT;
         goto failure;
       }
 
-      s->buf += unpack(s->buf, "<*hP", n, offsets + i);
+      s->buf += unpack(s->buf, "<*hP", consumedoffsets, offsets + i);
     }
   }
 

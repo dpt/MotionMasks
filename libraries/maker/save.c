@@ -1,5 +1,7 @@
 /* save.c */
 
+#include <assert.h>
+#include <stdint.h>
 #include <stdio.h>
 
 #include "base/mmerror.h"
@@ -51,9 +53,13 @@ mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
 
   for (i = 0; i < maker->noffsets; i++)
   {
-    uint16_t o;
+    ptrdiff_t diff;
+    uint16_t  o;
 
-    o = maker->offsets[i] - maker->data; // ptrdiff_t
+    diff = maker->offsets[i] - maker->data;
+    assert(diff <= UINT16_MAX);
+
+    o = (uint16_t) diff; // ptrdiff_t
     length += 2;
     fwrite(&o, 1, 2, f);
   }
