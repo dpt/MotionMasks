@@ -186,7 +186,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
       /* read up to the limit of the size of data we're anticipating */
       maxavailableoffsets = availableoffsets > INT32_MAX ?
-                            INT32_MAX : (int32_t) availablebytes;
+                            INT32_MAX : (int32_t) availableoffsets;
 
       consumedoffsets = MIN(totalheights - i, maxavailableoffsets);
       if (consumedoffsets < 1)
