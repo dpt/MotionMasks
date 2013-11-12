@@ -42,7 +42,7 @@ int array_grow(void   **block,
                int      minimum);
 
 /**
- * Resize dynamically allocated array to hold exactly the elements it uses.
+ * Shrink a dynamically allocated array to have no free entries.
  *
  * \param block     Pointer to pointer to block. Updated on exit.
  * \param elemsize  Element size.
