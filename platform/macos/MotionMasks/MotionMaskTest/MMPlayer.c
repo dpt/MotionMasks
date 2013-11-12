@@ -133,7 +133,7 @@ mmerror_t MMPlayer_setup(MMPlayer_t *tester,
 
   mmerror_t     mmerr;
   MMPlayer_t    newt;
-  uint8_t      *rawScreen;
+  uint8_t      *rawScreen = NULL;
   int           i;
   CGBitmapInfo  bitmapInfo;
   pixelfmt_t    pixelfmt;
@@ -227,9 +227,12 @@ mmerror_t MMPlayer_setup(MMPlayer_t *tester,
 
 failure:
 
-  // FIXME: cleanup 'newt'
-
   fprintf(stderr, "setupMotionMaskPlot: failure: mmerr=%d", mmerr);
+
+  if (rawScreen) /* if we got as far as setting up 'newt' ... */
+  {
+    free(newt.screen.base);
+  }
 
   return mmerr;
 }
