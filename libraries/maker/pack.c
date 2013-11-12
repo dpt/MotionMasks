@@ -212,7 +212,7 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
 
       if (memcmp(baseA, baseB, bitmaps->rowbytes) != 0)
       {
-        debugf("memcmp didn't agree with hash");
+        logf_error("memcmp didn't agree with hash");
         break;
       }
 
@@ -224,7 +224,7 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
     }
 
     if (ndupes > 1)
-      debugf("%d: %d duplicate scanlines", i, ndupes);
+      logf_info("%d: %d duplicate scanlines", i, ndupes);
 
     i = ib;
   }

@@ -305,7 +305,7 @@ static void setsource(source_t source1, source_t source2, state_t *state, int fo
                  state->sourceindexes[1] == source2))
   {
     if (MMDEBUG)
-      debugf("setsource: sources remain unchanged");
+      logf_warning("setsource: sources remain unchanged");
     return; /* no change */
   }
 
@@ -426,13 +426,13 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
 
   if (unlikely(nsources < 0 || nsources > motionmaskplayer_MAXSOURCES))
   {
-    logf_error("Invalid number of source bitmaps (%d)\n", nsources);
+    logf_fatal("Invalid number of source bitmaps (%d)\n", nsources);
     return mmerror_BAD_ARG;
   }
 
   if (unlikely(frameidx < 0 || frameidx >= player->nframes))
   {
-    logf_error("Invalid frame index (%d)\n", frameidx);
+    logf_fatal("Invalid frame index (%d)\n", frameidx);
     return mmerror_BAD_ARG;
   }
 
@@ -443,7 +443,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   state.span = spanregistry_get(screen->format);
   if (unlikely(state.span == NULL))
   {
-    logf_error("Unavailable pixel format (%d).", screen->format);
+    logf_fatal("Unavailable pixel format (%d).", screen->format);
     return mmerror_BAD_ARG;
   }
 
@@ -453,7 +453,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   {
     if (unlikely(sources[i]->format != screen->format))
     {
-      logf_error("Source pixel format doesn't match screen (source %d, %d != %d).", i, sources[i]->format, screen->format);
+      logf_fatal("Source pixel format doesn't match screen (source %d, %d != %d).", i, sources[i]->format, screen->format);
       return mmerror_BAD_ARG;
     }
   }

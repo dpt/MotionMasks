@@ -97,19 +97,19 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
   if (signature != format_ID)
   {
-    debugf("header has bad signature");
+    logf_fatal("header has bad signature");
     err = mmerror_PLAYER_BAD_SIGNATURE;
     goto failure;
   }
 
-  debugf("header: width x height = %d x %d, nframes = %d",
-         player->width,
-         player->height,
-         player->nframes);
+  logf_info("header: width x height = %d x %d, nframes = %d",
+            player->width,
+            player->height,
+            player->nframes);
 
   if (player->width <= 0 || player->height <= 0 || player->nframes <= 0)
   {
-    debugf("header has invalid dimensions");
+    logf_fatal("header has invalid dimensions");
     err = mmerror_PLAYER_INVALID_DIMENSIONS;
     goto failure;
   }
@@ -137,13 +137,13 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
     if (err)
       goto failure;
 
-    debugf("frame %d: width x height = %d x %d, x,y = %d,%d, source = %x",
-           i,
-           frame->width,
-           frame->height,
-           frame->x,
-           frame->y,
-           frame->source);
+    logf_info("frame %d: width x height = %d x %d, x,y = %d,%d, source = %x",
+              i,
+              frame->width,
+              frame->height,
+              frame->x,
+              frame->y,
+              frame->source);
 
     if (frame->width <= 0 || frame->height <= 0)
     {
@@ -250,7 +250,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
      * on) */
     if (o >= (mmoffset_t) dataused)
     {
-      debugf("offset %d out of range\n", i);
+      logf_fatal("offset %d out of range\n", i);
       err = mmerror_PLAYER_BAD_OFFSET;
       goto failure;
     }
