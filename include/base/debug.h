@@ -14,7 +14,7 @@
 /* Log a debug message - available only in debug builds. */
 #ifndef NDEBUG
 #  define debugf(fmt, ...)     fprintf(stderr, "(debug) %s:%d " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__)
-#  define check(err)           do { if (err) { logf_error("%x", err); goto failure; } while (0)
+#  define check(err)           do { if (err) { logf_error("%x", err); goto failure; } } while (0)
 #  define sentinel             do { logf_error("sentinel"); goto failure; } while (0)
 #else
 #  define debugf(fmt, ...)
