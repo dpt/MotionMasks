@@ -32,6 +32,8 @@ typedef size_t stream_size_t; // ideally make this 64-bit where supported
 
 typedef struct stream stream_t;
 
+/* Interfaces */
+
 typedef mmerror_t stream_op_t(stream_t        *s,
                               stream_opcode_t  opcode,
                               void            *opaque);
@@ -62,7 +64,7 @@ stream_seek_t    stream_seek;
 stream_length_t  stream_length;
 stream_destroy_t stream_destroy;
 
-/* Get a byte from a stream. Returns EOF (not stream_EOF) when EOF. */
+/* Get a byte from a stream. Returns EOF (not stream_EOF) at EOF. */
 #define stream_getc(s) (((s)->buf != (s)->end) ? *(s)->buf++ : (s)->get(s))
 
 /* Put back the last byte gotten. */
