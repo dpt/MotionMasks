@@ -246,9 +246,9 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
     o = offsets[i];
     
-    /* verify the offsets (as a truncated data chunk cannot be detected earlier
-     * on) */
-    if (o >= (mmoffset_t) dataused)
+    /* verify the offsets (since a truncated data chunk cannot be detected
+     * earlier on) */
+    if ((intptr_t) o >= dataused)
     {
       logf_fatal("offset %d out of range\n", i);
       err = mmerror_PLAYER_BAD_OFFSET;
