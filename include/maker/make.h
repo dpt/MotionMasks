@@ -1,4 +1,4 @@
-/* motionmask-maker.h */
+/* make.h -- motion mask encoder */
 
 // animated mask library. animates by blending frames via a compact mask
 // definition.

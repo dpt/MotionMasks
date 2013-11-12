@@ -1,4 +1,4 @@
-/* play.h */
+/* play.h -- motion mask decoder */
 
 #ifndef MOTIONMASK_PLAY_H
 #define MOTIONMASK_PLAY_H

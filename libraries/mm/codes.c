@@ -1,4 +1,4 @@
-/* codes.c */
+/* codes.c -- Motion Mask byte encoding */
 
 #include "codes.h"
 
