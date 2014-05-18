@@ -80,7 +80,8 @@ WARNINGS=-Wall -Wextra -Wno-unused-parameter
 # Tools (generic)
 #
 CFLAGS=-std=c99 $(WARNINGS) -MMD -MP $(INCLUDES) $(CROSSFLAGS)
-LDFLAGS=$(CROSSFLAGS) $(LIBS)
+LDFLAGS=$(CROSSFLAGS)
+LDLIBS=$(LIBS)
 
 ifeq ($(MODE),release)
   CFLAGS+=-O2 -DNDEBUG
@@ -110,7 +111,7 @@ usage:
 build: $(EXE)
 
 $(EXE): $(OBJ)
-	$(LD) $(LDFLAGS) -o $@ $^
+	$(LD) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 .PHONY: analyze
 analyze:
