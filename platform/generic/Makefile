@@ -54,6 +54,10 @@ else ifeq ($(TARGET),osx-any-clang)
 	#SANITIZE=-fsanitize=integer -fsanitize=address -fsanitize=undefined
 	CC=$(CLANG) $(CLANGFLAGS) $(SANITIZE)
 	LD=$(CLANG) $(SANITIZE)
+else ifeq ($(TARGET),linux-arm-gcc)
+	GCC=arm-linux-gnueabi-gcc-4.7
+	CC=$(GCC)
+	LD=$(GCC)
 else ifeq ($(TARGET),linux-any-clang)
 	CLANG=clang
 	CLANGFLAGS=-ferror-limit=2
