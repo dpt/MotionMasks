@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #include "base/debug.h"
-#include "base/mmerror.h"
+#include "base/result.h"
 #include "base/suppress.h"
 
 #include "mm/types.h"
@@ -397,7 +397,7 @@ static void decode_row(const mmdata_t *data, state_t *state)
   }
 }
 
-mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
+result_t motionmaskplayer_plot(const motionmaskplayer_t *player,
                                 const bitmap_t           *sources[],
                                 int                       nsources,
                                 const screen_t           *screen,
@@ -422,18 +422,18 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   int            imageskip_y0;
 
   if (unlikely(player == NULL || sources == NULL || screen == NULL))
-    return mmerror_BAD_ARG;
+    return result_BAD_ARG;
 
   if (unlikely(nsources < 0 || nsources > motionmaskplayer_MAXSOURCES))
   {
     logf_fatal("Invalid number of source bitmaps (%d)\n", nsources);
-    return mmerror_BAD_ARG;
+    return result_BAD_ARG;
   }
 
   if (unlikely(frameidx < 0 || frameidx >= player->nframes))
   {
     logf_fatal("Invalid frame index (%d)\n", frameidx);
-    return mmerror_BAD_ARG;
+    return result_BAD_ARG;
   }
 
   frame = &player->frames[frameidx];
@@ -444,7 +444,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   if (unlikely(state.span == NULL))
   {
     logf_fatal("Unavailable pixel format (%d).", screen->format);
-    return mmerror_BAD_ARG;
+    return result_BAD_ARG;
   }
 
   /* check that all surfaces are the same depth as the screen */
@@ -454,7 +454,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
     if (unlikely(sources[i]->format != screen->format))
     {
       logf_fatal("Source pixel format doesn't match screen (source %d, %d != %d).", i, sources[i]->format, screen->format);
-      return mmerror_BAD_ARG;
+      return result_BAD_ARG;
     }
   }
 
@@ -470,7 +470,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   if (unlikely(box_is_empty(&clippedscreenbox)))
   {
     logf_warning("%s", "Intersection of screen and clip boxes is empty.");
-    return mmerror_OK;
+    return result_OK;
   }
 
   areabox.x0 = x;
@@ -483,7 +483,7 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   if (unlikely(box_is_empty(&clippedscreenareabox)))
   {
     logf_warning("%s", "Intersection of clipped screen and area boxes is empty.");
-    return mmerror_OK;
+    return result_OK;
   }
 
   /* clipped screen box gives me the screen offsets
@@ -570,5 +570,5 @@ mmerror_t motionmaskplayer_plot(const motionmaskplayer_t *player,
     decode_row(player->offsets[row], &state);
   }
 
-  return mmerror_OK;
+  return result_OK;
 }

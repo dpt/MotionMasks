@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "base/mmerror.h"
+#include "base/result.h"
 #include "base/debug.h"
 #include "base/types.h"
 
@@ -16,8 +16,8 @@
 
 #include "impl.h"
 
-mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
-                               const char        *filename)
+result_t motionmaskmaker_save(motionmaskmaker_t *maker,
+                                 const char        *filename)
 {
   FILE    *f;
   uint8_t  header[format_HEADER_SIZE];
@@ -26,7 +26,7 @@ mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
 
   f = fopen(filename, "wb");
   if (f == NULL)
-    return mmerror_FILE_NOT_FOUND; // ideally could be a more appropriate error
+    return result_FILE_NOT_FOUND; // ideally could be a more appropriate error
 
   length = pack(header, "i2si",
                 format_ID,
@@ -73,5 +73,5 @@ mmerror_t motionmaskmaker_save(motionmaskmaker_t *maker,
 
   logf_info("motionmaskmaker_save: motion mask saved, %zd bytes long", length);
 
-  return mmerror_OK;
+  return result_OK;
 }

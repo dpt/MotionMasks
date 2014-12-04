@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "base/mmerror.h"
+#include "base/result.h"
 #include "base/types.h"
 #include "base/debug.h"
 
@@ -92,10 +92,10 @@ static int infocompare(const void *via, const void *vib)
 
 /* -------------------------------------------------------------------------- */
 
-mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
+result_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
                                const bitmap_set_t *bitmaps)
 {
-  mmerror_t         err;
+  result_t         err;
 
   mmscanlineinfo_t *info = NULL;
   int               infoused;
@@ -126,7 +126,7 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
   if (bitmaps->width  <= 0 ||
       bitmaps->height <= 0 ||
       bitmaps->nbases <= 0)
-    return mmerror_BAD_ARG; /* no input bitmaps specified */
+    return result_BAD_ARG; /* no input bitmaps specified */
 
   /* populate 'info' table with scanline info for all scanlines */
 
@@ -282,7 +282,7 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
                             datap,
                             dataallocated - dataused,
                             &used);
-        if (err == mmerror_BUFFER_OVERFLOW)
+        if (err == result_BUFFER_OVERFLOW)
         {
           debugf("Out of buffer at frame %d, row %d (used=%d)\n",
                  bm, y, dataused);
@@ -325,12 +325,12 @@ mmerror_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
   logf_info("motionmaskmaker_pack: data %zd long", dataused);
   logf_info("motionmaskmaker_pack: offsets %zd long", offsetsused);
 
-  return mmerror_OK;
+  return result_OK;
 
 
 oom:
 
-  err = mmerror_OOM;
+  err = result_OOM;
 
 failure:
 

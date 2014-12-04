@@ -9,7 +9,7 @@
 #include <string.h>
 
 // public headers
-#include "base/mmerror.h"
+#include "base/result.h"
 #include "base/debug.h"
 #include "base/types.h"
 #include "utils/pack.h"
@@ -26,15 +26,15 @@
 #include "mm/format.h"
 #include "impl.h"
 
-static mmerror_t unpackfromstream(stream_t   *s,
-                                  size_t      size,
-                                  const char *format,
-                                  ...)
+static result_t unpackfromstream(stream_t   *s,
+                                    size_t      size,
+                                    const char *format,
+                                    ...)
 {
   va_list args;
   
   if (stream_remaining_need_and_fill(s, size) < size)
-    return mmerror_PLAYER_TRUNCATED_INPUT;
+    return result_MMPLAYER_TRUNCATED_INPUT;
 
   va_start(args, format);
   
@@ -42,13 +42,13 @@ static mmerror_t unpackfromstream(stream_t   *s,
   
   va_end(args);
   
-  return mmerror_OK;
+  return result_OK;
 }
 
-mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
-                                const char         *filename)
+result_t motionmaskplayer_load(motionmaskplayer_t *player,
+                                  const char         *filename)
 {
-  mmerror_t   err;
+  result_t   err;
   FILE       *f = NULL;
   stream_t   *s = NULL;
   uint32_t    signature;
@@ -73,7 +73,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
   f = fopen(filename, "rb");
   if (f == NULL)
   {
-    err = mmerror_FILE_NOT_FOUND;
+    err = result_FILE_NOT_FOUND;
     goto failure;
   }
 
@@ -98,7 +98,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
   if (signature != format_ID)
   {
     logf_fatal("header has bad signature");
-    err = mmerror_PLAYER_BAD_SIGNATURE;
+    err = result_MMPLAYER_BAD_SIGNATURE;
     goto failure;
   }
 
@@ -110,7 +110,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
   if (player->width <= 0 || player->height <= 0 || player->nframes <= 0)
   {
     logf_fatal("header has invalid dimensions");
-    err = mmerror_PLAYER_INVALID_DIMENSIONS;
+    err = result_MMPLAYER_INVALID_DIMENSIONS;
     goto failure;
   }
 
@@ -147,7 +147,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
     if (frame->width <= 0 || frame->height <= 0)
     {
-      err = mmerror_PLAYER_INVALID_FRAME_DIMENSIONS;
+      err = result_MMPLAYER_INVALID_FRAME_DIMENSIONS;
       goto failure;
     }
 
@@ -178,7 +178,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
       availablebytes = stream_remaining_need_and_fill(s, 2);
       if (availablebytes == stream_EOF || availablebytes < 2)
       {
-        err = mmerror_PLAYER_TRUNCATED_INPUT;
+        err = result_MMPLAYER_TRUNCATED_INPUT;
         goto failure;
       }
 
@@ -191,7 +191,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
       consumedoffsets = MIN(totalheights - i, maxavailableoffsets);
       if (consumedoffsets < 1)
       {
-        err = mmerror_PLAYER_TRUNCATED_INPUT;
+        err = result_MMPLAYER_TRUNCATED_INPUT;
         goto failure;
       }
 
@@ -228,7 +228,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
   if (data == NULL)
   {
-    err = mmerror_PLAYER_TRUNCATED_INPUT;
+    err = result_MMPLAYER_TRUNCATED_INPUT;
     goto failure;
   }
 
@@ -251,7 +251,7 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
     if ((intptr_t) o >= dataused)
     {
       logf_fatal("offset %d out of range\n", i);
-      err = mmerror_PLAYER_BAD_OFFSET;
+      err = result_MMPLAYER_BAD_OFFSET;
       goto failure;
     }
     
@@ -267,12 +267,12 @@ mmerror_t motionmaskplayer_load(motionmaskplayer_t *player,
 
   player->flags |= player_FLAGS_LOADED;
 
-  return mmerror_OK;
+  return result_OK;
 
 
 oom:
 
-  err = mmerror_OOM;
+  err = result_OOM;
 
 failure:
 

@@ -9,14 +9,14 @@
 #ifndef MotionMasks_MMCommon_h
 #define MotionMasks_MMCommon_h
 
-#include "base/mmerror.h"
+#include "base/result.h"
 
 #include "MMPlayer.h"
 
 // Path to source images.
-#define PATH "/Users/dave/Dropbox/Projects/github/MotionMasks/"
+#define PATH "/Users/dave/SyncProjects/github/MotionMasks/"
 
-mmerror_t MMCommon_Player_instance(MMPlayer_t **pplayer);
+result_t MMCommon_Player_instance(MMPlayer_t **pplayer);
 void MMCommon_Player_destroy(void);
 
 #endif

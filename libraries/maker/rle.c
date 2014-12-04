@@ -7,7 +7,7 @@
 #include <string.h>
 
 #include "base/debug.h"
-#include "base/mmerror.h"
+#include "base/result.h"
 #include "base/types.h"
 
 #include "framebuf/pixelfmt.h"
@@ -21,22 +21,22 @@
 
 /* ----------------------------------------------------------------------- */
 
-static mmerror_t emit(encstate_t *state, uint32_t code, int codelength)
+static result_t emit(encstate_t *state, uint32_t code, int codelength)
 {
   if (state->dst == state->dstend)
-    return mmerror_BUFFER_OVERFLOW;
+    return result_BUFFER_OVERFLOW;
 
   while (codelength--)
     *state->dst++ = (code >> (codelength * 8)) & 0xFF;
 
-  return mmerror_OK;
+  return result_OK;
 }
 
 /* ----------------------------------------------------------------------- */
 
-static mmerror_t emit_copy(encstate_t *state, int n, int source)
+static result_t emit_copy(encstate_t *state, int n, int source)
 {
-  mmerror_t err;
+  result_t err;
 
   assert(source == 0 || source == 1);
 
@@ -77,12 +77,12 @@ static mmerror_t emit_copy(encstate_t *state, int n, int source)
     n -= length;
   }
 
-  return mmerror_OK;
+  return result_OK;
 }
 
-static mmerror_t emit_blendconst(encstate_t *state, int n, mmalpha_t alpha)
+static result_t emit_blendconst(encstate_t *state, int n, mmalpha_t alpha)
 {
-  mmerror_t err;
+  result_t err;
 
   while (n > 0)
   {
@@ -119,14 +119,14 @@ static mmerror_t emit_blendconst(encstate_t *state, int n, mmalpha_t alpha)
     n -= length;
   }
 
-  return mmerror_OK;
+  return result_OK;
 }
 
-static mmerror_t emit_blendarray(encstate_t      *state,
+static result_t emit_blendarray(encstate_t      *state,
                                  int              n,
                                  const mmalpha_t *alphas)
 {
-  mmerror_t err;
+  result_t err;
 
   while (n > 0)
   {
@@ -167,10 +167,10 @@ static mmerror_t emit_blendarray(encstate_t      *state,
     n -= length;
   }
 
-  return mmerror_OK;
+  return result_OK;
 }
 
-static mmerror_t emit_stop(encstate_t *state)
+static result_t emit_stop(encstate_t *state)
 {
   state->stats[MMStop_ID].hits++;
 
@@ -190,14 +190,14 @@ void encode_start(encstate_t *state)
   }
 }
 
-mmerror_t encode_row_y8(encstate_t *state,
+result_t encode_row_y8(encstate_t *state,
                         const void *vsrc,
                         int         nsrcpix,
                         uint8_t    *dst,
                         size_t      ndstbytes,
                         size_t     *dstused)
 {
-  mmerror_t      err;
+  result_t      err;
   const uint8_t *src = vsrc;
   const uint8_t *end = src + nsrcpix;
 
@@ -271,7 +271,7 @@ mmerror_t encode_row_y8(encstate_t *state,
   if (dstused)
     *dstused = state->dst - dst;
 
-  return mmerror_OK;
+  return result_OK;
 }
 
 void encode_stop(encstate_t *state)
@@ -296,7 +296,7 @@ int encodetest(void)
 {
   static const uint8_t scanline[] = { 0,0,0,0,1,2,0,255,3,4,4,4,4,255,255,255 };
 
-  mmerror_t err;
+  result_t err;
   uint8_t   buf[100];
   int       used;
   int       i;

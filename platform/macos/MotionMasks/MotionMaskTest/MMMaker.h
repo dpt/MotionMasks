@@ -9,8 +9,8 @@
 #ifndef MotionMasks_MMaker_h
 #define MotionMasks_MMaker_h
 
-#include "base/mmerror.h"
+#include "base/result.h"
 
-mmerror_t MMMaker_make(const char *filename);
+result_t MMMaker_make(const char *filename);
 
 #endif

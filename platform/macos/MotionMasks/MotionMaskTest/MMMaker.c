@@ -12,7 +12,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreGraphics/CoreGraphics.h>
 
-#include "base/mmerror.h"
+#include "base/result.h"
 #include "framebuf/pixelfmt.h"
 #include "framebuf/screen.h"
 
@@ -57,9 +57,9 @@ static const int nMakerSourceImageFilenames = NELEMS(makerSourceImageFilenames);
 
 // -----------------------------------------------------------------------------
 
-mmerror_t MMMaker_make(const char *filename)
+result_t MMMaker_make(const char *filename)
 {
-  mmerror_t          mmerr;
+  result_t          err;
   int                i;
   CGImageRef         makerSource[nMakerSourceImageFilenames];
   CGBitmapInfo       bitmapInfo;
@@ -70,13 +70,13 @@ mmerror_t MMMaker_make(const char *filename)
   motionmaskmaker_t *maker;
 
   if (nMakerSourceImageFilenames <= 0)
-    return mmerror_BAD_ARG;
+    return result_BAD_ARG;
   
   for (i = 0; i < nMakerSourceImageFilenames; i++)
     pixels[i] = NULL;
 
-  mmerr = motionmaskmaker_create(&maker);
-  if (mmerr)
+  err = motionmaskmaker_create(&maker);
+  if (err)
     goto failure;
   
   for (i = 0; i < nMakerSourceImageFilenames; i++)
@@ -90,7 +90,7 @@ mmerror_t MMMaker_make(const char *filename)
     if (pixelfmt == pixelfmt_unknown)
     {
       printf("MMMaker_make: Unknown pixelfmt.");
-      return mmerror_BAD_ARG;
+      return result_BAD_ARG;
     }
 
     // bodge pixelfmt to be something we can currently cope with
@@ -115,7 +115,7 @@ mmerror_t MMMaker_make(const char *filename)
       bitmapInfo = CGImageGetBitmapInfo(makerSource[i]);
       pixelfmt = bitmapInfoToPixelfmt(bitmapInfo);
       if (pixelfmt == pixelfmt_unknown)
-        return mmerror_BAD_ARG;
+        return result_BAD_ARG;
     }
 
     pixels[i] = copyImagePixels(makerSource[i]);
@@ -132,12 +132,12 @@ mmerror_t MMMaker_make(const char *filename)
   makerBitmaps.nbases   = nMakerSourceImageFilenames;
   makerBitmaps.bases    = makerBitmapBases;
 
-  mmerr = motionmaskmaker_pack(maker, &makerBitmaps);
-  if (mmerr)
+  err = motionmaskmaker_pack(maker, &makerBitmaps);
+  if (err)
     goto failure;
 
-  mmerr = motionmaskmaker_save(maker, filename);
-  if (mmerr)
+  err = motionmaskmaker_save(maker, filename);
+  if (err)
     goto failure;
 
   /* cleanup */
@@ -151,5 +151,5 @@ failure:
   motionmaskmaker_destroy(maker);
   maker = NULL;
 
-  return mmerr;
+  return err;
 }

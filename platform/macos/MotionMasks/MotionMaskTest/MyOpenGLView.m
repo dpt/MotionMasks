@@ -36,10 +36,10 @@
 
 - (void)awakeFromNib
 {
-  mmerror_t         mmerr;
-  
-  mmerr = MMCommon_Player_instance(&tester); // calls create
-  if (mmerr)
+  result_t err;
+
+  err = MMCommon_Player_instance(&tester); // calls create
+  if (err)
     goto failure;
   
   [self setTimer];
@@ -48,7 +48,7 @@
   
 failure:
   
-  NSLog(@"mmerr=%d in MyOpenGLView:awakeFromNib", mmerr);
+  NSLog(@"err=%d in MyOpenGLView:awakeFromNib", err);
   
   [NSApp terminate: nil];
 }

@@ -8,7 +8,7 @@
 
 #include <stddef.h>
 
-#include "base/mmerror.h"
+#include "base/result.h"
 
 #include "MMPlayer.h"
 
@@ -17,9 +17,9 @@
 static MMPlayer_t *player;
 static int         refs;
 
-mmerror_t MMCommon_Player_instance(MMPlayer_t **pplayer)
+result_t MMCommon_Player_instance(MMPlayer_t **pplayer)
 {
-  mmerror_t err;
+  result_t err;
 
   if (player == NULL)
   {
@@ -31,7 +31,7 @@ mmerror_t MMCommon_Player_instance(MMPlayer_t **pplayer)
   *pplayer = player;
   refs++;
 
-  return mmerror_OK;
+  return result_OK;
 }
 
 void MMCommon_Player_destroy(void)

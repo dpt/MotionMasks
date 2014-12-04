@@ -50,7 +50,7 @@ static CGColorSpaceRef   colourSpace;
 - (void)awakeFromNib
 {
   static const char motionMaskFilename[] = "tmp.momask";
-  mmerror_t         mmerr;
+  result_t       err;
   
   /*char buf[1000];
    getcwd(buf, 1000);
@@ -58,16 +58,16 @@ static CGColorSpaceRef   colourSpace;
   
   remove(motionMaskFilename); // delete any previous one kicking around
   
-  mmerr = MMMaker_make(motionMaskFilename);
-  if (mmerr)
+  err = MMMaker_make(motionMaskFilename);
+  if (err)
     goto failure;
 
-  mmerr = MMCommon_Player_instance(&tester); // calls create
-  if (mmerr)
+  err = MMCommon_Player_instance(&tester); // calls create
+  if (err)
     goto failure;
 
-  mmerr = MMPlayer_setup(tester, motionMaskFilename, 640, 480);
-  if (mmerr)
+  err = MMPlayer_setup(tester, motionMaskFilename, 640, 480);
+  if (err)
     goto failure;
   
   // setup objects we need for CGImageCreate
@@ -91,7 +91,7 @@ static CGColorSpaceRef   colourSpace;
   
 failure:
   
-  NSLog(@"mmerr=%d in PlotView:awakeFromNib", mmerr);
+  NSLog(@"err=%d in PlotView:awakeFromNib", err);
   
   [NSApp terminate: nil];
 }
@@ -192,6 +192,9 @@ failure:
   CGImageRef screenImage;
   
   (void) dirtyRect;
+  
+  if (screenDataProvider == NULL)
+    return;
   
   screenImage = CGImageCreate(screen->width, screen->height,
                               8, 32, // screenBPC, screenBPP,

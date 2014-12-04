@@ -3,13 +3,13 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#include "base/mmerror.h"
+#include "base/result.h"
 
 #include "maker/make.h"
 
 #include "impl.h"
 
-mmerror_t motionmaskmaker_create(motionmaskmaker_t **pmaker)
+result_t motionmaskmaker_create(motionmaskmaker_t **pmaker)
 {
   motionmaskmaker_t *maker;
 
@@ -17,9 +17,9 @@ mmerror_t motionmaskmaker_create(motionmaskmaker_t **pmaker)
 
   maker = calloc(1, sizeof(*maker));
   if (maker == NULL)
-    return mmerror_OOM;
+    return result_OOM;
 
   *pmaker = maker;
 
-  return mmerror_OK;
+  return result_OK;
 }
