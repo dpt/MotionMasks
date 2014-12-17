@@ -458,14 +458,14 @@ result_t motionmaskplayer_plot(const motionmaskplayer_t *player,
     }
   }
 
-  /* clamp inputs to screen space */
+  /* intersect the screen area box with the screen clipping box to get the
+   * clipped screen area */
 
   screenbox.x0 = 0;
   screenbox.y0 = 0;
   screenbox.x1 = screen->width;
   screenbox.y1 = screen->height;
 
-  /* intersect screen box with clip box */
   box_intersection(&screenbox, &screen->clip, &clippedscreenbox);
   if (unlikely(box_is_empty(&clippedscreenbox)))
   {
@@ -473,12 +473,13 @@ result_t motionmaskplayer_plot(const motionmaskplayer_t *player,
     return result_OK;
   }
 
+  /* intersect the plotting area box with the clipped screen area formed above */
+
   areabox.x0 = x;
   areabox.y0 = y;
   areabox.x1 = x + player->width;
   areabox.y1 = y + player->height;
 
-  /* intersect clipped screen box with motion mask area box */
   box_intersection(&clippedscreenbox, &areabox, &clippedscreenareabox);
   if (unlikely(box_is_empty(&clippedscreenareabox)))
   {
@@ -486,12 +487,14 @@ result_t motionmaskplayer_plot(const motionmaskplayer_t *player,
     return result_OK;
   }
 
-  /* clipped screen box gives me the screen offsets
+  /* the clipped screen area gives me the screen offsets.
    * this is the box of all the pixels we'll write on */
-  screenskip = clippedscreenareabox; // taking local copy
+
+  /* make a non memory-bound copy of the clipped screen area box */
+  screenskip = clippedscreenareabox;
 
   if (MMDEBUG)
-    debugf("screen: %d %d %d %d",
+    debugf("screenskip: %d %d %d %d",
            screenskip.x0, screenskip.y0, screenskip.x1, screenskip.y1);
 
   clipped_width  = screenskip.x1 - screenskip.x0;
@@ -502,13 +505,13 @@ result_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   imageskip_y0 = MAX(screenskip.y0 - y, 0);
 
   if (MMDEBUG)
-    debugf("image: %d %d", imageskip_x0, imageskip_y0);
+    debugf("imageskip: %d %d", imageskip_x0, imageskip_y0);
 
   /* calculate log2 BYTES-per-pixel for each surface */
 
   state.log2bpp = pixelfmt_log2bpp(screen->format) - 3; /* bits -> bytes */
 
-  /* calculate surface destination row addresses, merging destination and
+  /* calculate destination surface row addresses, merging destination and
    * source pointers into a single array */
 
   surfaces[0] = (unsigned char *) screen->base +
