@@ -27,9 +27,9 @@
 #include "impl.h"
 
 static result_t unpackfromstream(stream_t   *s,
-                                    size_t      size,
-                                    const char *format,
-                                    ...)
+                                 size_t      size,
+                                 const char *format,
+                                 ...)
 {
   va_list args;
   
@@ -46,11 +46,11 @@ static result_t unpackfromstream(stream_t   *s,
 }
 
 result_t motionmaskplayer_load(motionmaskplayer_t *player,
-                                  const char         *filename)
+                               const char         *filename)
 {
-  result_t   err;
-  FILE       *f = NULL;
-  stream_t   *s = NULL;
+  result_t    err;
+  FILE       *f       = NULL;
+  stream_t   *s       = NULL;
   uint32_t    signature;
   frame_t    *frames  = NULL;
   int         start;

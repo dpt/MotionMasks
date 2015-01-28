@@ -22,9 +22,9 @@ void MMPlayer_destroy(MMPlayer_t *doomed);
 screen_t *MMPlayer_getScreen(MMPlayer_t *player);
 
 result_t MMPlayer_setup(MMPlayer_t *player,
-                         const char *filename,
-                         int         width,
-                         int         height);
+                        const char *filename,
+                        int         width,
+                        int         height);
 
 result_t MMPlayer_render(MMPlayer_t *player, int x, int y);
 

@@ -50,7 +50,7 @@ static CGColorSpaceRef   colourSpace;
 - (void)awakeFromNib
 {
   static const char motionMaskFilename[] = "tmp.momask";
-  result_t       err;
+  result_t          err;
   
   /*char buf[1000];
    getcwd(buf, 1000);

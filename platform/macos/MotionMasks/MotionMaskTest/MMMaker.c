@@ -59,7 +59,7 @@ static const int nMakerSourceImageFilenames = NELEMS(makerSourceImageFilenames);
 
 result_t MMMaker_make(const char *filename)
 {
-  result_t          err;
+  result_t           err;
   int                i;
   CGImageRef         makerSource[nMakerSourceImageFilenames];
   CGBitmapInfo       bitmapInfo;

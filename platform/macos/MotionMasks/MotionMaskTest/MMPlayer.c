@@ -115,9 +115,9 @@ screen_t *MMPlayer_getScreen(MMPlayer_t *tester)
 // -----------------------------------------------------------------------------
 
 result_t MMPlayer_setup(MMPlayer_t *tester,
-                         const char *filename,
-                         int         width,
-                         int         height)
+                        const char *filename,
+                        int         width,
+                        int         height)
 {
 #ifndef LOAD_IMAGES
   static const struct
@@ -136,12 +136,12 @@ result_t MMPlayer_setup(MMPlayer_t *tester,
 #endif
 
   result_t     err;
-  MMPlayer_t    newt;
-  uint8_t      *rawScreen = NULL;
-  int           i;
-  CGBitmapInfo  bitmapInfo;
-  pixelfmt_t    pixelfmt;
-  int           rowbytes;
+  MMPlayer_t   newt;
+  uint8_t     *rawScreen = NULL;
+  int          i;
+  CGBitmapInfo bitmapInfo;
+  pixelfmt_t   pixelfmt;
+  int          rowbytes;
 
   newt = *tester;
 
@@ -244,12 +244,12 @@ failure:
 result_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
 {
   static const pixelfmt_rgbx8888_t backgroundColour = 0x00808080;
-  
+
   static int totalframes = 0;
-  
+
   result_t err;
-  int       i;
-  int       maxframes = motionmaskplayer_get_frames(tester->motionMaskPlayer);
+  int      i;
+  int      maxframes = motionmaskplayer_get_frames(tester->motionMaskPlayer);
 
   /* clear the screen */
 
@@ -284,12 +284,12 @@ result_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
     for (i = 0; i < BENCHMARK_LOOPS; i++) /* loop for benchmarking */
     {
       err = motionmaskplayer_plot(tester->motionMaskPlayer,
-                                    tester->sourceBitmapList,
-                                    nSourceImages,
-                                    &tester->screen,
-                                    x,
-                                    tester->screen.height - y,
-                                    frame);
+                                  tester->sourceBitmapList,
+                                  nSourceImages,
+                                  &tester->screen,
+                                  x,
+                                  tester->screen.height - y - 400,
+                                  frame);
       if (err)
         return err;
 
@@ -302,9 +302,9 @@ result_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
       rotateSources = 1;
     }
   }
-
+  
   if ((totalframes % 100) == 0)
     printf("%d frames drawn\n", totalframes);
-
+  
   return result_OK;
 }

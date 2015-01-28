@@ -17,12 +17,12 @@
 #include "impl.h"
 
 result_t motionmaskmaker_save(motionmaskmaker_t *maker,
-                                 const char        *filename)
+                              const char        *filename)
 {
-  FILE    *f;
-  uint8_t  header[format_HEADER_SIZE];
-  int      i;
-  size_t   length;
+  FILE   *f;
+  uint8_t header[format_HEADER_SIZE];
+  int     i;
+  size_t  length;
 
   f = fopen(filename, "wb");
   if (f == NULL)

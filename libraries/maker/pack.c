@@ -93,9 +93,9 @@ static int infocompare(const void *via, const void *vib)
 /* -------------------------------------------------------------------------- */
 
 result_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
-                               const bitmap_set_t *bitmaps)
+                              const bitmap_set_t *bitmaps)
 {
-  result_t         err;
+  result_t          err;
 
   mmscanlineinfo_t *info = NULL;
   int               infoused;

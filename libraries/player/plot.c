@@ -91,9 +91,9 @@ static void copy(int source, int length, state_t *state)
   state->surfaces[2] += plot;
 }
 
-static const mmdata_t *decode_copy(unsigned int  code,
+static const mmdata_t *decode_copy(unsigned int    code,
                                    const mmdata_t *p,
-                                   state_t      *state)
+                                   state_t        *state)
 {
   int source;
   int length; /* in pixels */
@@ -111,9 +111,9 @@ static const mmdata_t *decode_copy(unsigned int  code,
   return p;
 }
 
-static const mmdata_t *decode_copylong(unsigned int  code,
+static const mmdata_t *decode_copylong(unsigned int    code,
                                        const mmdata_t *p,
-                                       state_t      *state)
+                                       state_t        *state)
 {
   int source;
   int length; /* in pixels */
@@ -161,9 +161,9 @@ static void blendconst(int length, int alpha, state_t *state)
   state->surfaces[2] += plot;
 }
 
-static const mmdata_t *decode_blendconst(unsigned int  code,
+static const mmdata_t *decode_blendconst(unsigned int    code,
                                          const mmdata_t *p,
-                                         state_t      *state)
+                                         state_t        *state)
 {
   int length;
   int alpha; // not alpha_t, widened
@@ -181,9 +181,9 @@ static const mmdata_t *decode_blendconst(unsigned int  code,
   return p;
 }
 
-static const mmdata_t *decode_blendconstlong(unsigned int  code,
+static const mmdata_t *decode_blendconstlong(unsigned int    code,
                                              const mmdata_t *p,
-                                             state_t      *state)
+                                             state_t        *state)
 {
   int length;
   int alpha; // not alpha_t, widened
@@ -231,9 +231,9 @@ static void blendarray(int length, const mmalpha_t *palphas, state_t *state)
   state->surfaces[2] += plot;
 }
 
-static const mmdata_t *decode_blendarray(unsigned int  code,
+static const mmdata_t *decode_blendarray(unsigned int    code,
                                          const mmdata_t *p,
-                                         state_t      *state)
+                                         state_t        *state)
 {
   int              length;
   const mmalpha_t *palphas;
@@ -289,7 +289,10 @@ static const mmdata_t *decode_unknown(unsigned int    code,
 
 /* ----------------------------------------------------------------------- */
 
-static void setsource(source_t source1, source_t source2, state_t *state, int force)
+static void setsource(source_t source1,
+                      source_t source2,
+                      state_t *state,
+                      int      force)
 {
   source_t  maxsource;
   ptrdiff_t offset;
@@ -398,12 +401,12 @@ static void decode_row(const mmdata_t *data, state_t *state)
 }
 
 result_t motionmaskplayer_plot(const motionmaskplayer_t *player,
-                                const bitmap_t           *sources[],
-                                int                       nsources,
-                                const screen_t           *screen,
-                                int                       x,
-                                int                       y,
-                                int                       frameidx)
+                               const bitmap_t           *sources[],
+                               int                       nsources,
+                               const screen_t           *screen,
+                               int                       x,
+                               int                       y,
+                               int                       frameidx)
 {
   state_t        state;
   const frame_t *frame;

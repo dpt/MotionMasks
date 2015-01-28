@@ -19,11 +19,11 @@ void motionmaskmaker_set_config(motionmaskmaker_t *maker,
                                 int                config_stuff);
 
 result_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
-                               const bitmap_set_t *bitmaps);
+                              const bitmap_set_t *bitmaps);
 
 // load and save via estream?
 
 result_t motionmaskmaker_save(motionmaskmaker_t *maker,
-                               const char        *filename);
+                              const char        *filename);
 
 #endif /* MOTIONMASK_MAKER_H */
