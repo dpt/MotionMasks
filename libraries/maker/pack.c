@@ -284,8 +284,8 @@ result_t motionmaskmaker_pack(motionmaskmaker_t  *maker,
                             &used);
         if (err == result_BUFFER_OVERFLOW)
         {
-          debugf("Out of buffer at frame %d, row %d (used=%d)\n",
-                 bm, y, dataused);
+          logf_debug("Out of buffer at frame %d, row %d (used=%d)\n",
+                     bm, y, dataused);
         }
         if (err)
           goto failure;

@@ -281,12 +281,12 @@ void encode_stop(encstate_t *state)
   
   for (i = 0; i < MMID_LIMIT; i++)
   {
-    debugf("encode_stop: code %d (%s): used %d times, totalling %d pixels, average %.2f pixels/run",
-           i,
-           MMCodeNames[i],
-           state->stats[i].hits,
-           state->stats[i].pixels,
-           (double) state->stats[i].pixels / state->stats[i].hits);
+    logf_debug("encode_stop: code %d (%s): used %d times, totalling %d pixels, average %.2f pixels/run",
+               i,
+               MMCodeNames[i],
+               state->stats[i].hits,
+               state->stats[i].pixels,
+               (double) state->stats[i].pixels / state->stats[i].hits);
   }
 #endif
 }

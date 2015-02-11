@@ -104,7 +104,7 @@ static const mmdata_t *decode_copy(unsigned int    code,
   length = ZEROIS2N(length, MMCopy_LENGTH_BITS);
 
   if (MMDEBUG)
-    debugf("decode_copy: source %d, length %d", source, length);
+    logf_debug("decode_copy: source %d, length %d", source, length);
 
   copy(source, length, state);
 
@@ -126,7 +126,7 @@ static const mmdata_t *decode_copylong(unsigned int    code,
   length += MMCopyLong_LENGTH_MIN;
 
   if (MMDEBUG)
-    debugf("decode_copylong: source %d, length %d", source, length);
+    logf_debug("decode_copylong: source %d, length %d", source, length);
 
   copy(source, length, state);
 
@@ -174,7 +174,7 @@ static const mmdata_t *decode_blendconst(unsigned int    code,
   alpha  = *p++;
 
   if (MMDEBUG)
-    debugf("decode_blendconst: length %d, alpha %d", length, alpha);
+    logf_debug("decode_blendconst: length %d, alpha %d", length, alpha);
 
   blendconst(length, alpha, state);
 
@@ -196,7 +196,7 @@ static const mmdata_t *decode_blendconstlong(unsigned int    code,
   alpha  = *p++;
 
   if (MMDEBUG)
-    debugf("decode_blendconstlong: length %d, alpha %d", length, alpha);
+    logf_debug("decode_blendconstlong: length %d, alpha %d", length, alpha);
 
   blendconst(length, alpha, state);
 
@@ -244,7 +244,7 @@ static const mmdata_t *decode_blendarray(unsigned int    code,
   palphas = p;
 
   if (MMDEBUG)
-    debugf("decode_blendarray: length %d", length);
+    logf_debug("decode_blendarray: length %d", length);
 
   blendarray(length, palphas, state);
 
@@ -266,7 +266,7 @@ static const mmdata_t *decode_blendarraylong(unsigned int    code,
   palphas = p;
 
   if (MMDEBUG)
-    debugf("decode_blendarraylong: length %d", length);
+    logf_debug("decode_blendarraylong: length %d", length);
 
   blendarray(length, palphas, state);
 
@@ -348,7 +348,7 @@ static const mmdata_t *decode_setsource(unsigned int    code,
   source2 = (code & MMSetSource_SOURCE2_MASK) >> MMSetSource_SOURCE2_SHIFT;
 
   if (MMDEBUG)
-    debugf("decode_setsource: %d, %d", source1, source2);
+    logf_debug("decode_setsource: %d, %d", source1, source2);
 
   setsource(source1, source2, state, 0 /* don't force */);
 
@@ -388,7 +388,7 @@ static void decode_row(const mmdata_t *data, state_t *state)
     if (unlikely(clz == MMStop_ID))
     {
       if (MMDEBUG)
-        debugf("%s", "stop");
+        logf_debug("%s", "stop");
       break;
     }
 
@@ -497,8 +497,8 @@ result_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   screenskip = clippedscreenareabox;
 
   if (MMDEBUG)
-    debugf("screenskip: %d %d %d %d",
-           screenskip.x0, screenskip.y0, screenskip.x1, screenskip.y1);
+    logf_debug("screenskip: %d %d %d %d",
+               screenskip.x0, screenskip.y0, screenskip.x1, screenskip.y1);
 
   clipped_width  = screenskip.x1 - screenskip.x0;
   clipped_height = screenskip.y1 - screenskip.y0;
@@ -508,7 +508,7 @@ result_t motionmaskplayer_plot(const motionmaskplayer_t *player,
   imageskip_y0 = MAX(screenskip.y0 - y, 0);
 
   if (MMDEBUG)
-    debugf("imageskip: %d %d", imageskip_x0, imageskip_y0);
+    logf_debug("imageskip: %d %d", imageskip_x0, imageskip_y0);
 
   /* calculate log2 BYTES-per-pixel for each surface */
 
