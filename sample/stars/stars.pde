@@ -12,6 +12,7 @@ class Star
     scale = _scale;
     
     s = createShape();
+    s.beginShape(); //<>//
     s.fill(0);
     s.noStroke();
     s.vertex(0, -50);
@@ -24,7 +25,7 @@ class Star
     s.vertex(-23, 7);
     s.vertex(-47, -15);
     s.vertex(-14, -20);
-    s.end(CLOSE);
+    s.endShape(CLOSE);
   }
   
   void display()
@@ -38,6 +39,7 @@ class Star
   }
 }
 
+int max = 20;
 Star[] stars;
 float a = 0;
 int t = 0;
@@ -56,7 +58,7 @@ void draw()
 {
   background(255);
   
-  if (t++ < 20)
+  if (t++ < max)
   {
     for (int i = 0; i < stars.length; i++)
     {
@@ -67,7 +69,7 @@ void draw()
   
     a -= 4;
   
-    saveFrame("output-####.png");
+    saveFrame("Stars/####.png");
   }
   else
   {
@@ -76,4 +78,3 @@ void draw()
     t = 0;
   }
 }
-
