@@ -3,7 +3,7 @@
 #ifndef SPAN_REGISTRY_REGDATA_H
 #define SPAN_REGISTRY_REGDATA_H
 
-#include "utils/array.h"
+#include "base/utils.h"
 
 #include "plot/span-bgrx8888.h"
 #include "plot/span-rgbx8888.h"

@@ -9,11 +9,11 @@
 #include "base/debug.h"
 #include "base/result.h"
 #include "base/types.h"
+#include "base/utils.h"
 
 #include "framebuf/pixelfmt.h"
 #include "mm/codes.h"
 #include "utils/array.h"
-#include "utils/minmax.h"
 
 #include "mm/types.h"
 

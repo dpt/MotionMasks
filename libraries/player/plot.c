@@ -6,15 +6,13 @@
 
 #include "base/debug.h"
 #include "base/result.h"
-#include "base/suppress.h"
+#include "base/utils.h"
 
 #include "mm/types.h"
 #include "mm/codes.h"
 #include "framebuf/pixelfmt.h"
 #include "plot/span-registry.h"
 #include "utils/barith.h"
-#include "utils/likely.h"
-#include "utils/minmax.h"
 
 #include "player/play.h"
 
