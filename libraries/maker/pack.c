@@ -85,7 +85,7 @@ static int infocompare(const void *via, const void *vib)
     return +1;
 
   //sentinel(); // <- needs a failure: label to take
-  assert("Can't get here.");
+  assert("Can't get here." == NULL);
 
   return 0;
 }
