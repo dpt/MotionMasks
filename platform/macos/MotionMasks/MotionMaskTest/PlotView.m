@@ -1,43 +1,26 @@
-// sloppy slapdash slipshot test app for momasks
-
-#import <Foundation/NSTimer.h>
-
-#import "PlotView.h"
-
-#import "BitmapDrawing.h"
-#import "BitmapTransform.h"
-#import "BitmapUtils.h"
-#import "ImageLoaders.h"
-#import "ImageGenerators.h"
-#import "Utils.h"
-
-#import "MMCommon.h"
-#import "MMMaker.h"
-#import "MMPlayer.h"
+//
+//  PlotView.m
+//  MotionMasks
+//
+//  Created by David Thomas on 24/11/2012.
+//  Copyright (c) 2012 David Thomas. All rights reserved.
+//
 
 #import "framebuf/screen.h"
 
-#import "player/play.h"
-#import "maker/make.h"
+#import "BitmapUtils.h"
 
-// -----------------------------------------------------------------------------
+#import "MotionMaskRunner.h"
 
-static const int plotOffsetX = 64;
-static const int plotOffsetY = 64;
-
-// -----------------------------------------------------------------------------
-
-static CGDataProviderRef screenDataProvider;
-
-static CGColorSpaceRef   colourSpace;
+#import "PlotView.h"
 
 // -----------------------------------------------------------------------------
 
 @interface PlotView()
 {
-  MMPlayer_t     *tester;
-  const screen_t *screen;
-  NSPoint         mouseLocation;
+  const screen_t   *myscreen;
+  CGDataProviderRef screenDataProvider;
+  CGColorSpaceRef   colourSpace;
 }
 
 @end
@@ -49,81 +32,37 @@ static CGColorSpaceRef   colourSpace;
 // previously was implementing initWithFrame: but this is not called for interface builder objects
 - (void)awakeFromNib
 {
-  static const char motionMaskFilename[] = "tmp.momask";
-  result_t          err;
-  
-  /*char buf[1000];
-   getcwd(buf, 1000);
-   NSLog(@"CWD is %s", buf);*/
-  
-  remove(motionMaskFilename); // delete any previous one kicking around
-  
-  err = MMMaker_make(motionMaskFilename);
-  if (err)
-    goto failure;
+  MotionMaskRunner *runner = [MotionMaskRunner sharedInstance];
 
-  err = MMCommon_Player_instance(&tester); // calls create
-  if (err)
-    goto failure;
+  [runner addClient:self];
 
-  err = MMPlayer_setup(tester, motionMaskFilename, 640, 480);
-  if (err)
-    goto failure;
+  [runner configureImageSet:@"Wipe" width:640 height:480];
+
+  [runner run];
   
+  myscreen = [runner screent];
+
   // setup objects we need for CGImageCreate
-  
-  screen = MMPlayer_getScreen(tester);
-  
-  mouseLocation.x = plotOffsetX;
-  mouseLocation.y = plotOffsetY + 480;
-  
+
   screenDataProvider = CGDataProviderCreateWithData(NULL,
-                                                    screen->base,
-                                                    screen->rowbytes * screen->height,
+                                                    myscreen->base,
+                                                    myscreen->rowbytes * myscreen->height,
                                                     NULL);
-  
+
   colourSpace = CGColorSpaceCreateDeviceRGB();
-  
+
   [self setTracking];
-  [self setTimer];
-  
-  return;
-  
-failure:
-  
-  NSLog(@"err=%d in PlotView:awakeFromNib", err);
-  
-  [NSApp terminate: nil];
 }
 
 - (void)dealloc
 {
-  MMCommon_Player_destroy();
-  
   CGDataProviderRelease(screenDataProvider);
   
   CGColorSpaceRelease(colourSpace);
   
+  [[MotionMaskRunner sharedInstance] removeClient:self];
+
   [super dealloc];
-}
-
-// -----------------------------------------------------------------------------
-
-- (void)animate
-{
-  int x, y;
-  
-  x = (int) floor(mouseLocation.x) - plotOffsetX;
-  y = (int) floor(mouseLocation.y) - plotOffsetY;
-  
-  // NSLog(@"MMPlayer_render to %d, %d", x, y);
-
-  MMPlayer_render(tester, x, y);
-  
-  /* redraw just the region we've invalidated */
-  [self setNeedsDisplayInRect:NSMakeRect(plotOffsetX, plotOffsetY,
-                                         screen->width, screen->height)];
-  //[self displayIfNeeded];
 }
 
 // -----------------------------------------------------------------------------
@@ -147,24 +86,6 @@ failure:
 
 // -----------------------------------------------------------------------------
 
-- (void)setTimer
-{
-  [NSTimer scheduledTimerWithTimeInterval:1.0 / 30 /* 30fps */
-                                   target:self
-                                 selector:@selector(onTick:)
-                                 userInfo:nil
-                                  repeats:YES];
-}
-
-- (void)onTick:(NSTimer *)timer
-{
-  (void) timer;
-  
-  [self animate];
-}
-
-// -----------------------------------------------------------------------------
-
 - (void)mouseEntered:(NSEvent *)theEvent
 {
   (void) theEvent;
@@ -181,8 +102,12 @@ failure:
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
+  NSPoint mouseLocation;
+
   mouseLocation = [self convertPoint:[theEvent locationInWindow]
                             fromView:nil];
+
+  [[MotionMaskRunner sharedInstance] setPosition:mouseLocation];
 }
 
 // -----------------------------------------------------------------------------
@@ -196,23 +121,30 @@ failure:
   if (screenDataProvider == NULL)
     return;
   
-  screenImage = CGImageCreate(screen->width, screen->height,
+  screenImage = CGImageCreate(myscreen->width, myscreen->height,
                               8, 32, // screenBPC, screenBPP,
-                              screen->rowbytes,
+                              myscreen->rowbytes,
                               colourSpace,
-                              PixelfmtTobitmapInfo(screen->format),
+                              PixelfmtTobitmapInfo(myscreen->format),
                               screenDataProvider,
                               NULL, // decode array
                               NO, // should interpolate
                               kCGRenderingIntentDefault);
   
   CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort],
-                     CGRectMake(plotOffsetX, plotOffsetY, screen->width, screen->height),
+                     CGRectMake(0, 0, myscreen->width, myscreen->height),
                      screenImage);
-  
-  // NSLog(@"drawing at %d, %d", plotOffsetX, plotOffsetY);
-  
+
   CGImageRelease(screenImage);
+}
+
+- (void)animationUpdated:(NSNotification*)notification
+{
+  NSDictionary *userInfo       = notification.userInfo;
+  NSValue      *dirtyRectValue = userInfo[@"dirtyRect"];
+  NSRect        dirtyRect      = dirtyRectValue.rectValue;
+
+  [self setNeedsDisplayInRect:dirtyRect];
 }
 
 @end

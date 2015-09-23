@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface GLView :
-NSView
+@interface GLView : NSView
 
 @end

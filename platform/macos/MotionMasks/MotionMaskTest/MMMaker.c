@@ -1,10 +1,12 @@
 //
-//  MMaker.c
+//  MMMaker.c
 //  MotionMasks
 //
 //  Created by David Thomas on 26/11/2012.
 //  Copyright (c) 2012 David Thomas. All rights reserved.
 //
+
+#include <sys/types.h>
 
 #include <assert.h>
 #include <stdio.h>
@@ -12,7 +14,13 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreGraphics/CoreGraphics.h>
 
+/* DPTLib */
+
 #include "base/result.h"
+#include "utils/array.h"
+
+/* MotionMasks */
+
 #include "framebuf/pixelfmt.h"
 #include "framebuf/screen.h"
 
@@ -23,67 +31,58 @@
 #include "ImageLoaders.h"
 #include "Utils.h"
 
-#include "MMCommon.h"
+#include "MMSinglePlayer.h"
 
 #include "MMMaker.h"
 
 // -----------------------------------------------------------------------------
 
-static const char *makerSourceImageFilenames[] =
+result_t MMMaker_make(const char **sourceMaskDirs,
+                      int          nSourceMaskDirs,
+                      const char  *filename)
 {
-  PATH "output-0001.png",
-  PATH "output-0002.png",
-  PATH "output-0003.png",
-  PATH "output-0004.png",
-  PATH "output-0005.png",
-  PATH "output-0006.png",
-  PATH "output-0007.png",
-  PATH "output-0008.png",
-  PATH "output-0009.png",
-  PATH "output-0010.png",
-  PATH "output-0011.png",
-  PATH "output-0012.png",
-  PATH "output-0013.png",
-  PATH "output-0014.png",
-  PATH "output-0015.png",
-  PATH "output-0016.png",
-  PATH "output-0017.png",
-  PATH "output-0018.png",
-  PATH "output-0019.png",
-  PATH "output-0020.png",
-};
+#define MAX_FILENAMES 500
 
-static const int nMakerSourceImageFilenames = NELEMS(makerSourceImageFilenames);
-
-// -----------------------------------------------------------------------------
-
-result_t MMMaker_make(const char *filename)
-{
   result_t           err;
+  char             **sourceMaskFilenames;
+  int                nSourceMaskFilenames;
+  char              *sourceMaskFilenamesBuffer = NULL;
+  motionmaskmaker_t *maker;
   int                i;
-  CGImageRef         makerSource[nMakerSourceImageFilenames];
+  CGImageRef         makerSource[MAX_FILENAMES];
   CGBitmapInfo       bitmapInfo;
   pixelfmt_t         pixelfmt;
   bitmap_set_t       makerBitmaps;
-  CFDataRef          pixels[nMakerSourceImageFilenames];
-  void              *makerBitmapBases[nMakerSourceImageFilenames];
-  motionmaskmaker_t *maker;
+  CFDataRef          pixels[MAX_FILENAMES];
+  void              *makerBitmapBases[MAX_FILENAMES];
 
-  if (nMakerSourceImageFilenames <= 0)
-    return result_BAD_ARG;
-  
-  for (i = 0; i < nMakerSourceImageFilenames; i++)
+  err = findfilesbyregexp(sourceMaskDirs,
+                          nSourceMaskDirs,
+                          ".*\\.png",
+                          &sourceMaskFilenames,
+                          &nSourceMaskFilenames,
+                          &sourceMaskFilenamesBuffer);
+  if (err)
+    goto failure;
+
+  if (nSourceMaskFilenames > MAX_FILENAMES)
+  {
+    err = result_TOO_BIG;
+    goto failure;
+  }
+
+  for (i = 0; i < nSourceMaskFilenames; i++)
     pixels[i] = NULL;
 
   err = motionmaskmaker_create(&maker);
   if (err)
     goto failure;
-  
-  for (i = 0; i < nMakerSourceImageFilenames; i++)
-  {
-    printf("loading %s", makerSourceImageFilenames[i]);
 
-    makerSource[i] = createCGImageFromPNGFile(makerSourceImageFilenames[i]);
+  for (i = 0; i < nSourceMaskFilenames; i++)
+  {
+    printf("creaing mask from %s\n", sourceMaskFilenames[i]);
+
+    makerSource[i] = createCGImageFromPNGFile(sourceMaskFilenames[i]);
 
     bitmapInfo = CGImageGetBitmapInfo(makerSource[i]);
     pixelfmt = bitmapInfoToPixelfmt(bitmapInfo);
@@ -129,7 +128,7 @@ result_t MMMaker_make(const char *filename)
   makerBitmaps.height   = (int) CGImageGetHeight(makerSource[0]);
   makerBitmaps.format   = pixelfmt;
   makerBitmaps.rowbytes = (int) CGImageGetBytesPerRow(makerSource[0]);
-  makerBitmaps.nbases   = nMakerSourceImageFilenames;
+  makerBitmaps.nbases   = nSourceMaskFilenames;
   makerBitmaps.bases    = makerBitmapBases;
 
   err = motionmaskmaker_pack(maker, &makerBitmaps);
@@ -144,12 +143,15 @@ result_t MMMaker_make(const char *filename)
 
 failure:
 
-  for (i = 0; i < nMakerSourceImageFilenames; i++)
+  for (i = 0; i < nSourceMaskFilenames; i++)
     if (pixels[i])
       CFRelease(pixels[i]);
 
   motionmaskmaker_destroy(maker);
   maker = NULL;
+
+  free(sourceMaskFilenamesBuffer);
+  free(sourceMaskFilenames);
 
   return err;
 }

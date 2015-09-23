@@ -7,11 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55079BF61B8D22FB00898C5A /* MotionMaskRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55079BF51B8D22FB00898C5A /* MotionMaskRunner.m */; };
+		55079C601B97888600898C5A /* Wipe in Resources */ = {isa = PBXBuildFile; fileRef = 55079C5F1B97888600898C5A /* Wipe */; };
+		55079C621B97889300898C5A /* Stars in Resources */ = {isa = PBXBuildFile; fileRef = 55079C611B97889300898C5A /* Stars */; };
+		55079C641B97889B00898C5A /* Fade in Resources */ = {isa = PBXBuildFile; fileRef = 55079C631B97889B00898C5A /* Fade */; };
+		551FE0C81B72391100F49B70 /* composite.h in Headers */ = {isa = PBXBuildFile; fileRef = 551FE0C71B72391100F49B70 /* composite.h */; };
 		5530840B166389700011DF33 /* MMMaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530840A166389700011DF33 /* MMMaker.c */; };
 		5530840E166389B00011DF33 /* MMPlayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530840D166389B00011DF33 /* MMPlayer.c */; };
 		5535B0C2166CD9BC0013C297 /* bgrx8888.c in Sources */ = {isa = PBXBuildFile; fileRef = 5535B0C1166CD9BC0013C297 /* bgrx8888.c */; };
 		5535B0C5166CD9C60013C297 /* span-bgrx8888.h in Headers */ = {isa = PBXBuildFile; fileRef = 5535B0C4166CD9C60013C297 /* span-bgrx8888.h */; };
 		55460F20166048DC000D8974 /* MyOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55460F1F166048DC000D8974 /* MyOpenGLView.m */; };
+		5549B5DF1B683FB100BAE79B /* composite.c in Sources */ = {isa = PBXBuildFile; fileRef = 5549B5DE1B683FB100BAE79B /* composite.c */; };
+		5549B5E31B68495400BAE79B /* plot.c in Sources */ = {isa = PBXBuildFile; fileRef = 5549B5E21B68495400BAE79B /* plot.c */; };
 		554A2A7017672DCC0081B625 /* codes.c in Sources */ = {isa = PBXBuildFile; fileRef = 554A2A6F17672DCC0081B625 /* codes.c */; };
 		555137A916545786007F3565 /* play.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551376516545786007F3565 /* play.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		555137AA16545786007F3565 /* span-registry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551376716545786007F3565 /* span-registry.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -30,7 +37,6 @@
 		5551381A165460EF007F3565 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55513818165460EF007F3565 /* Credits.rtf */; };
 		5551381D165460EF007F3565 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5551381C165460EF007F3565 /* AppDelegate.m */; };
 		5551382A165461D8007F3565 /* PlotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55513827165461D8007F3565 /* PlotView.m */; };
-		5551382B165461D8007F3565 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55513828165461D8007F3565 /* MainMenu.xib */; };
 		5551384F165463EB007F3565 /* create.c in Sources */ = {isa = PBXBuildFile; fileRef = 555137F916545FDD007F3565 /* create.c */; };
 		55513850165463EB007F3565 /* destroy.c in Sources */ = {isa = PBXBuildFile; fileRef = 555137FA16545FDD007F3565 /* destroy.c */; };
 		55513852165463EB007F3565 /* pack.c in Sources */ = {isa = PBXBuildFile; fileRef = 555137FC16545FDD007F3565 /* pack.c */; };
@@ -39,20 +45,26 @@
 		55513855165463EB007F3565 /* create.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551378316545786007F3565 /* create.c */; };
 		55513856165463EB007F3565 /* destroy.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551378416545786007F3565 /* destroy.c */; };
 		55513858165463EB007F3565 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551378616545786007F3565 /* load.c */; };
-		55513859165463EB007F3565 /* plot.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551378716545786007F3565 /* plot.c */; };
 		5551385A165463EB007F3565 /* all8888.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551378A16545786007F3565 /* all8888.c */; };
 		5551385C165463EB007F3565 /* rgbx8888.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551378D16545786007F3565 /* rgbx8888.c */; };
 		5551385E165463EB007F3565 /* xbgr8888.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551378F16545786007F3565 /* xbgr8888.c */; };
 		55513860165463EB007F3565 /* get.c in Sources */ = {isa = PBXBuildFile; fileRef = 5551379216545786007F3565 /* get.c */; };
+		555C7BBB1BA4FD1800E4305B /* images in Resources */ = {isa = PBXBuildFile; fileRef = 555C7BBA1BA4FD1800E4305B /* images */; };
 		55873E30165A500A00A47AE1 /* BitmapUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55873E2F165A500A00A47AE1 /* BitmapUtils.c */; };
 		55885B0E1659ADE000EAE252 /* BitmapDrawing.c in Sources */ = {isa = PBXBuildFile; fileRef = 55885B0D1659ADE000EAE252 /* BitmapDrawing.c */; };
 		55885B111659AE1200EAE252 /* Utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55885B101659AE1200EAE252 /* Utils.c */; };
 		55885B161659B06500EAE252 /* BitmapTransform.c in Sources */ = {isa = PBXBuildFile; fileRef = 55885B151659B06500EAE252 /* BitmapTransform.c */; };
 		559183E0166160B000A08055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559183DF166160B000A08055 /* OpenGL.framework */; };
 		559183E716627C7B00A08055 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559183E616627C7B00A08055 /* GLUT.framework */; };
+		559F76F31B9CD6EE008CA760 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 559F76F21B9CD6EE008CA760 /* MainMenu.xib */; };
+		55C19B2F1B8B538A00B713FE /* bezier.c in Sources */ = {isa = PBXBuildFile; fileRef = 55C19B2E1B8B538A00B713FE /* bezier.c */; };
+		55C19BC71B8B7D6C00B713FE /* MotionMaskCGWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C19BC51B8B7D6C00B713FE /* MotionMaskCGWindowController.m */; };
+		55C19BC81B8B7D6C00B713FE /* MotionMaskCGWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C19BC61B8B7D6C00B713FE /* MotionMaskCGWindowController.xib */; };
+		55C19BCC1B8B7D7C00B713FE /* MotionMaskGLWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C19BCA1B8B7D7C00B713FE /* MotionMaskGLWindowController.m */; };
+		55C19BCD1B8B7D7C00B713FE /* MotionMaskGLWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C19BCB1B8B7D7C00B713FE /* MotionMaskGLWindowController.xib */; };
 		55CC4D291659B26500916010 /* ImageLoaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC4D281659B26500916010 /* ImageLoaders.c */; };
 		55CC4D2E1659B2E800916010 /* ImageGenerators.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC4D2D1659B2E800916010 /* ImageGenerators.c */; };
-		55F2A70F16655F5F0099FDED /* MMCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F2A70E16655F5F0099FDED /* MMCommon.c */; };
+		55F2A70F16655F5F0099FDED /* MMSinglePlayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F2A70E16655F5F0099FDED /* MMSinglePlayer.c */; };
 		55F7E0111A38AB8A00A64017 /* libMotionMasks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5551374C165456FA007F3565 /* libMotionMasks.a */; };
 		55F7E0121A38AB8D00A64017 /* libDPTLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7E00A1A38AB7700A64017 /* libDPTLib.a */; };
 /* End PBXBuildFile section */
@@ -97,7 +109,13 @@
 
 /* Begin PBXFileReference section */
 		5503CDE7166ECADE00B5A0E1 /* all8888-generic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "all8888-generic.c"; sourceTree = "<group>"; };
-		5504B6491663A7FF00213CDD /* MMCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMCommon.h; sourceTree = "<group>"; };
+		5504B6491663A7FF00213CDD /* MMSinglePlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMSinglePlayer.h; sourceTree = "<group>"; };
+		55079BF51B8D22FB00898C5A /* MotionMaskRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionMaskRunner.m; sourceTree = "<group>"; };
+		55079BF81B8D232000898C5A /* MotionMaskRunner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MotionMaskRunner.h; sourceTree = "<group>"; };
+		55079C5F1B97888600898C5A /* Wipe */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Wipe; path = ../../../sample/wipe/Wipe; sourceTree = "<group>"; };
+		55079C611B97889300898C5A /* Stars */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Stars; path = ../../../sample/stars/Stars; sourceTree = "<group>"; };
+		55079C631B97889B00898C5A /* Fade */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fade; path = ../../../sample/fade/Fade; sourceTree = "<group>"; };
+		551FE0C71B72391100F49B70 /* composite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = composite.h; path = composite/composite.h; sourceTree = "<group>"; };
 		55308408166387550011DF33 /* MMMaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMMaker.h; sourceTree = "<group>"; };
 		5530840A166389700011DF33 /* MMMaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MMMaker.c; sourceTree = "<group>"; };
 		5530840C1663899E0011DF33 /* MMPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMPlayer.h; sourceTree = "<group>"; };
@@ -106,6 +124,8 @@
 		5535B0C4166CD9C60013C297 /* span-bgrx8888.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "span-bgrx8888.h"; sourceTree = "<group>"; };
 		55460F1E166048DC000D8974 /* MyOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOpenGLView.h; sourceTree = "<group>"; };
 		55460F1F166048DC000D8974 /* MyOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenGLView.m; sourceTree = "<group>"; };
+		5549B5DE1B683FB100BAE79B /* composite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = composite.c; path = composite/composite.c; sourceTree = "<group>"; };
+		5549B5E21B68495400BAE79B /* plot.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plot.c; sourceTree = "<group>"; };
 		554A2A6F17672DCC0081B625 /* codes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = codes.c; sourceTree = "<group>"; };
 		554F1CFC1A307E07009FA237 /* DPTLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DPTLib.xcodeproj; path = ../../../../DPTLib/platform/osx/DPTLib.xcodeproj; sourceTree = "<group>"; };
 		5551374C165456FA007F3565 /* libMotionMasks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMotionMasks.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,7 +141,6 @@
 		5551378416545786007F3565 /* destroy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = destroy.c; sourceTree = "<group>"; };
 		5551378516545786007F3565 /* impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = impl.h; sourceTree = "<group>"; };
 		5551378616545786007F3565 /* load.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = load.c; sourceTree = "<group>"; };
-		5551378716545786007F3565 /* plot.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plot.c; sourceTree = "<group>"; };
 		5551378A16545786007F3565 /* all8888.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = all8888.c; sourceTree = "<group>"; };
 		5551378B16545786007F3565 /* all8888.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = all8888.h; sourceTree = "<group>"; };
 		5551378D16545786007F3565 /* rgbx8888.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rgbx8888.c; sourceTree = "<group>"; };
@@ -149,7 +168,7 @@
 		5551381C165460EF007F3565 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		55513826165461D8007F3565 /* PlotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlotView.h; sourceTree = "<group>"; };
 		55513827165461D8007F3565 /* PlotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlotView.m; sourceTree = "<group>"; };
-		55513828165461D8007F3565 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		555C7BBA1BA4FD1800E4305B /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../../test/images; sourceTree = "<group>"; };
 		55873E2F165A500A00A47AE1 /* BitmapUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BitmapUtils.c; sourceTree = "<group>"; };
 		55885B0D1659ADE000EAE252 /* BitmapDrawing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BitmapDrawing.c; sourceTree = "<group>"; };
 		55885B101659AE1200EAE252 /* Utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Utils.c; sourceTree = "<group>"; };
@@ -160,11 +179,19 @@
 		55885B171659B0BB00EAE252 /* BitmapUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmapUtils.h; sourceTree = "<group>"; };
 		559183DF166160B000A08055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		559183E616627C7B00A08055 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		559F76F21B9CD6EE008CA760 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		55C19B2E1B8B538A00B713FE /* bezier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bezier.c; path = ../path/bezier.c; sourceTree = "<group>"; };
+		55C19BC41B8B7D6C00B713FE /* MotionMaskCGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionMaskCGWindowController.h; sourceTree = "<group>"; };
+		55C19BC51B8B7D6C00B713FE /* MotionMaskCGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionMaskCGWindowController.m; sourceTree = "<group>"; };
+		55C19BC61B8B7D6C00B713FE /* MotionMaskCGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MotionMaskCGWindowController.xib; sourceTree = "<group>"; };
+		55C19BC91B8B7D7C00B713FE /* MotionMaskGLWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionMaskGLWindowController.h; sourceTree = "<group>"; };
+		55C19BCA1B8B7D7C00B713FE /* MotionMaskGLWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionMaskGLWindowController.m; sourceTree = "<group>"; };
+		55C19BCB1B8B7D7C00B713FE /* MotionMaskGLWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MotionMaskGLWindowController.xib; sourceTree = "<group>"; };
 		55CC4D281659B26500916010 /* ImageLoaders.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ImageLoaders.c; sourceTree = "<group>"; };
 		55CC4D2B1659B29400916010 /* ImageLoaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageLoaders.h; sourceTree = "<group>"; };
 		55CC4D2C1659B2DF00916010 /* ImageGenerators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageGenerators.h; sourceTree = "<group>"; };
 		55CC4D2D1659B2E800916010 /* ImageGenerators.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ImageGenerators.c; sourceTree = "<group>"; };
-		55F2A70E16655F5F0099FDED /* MMCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MMCommon.c; sourceTree = "<group>"; };
+		55F2A70E16655F5F0099FDED /* MMSinglePlayer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MMSinglePlayer.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +217,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		55079C221B9785E900898C5A /* Mask Images */ = {
+			isa = PBXGroup;
+			children = (
+				55079C631B97889B00898C5A /* Fade */,
+				55079C611B97889300898C5A /* Stars */,
+				55079C5F1B97888600898C5A /* Wipe */,
+			);
+			name = "Mask Images";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		551FE0C61B72390800F49B70 /* comp */ = {
+			isa = PBXGroup;
+			children = (
+				551FE0C71B72391100F49B70 /* composite.h */,
+			);
+			name = comp;
+			sourceTree = "<group>";
+		};
 		5530840F166389BA0011DF33 /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,12 +258,12 @@
 		55308410166389CC0011DF33 /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				5504B6491663A7FF00213CDD /* MMCommon.h */,
-				55F2A70E16655F5F0099FDED /* MMCommon.c */,
 				55308408166387550011DF33 /* MMMaker.h */,
 				5530840A166389700011DF33 /* MMMaker.c */,
 				5530840C1663899E0011DF33 /* MMPlayer.h */,
 				5530840D166389B00011DF33 /* MMPlayer.c */,
+				5504B6491663A7FF00213CDD /* MMSinglePlayer.h */,
+				55F2A70E16655F5F0099FDED /* MMSinglePlayer.c */,
 			);
 			name = Test;
 			sourceTree = "<group>";
@@ -227,12 +273,30 @@
 			children = (
 				5551381B165460EF007F3565 /* AppDelegate.h */,
 				5551381C165460EF007F3565 /* AppDelegate.m */,
+				559F76F21B9CD6EE008CA760 /* MainMenu.xib */,
+				55C19BC41B8B7D6C00B713FE /* MotionMaskCGWindowController.h */,
+				55C19BC51B8B7D6C00B713FE /* MotionMaskCGWindowController.m */,
+				55C19BC61B8B7D6C00B713FE /* MotionMaskCGWindowController.xib */,
+				55C19BC91B8B7D7C00B713FE /* MotionMaskGLWindowController.h */,
+				55C19BCA1B8B7D7C00B713FE /* MotionMaskGLWindowController.m */,
+				55C19BCB1B8B7D7C00B713FE /* MotionMaskGLWindowController.xib */,
 				55513826165461D8007F3565 /* PlotView.h */,
 				55513827165461D8007F3565 /* PlotView.m */,
 				55460F1E166048DC000D8974 /* MyOpenGLView.h */,
 				55460F1F166048DC000D8974 /* MyOpenGLView.m */,
+				55079BF81B8D232000898C5A /* MotionMaskRunner.h */,
+				55079BF51B8D22FB00898C5A /* MotionMaskRunner.m */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		5549B5E11B683FE700BAE79B /* composite */ = {
+			isa = PBXGroup;
+			children = (
+				5549B5DE1B683FB100BAE79B /* composite.c */,
+			);
+			name = composite;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		55513741165456FA007F3565 = {
@@ -263,6 +327,7 @@
 		5551375316545786007F3565 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				551FE0C61B72390800F49B70 /* comp */,
 				555137F516545FBE007F3565 /* maker */,
 				5551376416545786007F3565 /* player */,
 				5551376616545786007F3565 /* plot */,
@@ -321,7 +386,7 @@
 				5551378416545786007F3565 /* destroy.c */,
 				5551378516545786007F3565 /* impl.h */,
 				5551378616545786007F3565 /* load.c */,
-				5551378716545786007F3565 /* plot.c */,
+				5549B5E21B68495400BAE79B /* plot.c */,
 			);
 			path = player;
 			sourceTree = "<group>";
@@ -329,8 +394,10 @@
 		5551378816545786007F3565 /* plot */ = {
 			isa = PBXGroup;
 			children = (
+				5549B5E11B683FE700BAE79B /* composite */,
 				5551378916545786007F3565 /* span */,
 				5551379116545786007F3565 /* span-registry */,
+				55C19B311B8B53A900B713FE /* path */,
 			);
 			path = plot;
 			sourceTree = "<group>";
@@ -405,7 +472,6 @@
 				55308411166389DE0011DF33 /* UI */,
 				55308410166389CC0011DF33 /* Test */,
 				5530840F166389BA0011DF33 /* Support */,
-				55513828165461D8007F3565 /* MainMenu.xib */,
 				55513810165460EF007F3565 /* Supporting Files */,
 			);
 			path = MotionMaskTest;
@@ -419,8 +485,26 @@
 				55513815165460EF007F3565 /* main.m */,
 				55513817165460EF007F3565 /* MotionMaskTest-Prefix.pch */,
 				55513818165460EF007F3565 /* Credits.rtf */,
+				555C7BB71BA4FC0400E4305B /* Source Images */,
+				55079C221B9785E900898C5A /* Mask Images */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		555C7BB71BA4FC0400E4305B /* Source Images */ = {
+			isa = PBXGroup;
+			children = (
+				555C7BBA1BA4FD1800E4305B /* images */,
+			);
+			name = "Source Images";
+			sourceTree = "<group>";
+		};
+		55C19B311B8B53A900B713FE /* path */ = {
+			isa = PBXGroup;
+			children = (
+				55C19B2E1B8B538A00B713FE /* bezier.c */,
+			);
+			name = path;
 			sourceTree = "<group>";
 		};
 		55F7E0051A38AB7700A64017 /* Products */ = {
@@ -447,6 +531,7 @@
 				555137BA16545786007F3565 /* codes.h in Headers */,
 				555137BB16545786007F3565 /* format.h in Headers */,
 				555137BC16545786007F3565 /* types.h in Headers */,
+				551FE0C81B72391100F49B70 /* composite.h in Headers */,
 				555137BF16545786007F3565 /* impl.h in Headers */,
 				555137C316545786007F3565 /* all8888.h in Headers */,
 				555137CA16545786007F3565 /* regdata.h in Headers */,
@@ -500,7 +585,7 @@
 		55513743165456FA007F3565 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "David Thomas";
 			};
 			buildConfigurationList = 55513746165456FA007F3565 /* Build configuration list for PBXProject "MotionMasks" */;
@@ -550,8 +635,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				55513814165460EF007F3565 /* InfoPlist.strings in Resources */,
+				55C19BC81B8B7D6C00B713FE /* MotionMaskCGWindowController.xib in Resources */,
+				55C19BCD1B8B7D7C00B713FE /* MotionMaskGLWindowController.xib in Resources */,
 				5551381A165460EF007F3565 /* Credits.rtf in Resources */,
-				5551382B165461D8007F3565 /* MainMenu.xib in Resources */,
+				555C7BBB1BA4FD1800E4305B /* images in Resources */,
+				55079C621B97889300898C5A /* Stars in Resources */,
+				55079C641B97889B00898C5A /* Fade in Resources */,
+				55079C601B97888600898C5A /* Wipe in Resources */,
+				559F76F31B9CD6EE008CA760 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,18 +656,20 @@
 				5551384F165463EB007F3565 /* create.c in Sources */,
 				55513850165463EB007F3565 /* destroy.c in Sources */,
 				55513852165463EB007F3565 /* pack.c in Sources */,
+				55C19B2F1B8B538A00B713FE /* bezier.c in Sources */,
 				55513853165463EB007F3565 /* rle.c in Sources */,
 				55513854165463EB007F3565 /* save.c in Sources */,
 				55513855165463EB007F3565 /* create.c in Sources */,
+				5549B5E31B68495400BAE79B /* plot.c in Sources */,
 				55513856165463EB007F3565 /* destroy.c in Sources */,
 				55513858165463EB007F3565 /* load.c in Sources */,
-				55513859165463EB007F3565 /* plot.c in Sources */,
 				5551385A165463EB007F3565 /* all8888.c in Sources */,
 				5551385C165463EB007F3565 /* rgbx8888.c in Sources */,
 				5551385E165463EB007F3565 /* xbgr8888.c in Sources */,
 				55513860165463EB007F3565 /* get.c in Sources */,
 				5535B0C2166CD9BC0013C297 /* bgrx8888.c in Sources */,
 				554A2A7017672DCC0081B625 /* codes.c in Sources */,
+				5549B5DF1B683FB100BAE79B /* composite.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,15 +681,18 @@
 				5551381D165460EF007F3565 /* AppDelegate.m in Sources */,
 				5551382A165461D8007F3565 /* PlotView.m in Sources */,
 				55885B0E1659ADE000EAE252 /* BitmapDrawing.c in Sources */,
+				55079BF61B8D22FB00898C5A /* MotionMaskRunner.m in Sources */,
 				55885B111659AE1200EAE252 /* Utils.c in Sources */,
+				55C19BC71B8B7D6C00B713FE /* MotionMaskCGWindowController.m in Sources */,
 				55885B161659B06500EAE252 /* BitmapTransform.c in Sources */,
 				55CC4D291659B26500916010 /* ImageLoaders.c in Sources */,
 				55CC4D2E1659B2E800916010 /* ImageGenerators.c in Sources */,
+				55C19BCC1B8B7D7C00B713FE /* MotionMaskGLWindowController.m in Sources */,
 				55873E30165A500A00A47AE1 /* BitmapUtils.c in Sources */,
 				55460F20166048DC000D8974 /* MyOpenGLView.m in Sources */,
 				5530840B166389700011DF33 /* MMMaker.c in Sources */,
 				5530840E166389B00011DF33 /* MMPlayer.c in Sources */,
-				55F2A70F16655F5F0099FDED /* MMCommon.c in Sources */,
+				55F2A70F16655F5F0099FDED /* MMSinglePlayer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,6 +747,7 @@
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -756,6 +853,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MotionMaskTest/MotionMaskTest-Prefix.pch";
 				INFOPLIST_FILE = "MotionMaskTest/MotionMaskTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.davespace.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -768,6 +866,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MotionMaskTest/MotionMaskTest-Prefix.pch";
 				INFOPLIST_FILE = "MotionMaskTest/MotionMaskTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.davespace.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

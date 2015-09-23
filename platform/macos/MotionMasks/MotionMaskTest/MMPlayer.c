@@ -23,37 +23,24 @@
 #include "ImageGenerators.h"
 #include "Utils.h"
 
-#include "MMCommon.h"
+#include "MMSinglePlayer.h"
 
 #include "MMPlayer.h"
 
 // -----------------------------------------------------------------------------
 
 // Define this to load images, as opposed to generating them.
-//#define LOAD_IMAGES
+#define LOAD_IMAGES
 
 // Number of loops to use when plotting, for benchmarking.
-#define BENCHMARK_LOOPS 1000
+#define BENCHMARK_LOOPS 1
 
 // -----------------------------------------------------------------------------
 
 #ifdef LOAD_IMAGES
-
-static const char *sourceImageFilenames[] =
-{
-  PATH "a.jpg",
-  PATH "b.jpg",
-  PATH "c.jpg",
-  PATH "d.jpg",
-  PATH "e.jpg",
-};
-
-static const int nSourceImages = NELEMS(sourceImageFilenames);
-
+#define MAX_SOURCE_IMAGES 20
 #else
-
-static const int nSourceImages = 5;
-
+#define MAX_SOURCE_IMAGES 5
 #endif
 
 // -----------------------------------------------------------------------------
@@ -61,15 +48,19 @@ static const int nSourceImages = 5;
 struct MMPlayer
 {
   motionmaskplayer_t *motionMaskPlayer;
-  int                 width, height;
+  int                 width, height; /* dimensions of motion mask */
 
   screen_t            screen;
 
-  bitmap_t            sourceBitmaps[nSourceImages];
-  const bitmap_t     *sourceBitmapList[nSourceImages];
+  bitmap_t            sourceBitmaps[MAX_SOURCE_IMAGES];
+  const bitmap_t     *sourceBitmapList[MAX_SOURCE_IMAGES];
 
-  CGImageRef          sourceImages[nSourceImages];
-  CFDataRef           sourceData[nSourceImages];
+  CGImageRef          sourceImages[MAX_SOURCE_IMAGES];
+  CFDataRef           sourceData[MAX_SOURCE_IMAGES];
+
+  char              **sourceImageFilenames;
+  int                 nSourceImages;
+  char               *sourceImageFilenamesBuffer;
 };
 
 // -----------------------------------------------------------------------------
@@ -96,7 +87,7 @@ void MMPlayer_destroy(MMPlayer_t *doomed)
 
   free(doomed->screen.base);
 
-  for (i = 0; i < nSourceImages; i++)
+  for (i = 0; i < doomed->nSourceImages; i++)
   {
     CGImageRelease(doomed->sourceImages[i]);
     doomed->sourceImages[i] = NULL;
@@ -117,7 +108,9 @@ screen_t *MMPlayer_getScreen(MMPlayer_t *tester)
 result_t MMPlayer_setup(MMPlayer_t *tester,
                         const char *filename,
                         int         width,
-                        int         height)
+                        int         height,
+                        const char *sourceDirs[],
+                        int         nSourceDirs)
 {
 #ifndef LOAD_IMAGES
   static const struct
@@ -125,7 +118,7 @@ result_t MMPlayer_setup(MMPlayer_t *tester,
     pixelfmt_rgbx8888_t start, end;
     int                 direction;
   }
-  gradients[nSourceImages] =
+  gradients[MAX_SOURCE_IMAGES] =
   {
     { 0x00000000, 0x000000FF, 1 },
     { 0x00000000, 0x0000FF00, 0 },
@@ -181,14 +174,28 @@ result_t MMPlayer_setup(MMPlayer_t *tester,
 
   // set up sources
 
+#ifdef LOAD_IMAGES
+  // scan for images
+  err = findfilesbyregexp(sourceDirs,
+                          nSourceDirs,
+                          ".*\\.jpg",
+                          &newt.sourceImageFilenames,
+                          &newt.nSourceImages,
+                          &newt.sourceImageFilenamesBuffer);
+  if (err)
+    goto failure;
+#else
+  newt.nSourceImages = MAX_SOURCE_IMAGES;
+#endif
+
   // we could check that they're the same depth and dimensions but we can
   // ignore that and use this as a test for motionmask interface itself (it
   // ought to check)
 
-  for (i = 0; i < nSourceImages; i++)
+  for (i = 0; i < newt.nSourceImages; i++)
   {
 #ifdef LOAD_IMAGES
-    newt.sourceImages[i] = createCGImageFromJPEGFile(sourceImageFilenames[i]);
+    newt.sourceImages[i] = createCGImageFromJPEGFile(newt.sourceImageFilenames[i]);
 #else
     newt.sourceImages[i] = createCGImageFromGradient(320,
                                                      480, // HACK
@@ -223,7 +230,7 @@ result_t MMPlayer_setup(MMPlayer_t *tester,
 
   /* fixup pointers */
 
-  for (i = 0; i < nSourceImages; i++)
+  for (i = 0; i < newt.nSourceImages; i++)
     tester->sourceBitmapList[i] = &tester->sourceBitmaps[i];
 
   return result_OK;
@@ -241,7 +248,7 @@ failure:
   return err;
 }
 
-result_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
+result_t MMPlayer_render(MMPlayer_t *tester, int x, int y, box_t *dirty)
 {
   static const pixelfmt_rgbx8888_t backgroundColour = 0x00808080;
 
@@ -250,6 +257,9 @@ result_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
   result_t err;
   int      i;
   int      maxframes = motionmaskplayer_get_frames(tester->motionMaskPlayer);
+
+  assert(tester);
+  assert(dirty);
 
   /* clear the screen */
 
@@ -273,7 +283,7 @@ result_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
       tmp = tester->sourceBitmapList[0];
 
       /* could memmove instead of loop here */
-      for (k = 0; k < nSourceImages - 1; k++)
+      for (k = 0; k < tester->nSourceImages - 1; k++)
         tester->sourceBitmapList[k] = tester->sourceBitmapList[k + 1];
 
       tester->sourceBitmapList[k] = tmp;
@@ -285,10 +295,9 @@ result_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
     {
       err = motionmaskplayer_plot(tester->motionMaskPlayer,
                                   tester->sourceBitmapList,
-                                  nSourceImages,
+                                  tester->nSourceImages,
                                   &tester->screen,
-                                  x,
-                                  tester->screen.height - y - 400,
+                                  x, y,
                                   frame);
       if (err)
         return err;
@@ -305,6 +314,11 @@ result_t MMPlayer_render(MMPlayer_t *tester, int x, int y)
   
   if ((totalframes % 100) == 0)
     printf("%d frames drawn\n", totalframes);
-  
+
+  dirty->x0 = x;
+  dirty->y0 = y;
+  dirty->x1 = x + tester->width;
+  dirty->y1 = y + tester->height;
+
   return result_OK;
 }

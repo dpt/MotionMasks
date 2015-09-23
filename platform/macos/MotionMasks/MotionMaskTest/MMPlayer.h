@@ -2,6 +2,8 @@
 //  MMPlayer.h
 //  MotionMasks
 //
+//  MotionMask + screen + image loading
+//
 //  Created by David Thomas on 26/11/2012.
 //  Copyright (c) 2012 David Thomas. All rights reserved.
 //
@@ -18,14 +20,15 @@ typedef struct MMPlayer MMPlayer_t;
 result_t MMPlayer_create(MMPlayer_t **player);
 void MMPlayer_destroy(MMPlayer_t *doomed);
 
-// FIXME: Exposing the screen_t maybe bad form.
 screen_t *MMPlayer_getScreen(MMPlayer_t *player);
 
 result_t MMPlayer_setup(MMPlayer_t *player,
-                        const char *filename,
+                        const char *filename, /* of motion mask */
                         int         width,
-                        int         height);
+                        int         height,
+                        const char *sourceDirs[],
+                        int         nSourceDirs);
 
-result_t MMPlayer_render(MMPlayer_t *player, int x, int y);
+result_t MMPlayer_render(MMPlayer_t *player, int x, int y, box_t *dirty);
 
 #endif

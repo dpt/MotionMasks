@@ -12,4 +12,7 @@
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication;
 
+- (IBAction)motionMaskCGClicked:(id)sender;
+- (IBAction)motionMaskGLClicked:(id)sender;
+
 @end
