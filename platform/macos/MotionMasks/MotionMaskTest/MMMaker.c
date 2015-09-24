@@ -16,6 +16,7 @@
 
 /* DPTLib */
 
+#include "base/debug.h"
 #include "base/result.h"
 #include "utils/array.h"
 
@@ -80,7 +81,7 @@ result_t MMMaker_make(const char **sourceMaskDirs,
 
   for (i = 0; i < nSourceMaskFilenames; i++)
   {
-    printf("creaing mask from %s\n", sourceMaskFilenames[i]);
+    logf_info("sourcing mask %d from %s", i, sourceMaskFilenames[i]);
 
     makerSource[i] = createCGImageFromPNGFile(sourceMaskFilenames[i]);
 
@@ -88,7 +89,7 @@ result_t MMMaker_make(const char **sourceMaskDirs,
     pixelfmt = bitmapInfoToPixelfmt(bitmapInfo);
     if (pixelfmt == pixelfmt_unknown)
     {
-      printf("MMMaker_make: Unknown pixelfmt.");
+      logf_error("MMMaker_make: Unknown pixelfmt.");
       return result_BAD_ARG;
     }
 

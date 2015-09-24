@@ -24,6 +24,8 @@ result_t motionmaskmaker_save(motionmaskmaker_t *maker,
   int     i;
   size_t  length;
 
+  logf_info("motionmaskmaker_save: saving to %s", filename);
+
   f = fopen(filename, "wb");
   if (f == NULL)
     return result_FILE_NOT_FOUND; // ideally could be a more appropriate error
@@ -36,6 +38,8 @@ result_t motionmaskmaker_save(motionmaskmaker_t *maker,
   fwrite(header, 1, format_HEADER_SIZE, f);
 
   /* frames */
+
+  logf_info("motionmaskmaker_save: writing frames");
 
   for (i = 0; i < maker->nframes; i++)
   {
@@ -50,6 +54,8 @@ result_t motionmaskmaker_save(motionmaskmaker_t *maker,
   }
 
   /* offsets */
+
+  logf_info("motionmaskmaker_save: writing offsets");
 
   for (i = 0; i < maker->noffsets; i++)
   {

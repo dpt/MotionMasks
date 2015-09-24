@@ -136,7 +136,7 @@
 
 #pragma mark Loader
 
-static const char temporaryMotionMaskFilename[] = "tmp.momask";
+static const char temporaryMotionMaskFilename[] = "/tmp/motion.mask";
 
 - (void)run
 {
