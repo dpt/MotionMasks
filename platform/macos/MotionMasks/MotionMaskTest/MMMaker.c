@@ -46,9 +46,9 @@ result_t MMMaker_make(const char **sourceMaskDirs,
 
   result_t           err;
   char             **sourceMaskFilenames;
-  int                nSourceMaskFilenames;
+  int                nSourceMaskFilenames = 0;
   char              *sourceMaskFilenamesBuffer = NULL;
-  motionmaskmaker_t *maker;
+  motionmaskmaker_t *maker = NULL;
   int                i;
   CGImageRef         makerSource[MAX_FILENAMES];
   CGBitmapInfo       bitmapInfo;
@@ -66,7 +66,7 @@ result_t MMMaker_make(const char **sourceMaskDirs,
   if (err)
     goto failure;
 
-  if (nSourceMaskFilenames > MAX_FILENAMES)
+  if (nSourceMaskFilenames <= 0 || nSourceMaskFilenames > MAX_FILENAMES)
   {
     err = result_TOO_BIG;
     goto failure;
