@@ -184,7 +184,7 @@ int main(void)
     }
     }*/
 
-    mmerror_t           mmerr;
+    result_t            mmerr;
     motionmaskplayer_t *motionMaskPlayer;
     screen_t            screen;
     bitmap_t            sourceBitmaps[2];

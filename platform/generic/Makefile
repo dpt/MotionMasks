@@ -19,7 +19,7 @@
 # Project
 #
 PROJECT=MotionMasks
-LIBS=-ljpeg
+LIBS=-ljpeg $(ROOT)/../DPTLib/platform/generic/DPTLib.a
 DONTCOMPILE=all8888-generic.c
 
 # Paths
@@ -29,6 +29,7 @@ PUBLIC_INCLUDES=$(ROOT)/include
 LIBRARIES=$(ROOT)/libraries
 PLATFORM_DIR=$(ROOT)/platform/generic
 EXE=$(PROJECT)
+DPTLIB_INCLUDES=$(ROOT)/../DPTLib/include
 
 # Tools (choices)
 #
@@ -78,7 +79,7 @@ CTAGS=/usr/local/bin/ctags
 
 # Tools (config)
 #
-INCLUDES=-I$(PUBLIC_INCLUDES) -I$(LIBRARIES) -I$(PRIVATE_INCLUDES)
+INCLUDES=-I$(DPTLIB_INCLUDES) -I$(PUBLIC_INCLUDES) -I$(LIBRARIES) -I$(PLATFORM_DIR)
 WARNINGS=-Wall -Wextra -Wno-unused-parameter
 
 # Tools (generic)
