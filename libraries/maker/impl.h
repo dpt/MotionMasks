@@ -43,11 +43,11 @@ encstate_t;
 void encode_start(encstate_t *state);
 
 result_t encode_row_y8(encstate_t *state,
-                          const void *vsrc,
-                          int         nsrcpix,
-                          uint8_t    *dst,
-                          size_t      ndstbytes,
-                          size_t     *dstused);
+                       const void *vsrc,
+                       int         nsrcpix,
+                       uint8_t    *dst,
+                       size_t      ndstbytes,
+                       size_t     *dstused);
 
 void encode_stop(encstate_t *state);
 
