@@ -11,13 +11,11 @@
 		55079C601B97888600898C5A /* Wipe in Resources */ = {isa = PBXBuildFile; fileRef = 55079C5F1B97888600898C5A /* Wipe */; };
 		55079C621B97889300898C5A /* Stars in Resources */ = {isa = PBXBuildFile; fileRef = 55079C611B97889300898C5A /* Stars */; };
 		55079C641B97889B00898C5A /* Fade in Resources */ = {isa = PBXBuildFile; fileRef = 55079C631B97889B00898C5A /* Fade */; };
-		551FE0C81B72391100F49B70 /* composite.h in Headers */ = {isa = PBXBuildFile; fileRef = 551FE0C71B72391100F49B70 /* composite.h */; };
 		5530840B166389700011DF33 /* MMMaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530840A166389700011DF33 /* MMMaker.c */; };
 		5530840E166389B00011DF33 /* MMPlayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530840D166389B00011DF33 /* MMPlayer.c */; };
 		5535B0C2166CD9BC0013C297 /* bgrx8888.c in Sources */ = {isa = PBXBuildFile; fileRef = 5535B0C1166CD9BC0013C297 /* bgrx8888.c */; };
 		5535B0C5166CD9C60013C297 /* span-bgrx8888.h in Headers */ = {isa = PBXBuildFile; fileRef = 5535B0C4166CD9C60013C297 /* span-bgrx8888.h */; };
 		55460F20166048DC000D8974 /* MyOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55460F1F166048DC000D8974 /* MyOpenGLView.m */; };
-		5549B5DF1B683FB100BAE79B /* composite.c in Sources */ = {isa = PBXBuildFile; fileRef = 5549B5DE1B683FB100BAE79B /* composite.c */; };
 		5549B5E31B68495400BAE79B /* plot.c in Sources */ = {isa = PBXBuildFile; fileRef = 5549B5E21B68495400BAE79B /* plot.c */; };
 		554A2A7017672DCC0081B625 /* codes.c in Sources */ = {isa = PBXBuildFile; fileRef = 554A2A6F17672DCC0081B625 /* codes.c */; };
 		555137A916545786007F3565 /* play.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551376516545786007F3565 /* play.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -115,7 +113,6 @@
 		55079C5F1B97888600898C5A /* Wipe */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Wipe; path = ../../../sample/wipe/Wipe; sourceTree = "<group>"; };
 		55079C611B97889300898C5A /* Stars */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Stars; path = ../../../sample/stars/Stars; sourceTree = "<group>"; };
 		55079C631B97889B00898C5A /* Fade */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fade; path = ../../../sample/fade/Fade; sourceTree = "<group>"; };
-		551FE0C71B72391100F49B70 /* composite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = composite.h; path = composite/composite.h; sourceTree = "<group>"; };
 		55308408166387550011DF33 /* MMMaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMMaker.h; sourceTree = "<group>"; };
 		5530840A166389700011DF33 /* MMMaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MMMaker.c; sourceTree = "<group>"; };
 		5530840C1663899E0011DF33 /* MMPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMPlayer.h; sourceTree = "<group>"; };
@@ -124,7 +121,6 @@
 		5535B0C4166CD9C60013C297 /* span-bgrx8888.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "span-bgrx8888.h"; sourceTree = "<group>"; };
 		55460F1E166048DC000D8974 /* MyOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOpenGLView.h; sourceTree = "<group>"; };
 		55460F1F166048DC000D8974 /* MyOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenGLView.m; sourceTree = "<group>"; };
-		5549B5DE1B683FB100BAE79B /* composite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = composite.c; path = composite/composite.c; sourceTree = "<group>"; };
 		5549B5E21B68495400BAE79B /* plot.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plot.c; sourceTree = "<group>"; };
 		554A2A6F17672DCC0081B625 /* codes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = codes.c; sourceTree = "<group>"; };
 		554F1CFC1A307E07009FA237 /* DPTLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DPTLib.xcodeproj; path = ../../../../DPTLib/platform/osx/DPTLib.xcodeproj; sourceTree = "<group>"; };
@@ -228,14 +224,6 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		551FE0C61B72390800F49B70 /* comp */ = {
-			isa = PBXGroup;
-			children = (
-				551FE0C71B72391100F49B70 /* composite.h */,
-			);
-			name = comp;
-			sourceTree = "<group>";
-		};
 		5530840F166389BA0011DF33 /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,15 +278,6 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
-		5549B5E11B683FE700BAE79B /* composite */ = {
-			isa = PBXGroup;
-			children = (
-				5549B5DE1B683FB100BAE79B /* composite.c */,
-			);
-			name = composite;
-			path = ..;
-			sourceTree = "<group>";
-		};
 		55513741165456FA007F3565 = {
 			isa = PBXGroup;
 			children = (
@@ -327,7 +306,6 @@
 		5551375316545786007F3565 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				551FE0C61B72390800F49B70 /* comp */,
 				555137F516545FBE007F3565 /* maker */,
 				5551376416545786007F3565 /* player */,
 				5551376616545786007F3565 /* plot */,
@@ -394,7 +372,6 @@
 		5551378816545786007F3565 /* plot */ = {
 			isa = PBXGroup;
 			children = (
-				5549B5E11B683FE700BAE79B /* composite */,
 				5551378916545786007F3565 /* span */,
 				5551379116545786007F3565 /* span-registry */,
 				55C19B311B8B53A900B713FE /* path */,
@@ -531,7 +508,6 @@
 				555137BA16545786007F3565 /* codes.h in Headers */,
 				555137BB16545786007F3565 /* format.h in Headers */,
 				555137BC16545786007F3565 /* types.h in Headers */,
-				551FE0C81B72391100F49B70 /* composite.h in Headers */,
 				555137BF16545786007F3565 /* impl.h in Headers */,
 				555137C316545786007F3565 /* all8888.h in Headers */,
 				555137CA16545786007F3565 /* regdata.h in Headers */,
@@ -585,7 +561,7 @@
 		55513743165456FA007F3565 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "David Thomas";
 			};
 			buildConfigurationList = 55513746165456FA007F3565 /* Build configuration list for PBXProject "MotionMasks" */;
@@ -669,7 +645,6 @@
 				55513860165463EB007F3565 /* get.c in Sources */,
 				5535B0C2166CD9BC0013C297 /* bgrx8888.c in Sources */,
 				554A2A7017672DCC0081B625 /* codes.c in Sources */,
-				5549B5DF1B683FB100BAE79B /* composite.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,13 +719,18 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -769,6 +749,7 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -779,7 +760,7 @@
 					"\"$(SRCROOT)/../../../libraries\"",
 					"\"$(SRCROOT)/../../../../DPTLib/include\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
@@ -794,12 +775,17 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -812,6 +798,7 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -822,7 +809,7 @@
 					"\"$(SRCROOT)/../../../libraries\"",
 					"\"$(SRCROOT)/../../../../DPTLib/include\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
 			};
