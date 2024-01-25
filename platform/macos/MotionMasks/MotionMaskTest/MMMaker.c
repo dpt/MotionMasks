@@ -64,7 +64,7 @@ result_t MMMaker_make(const char **sourceMaskDirs,
                           &nSourceMaskFilenames,
                           &sourceMaskFilenamesBuffer);
   if (err)
-    goto failure;
+    goto failure2;
 
   if (nSourceMaskFilenames <= 0 || nSourceMaskFilenames > MAX_FILENAMES)
   {
@@ -150,6 +150,8 @@ failure:
 
   motionmaskmaker_destroy(maker);
   maker = NULL;
+
+failure2:
 
   free(sourceMaskFilenamesBuffer);
   free(sourceMaskFilenames);

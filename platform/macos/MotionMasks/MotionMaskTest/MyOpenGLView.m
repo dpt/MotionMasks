@@ -63,7 +63,9 @@
 // -----------------------------------------------------------------------------
 
 - (void)reshape
-{  
+{
+  [super reshape];
+  
   // Convert up to window space, which is in pixel units.
   NSRect baseRect = [self convertRectToBacking:[self bounds]];
   

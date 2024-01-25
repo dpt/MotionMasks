@@ -33,7 +33,7 @@ static result_t unpackfromstream(stream_t   *s,
 {
   va_list args;
   
-  if (stream_remaining_need_and_fill(s, size) < size)
+  if (stream_remaining_and_fill(s) < size)
     return result_MMPLAYER_TRUNCATED_INPUT;
 
   va_start(args, format);
@@ -175,7 +175,7 @@ result_t motionmaskplayer_load(motionmaskplayer_t *player,
       stream_size_t availableoffsets;
       int32_t       maxavailableoffsets;
 
-      availablebytes = stream_remaining_need_and_fill(s, 2);
+      availablebytes = stream_remaining_and_fill(s);
       if (availablebytes == stream_EOF || availablebytes < 2)
       {
         err = result_MMPLAYER_TRUNCATED_INPUT;
