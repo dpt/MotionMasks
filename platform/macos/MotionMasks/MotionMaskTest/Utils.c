@@ -26,6 +26,14 @@ void memset32(uint32_t *dest, uint32_t val, int len)
     *dest++ = val;
 }
 
+static int filenamecompare(const void *a, const void *b)
+{
+  const char *const *sa = a;
+  const char *const *sb = b;
+
+  return strcmp(*sa, *sb);
+}
+
 result_t findfilesbyregexp(const char **dirs,
                            int          ndirs,
                            const char  *pattern,
@@ -136,6 +144,8 @@ result_t findfilesbyregexp(const char **dirs,
     for (i = 0; i < ptrs_used; i++)
       ptrs[i] = ptrs[i] + (intptr_t) buf;
   }
+
+  qsort(ptrs, ptrs_used, sizeof(*ptrs), filenamecompare);
 
   *filenames  = ptrs;
   *nfilenames = (int) ptrs_used;
