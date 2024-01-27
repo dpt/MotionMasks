@@ -131,7 +131,7 @@
                               NO, // should interpolate
                               kCGRenderingIntentDefault);
   
-  CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort],
+  CGContextDrawImage([[NSGraphicsContext currentContext] CGContext],
                      CGRectMake(0, 0, myscreen->width, myscreen->height),
                      screenImage);
 
