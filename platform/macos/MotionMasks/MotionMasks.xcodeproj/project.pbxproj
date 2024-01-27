@@ -56,7 +56,6 @@
 		559183E716627C7B00A08055 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559183E616627C7B00A08055 /* GLUT.framework */; };
 		559F76F31B9CD6EE008CA760 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 559F76F21B9CD6EE008CA760 /* MainMenu.xib */; };
 		55C078F62756F2E000E53550 /* DPTLib-debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C078F52756F2E000E53550 /* DPTLib-debug.a */; };
-		55C19B2F1B8B538A00B713FE /* bezier.c in Sources */ = {isa = PBXBuildFile; fileRef = 55C19B2E1B8B538A00B713FE /* bezier.c */; };
 		55C19BC71B8B7D6C00B713FE /* MotionMaskCGWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C19BC51B8B7D6C00B713FE /* MotionMaskCGWindowController.m */; };
 		55C19BC81B8B7D6C00B713FE /* MotionMaskCGWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C19BC61B8B7D6C00B713FE /* MotionMaskCGWindowController.xib */; };
 		55C19BCC1B8B7D7C00B713FE /* MotionMaskGLWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C19BCA1B8B7D7C00B713FE /* MotionMaskGLWindowController.m */; };
@@ -148,7 +147,6 @@
 		559183E616627C7B00A08055 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		559F76F21B9CD6EE008CA760 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		55C078F52756F2E000E53550 /* DPTLib-debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "DPTLib-debug.a"; path = "../../../../../../build-dptlib/Debug/DPTLib-debug.a"; sourceTree = "<group>"; };
-		55C19B2E1B8B538A00B713FE /* bezier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bezier.c; path = ../path/bezier.c; sourceTree = "<group>"; };
 		55C19BC41B8B7D6C00B713FE /* MotionMaskCGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionMaskCGWindowController.h; sourceTree = "<group>"; };
 		55C19BC51B8B7D6C00B713FE /* MotionMaskCGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionMaskCGWindowController.m; sourceTree = "<group>"; };
 		55C19BC61B8B7D6C00B713FE /* MotionMaskCGWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MotionMaskCGWindowController.xib; sourceTree = "<group>"; };
@@ -345,7 +343,6 @@
 			children = (
 				5551378916545786007F3565 /* span */,
 				5551379116545786007F3565 /* span-registry */,
-				55C19B311B8B53A900B713FE /* path */,
 			);
 			path = plot;
 			sourceTree = "<group>";
@@ -446,14 +443,6 @@
 				555C7BBA1BA4FD1800E4305B /* images */,
 			);
 			name = "Source Images";
-			sourceTree = "<group>";
-		};
-		55C19B311B8B53A900B713FE /* path */ = {
-			isa = PBXGroup;
-			children = (
-				55C19B2E1B8B538A00B713FE /* bezier.c */,
-			);
-			name = path;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -571,7 +560,6 @@
 				5551384F165463EB007F3565 /* create.c in Sources */,
 				55513850165463EB007F3565 /* destroy.c in Sources */,
 				55513852165463EB007F3565 /* pack.c in Sources */,
-				55C19B2F1B8B538A00B713FE /* bezier.c in Sources */,
 				55513853165463EB007F3565 /* rle.c in Sources */,
 				55513854165463EB007F3565 /* save.c in Sources */,
 				55513855165463EB007F3565 /* create.c in Sources */,
