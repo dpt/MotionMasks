@@ -28,7 +28,7 @@ result_t motionmaskmaker_save(motionmaskmaker_t *maker,
 
   f = fopen(filename, "wb");
   if (f == NULL)
-    return result_FILE_NOT_FOUND; // ideally could be a more appropriate error
+    return result_FOPEN_FAILED;
 
   length = pack(header, "i2si",
                 format_ID,
