@@ -55,6 +55,7 @@
 		559183E0166160B000A08055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559183DF166160B000A08055 /* OpenGL.framework */; };
 		559183E716627C7B00A08055 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559183E616627C7B00A08055 /* GLUT.framework */; };
 		559F76F31B9CD6EE008CA760 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 559F76F21B9CD6EE008CA760 /* MainMenu.xib */; };
+		55C078F62756F2E000E53550 /* DPTLib-debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C078F52756F2E000E53550 /* DPTLib-debug.a */; };
 		55C19B2F1B8B538A00B713FE /* bezier.c in Sources */ = {isa = PBXBuildFile; fileRef = 55C19B2E1B8B538A00B713FE /* bezier.c */; };
 		55C19BC71B8B7D6C00B713FE /* MotionMaskCGWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C19BC51B8B7D6C00B713FE /* MotionMaskCGWindowController.m */; };
 		55C19BC81B8B7D6C00B713FE /* MotionMaskCGWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C19BC61B8B7D6C00B713FE /* MotionMaskCGWindowController.xib */; };
@@ -64,7 +65,6 @@
 		55CC4D2E1659B2E800916010 /* ImageGenerators.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC4D2D1659B2E800916010 /* ImageGenerators.c */; };
 		55F2A70F16655F5F0099FDED /* MMSinglePlayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F2A70E16655F5F0099FDED /* MMSinglePlayer.c */; };
 		55F7E0111A38AB8A00A64017 /* libMotionMasks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5551374C165456FA007F3565 /* libMotionMasks.a */; };
-		55F7E0121A38AB8D00A64017 /* libDPTLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7E00A1A38AB7700A64017 /* libDPTLib.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,34 +74,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5551374B165456FA007F3565;
 			remoteInfo = MotionMasks;
-		};
-		55F7E0091A38AB7700A64017 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554F1CFC1A307E07009FA237 /* DPTLib.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5551374C165456FA007F3565;
-			remoteInfo = DPTLib;
-		};
-		55F7E00B1A38AB7700A64017 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554F1CFC1A307E07009FA237 /* DPTLib.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55F7DFE91A373E9000A64017;
-			remoteInfo = DPTLibTest;
-		};
-		55F7E00D1A38AB7D00A64017 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554F1CFC1A307E07009FA237 /* DPTLib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5551374B165456FA007F3565;
-			remoteInfo = DPTLib;
-		};
-		55F7E00F1A38AB8400A64017 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554F1CFC1A307E07009FA237 /* DPTLib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5551374B165456FA007F3565;
-			remoteInfo = DPTLib;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -123,7 +95,6 @@
 		55460F1F166048DC000D8974 /* MyOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenGLView.m; sourceTree = "<group>"; };
 		5549B5E21B68495400BAE79B /* plot.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plot.c; sourceTree = "<group>"; };
 		554A2A6F17672DCC0081B625 /* codes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = codes.c; sourceTree = "<group>"; };
-		554F1CFC1A307E07009FA237 /* DPTLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DPTLib.xcodeproj; path = ../../../../DPTLib/platform/osx/DPTLib.xcodeproj; sourceTree = "<group>"; };
 		5551374C165456FA007F3565 /* libMotionMasks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMotionMasks.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5551376516545786007F3565 /* play.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = play.h; sourceTree = "<group>"; };
 		5551376716545786007F3565 /* span-registry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "span-registry.h"; sourceTree = "<group>"; };
@@ -176,6 +147,7 @@
 		559183DF166160B000A08055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		559183E616627C7B00A08055 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		559F76F21B9CD6EE008CA760 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		55C078F52756F2E000E53550 /* DPTLib-debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "DPTLib-debug.a"; path = "../../../../../../build-dptlib/Debug/DPTLib-debug.a"; sourceTree = "<group>"; };
 		55C19B2E1B8B538A00B713FE /* bezier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bezier.c; path = ../path/bezier.c; sourceTree = "<group>"; };
 		55C19BC41B8B7D6C00B713FE /* MotionMaskCGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionMaskCGWindowController.h; sourceTree = "<group>"; };
 		55C19BC51B8B7D6C00B713FE /* MotionMaskCGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionMaskCGWindowController.m; sourceTree = "<group>"; };
@@ -202,7 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55F7E0121A38AB8D00A64017 /* libDPTLib.a in Frameworks */,
+				55C078F62756F2E000E53550 /* DPTLib-debug.a in Frameworks */,
 				55F7E0111A38AB8A00A64017 /* libMotionMasks.a in Frameworks */,
 				5551380A165460EF007F3565 /* Cocoa.framework in Frameworks */,
 				559183E0166160B000A08055 /* OpenGL.framework in Frameworks */,
@@ -281,7 +253,6 @@
 		55513741165456FA007F3565 = {
 			isa = PBXGroup;
 			children = (
-				554F1CFC1A307E07009FA237 /* DPTLib.xcodeproj */,
 				5551375316545786007F3565 /* include */,
 				5551377216545786007F3565 /* libraries */,
 				5551380F165460EF007F3565 /* MotionMaskTest */,
@@ -425,6 +396,7 @@
 		55513808165460EF007F3565 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55C078F52756F2E000E53550 /* DPTLib-debug.a */,
 				55513809165460EF007F3565 /* Cocoa.framework */,
 				559183DF166160B000A08055 /* OpenGL.framework */,
 				559183E616627C7B00A08055 /* GLUT.framework */,
@@ -484,15 +456,6 @@
 			name = path;
 			sourceTree = "<group>";
 		};
-		55F7E0051A38AB7700A64017 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				55F7E00A1A38AB7700A64017 /* libDPTLib.a */,
-				55F7E00C1A38AB7700A64017 /* DPTLibTest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -529,7 +492,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55F7E00E1A38AB7D00A64017 /* PBXTargetDependency */,
 			);
 			name = MotionMasks;
 			productName = MotionMasks;
@@ -547,7 +509,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55F7E0101A38AB8400A64017 /* PBXTargetDependency */,
 				55E9D5FA1A30928E00C3FC3B /* PBXTargetDependency */,
 			);
 			name = MotionMaskTest;
@@ -569,17 +530,12 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 55513741165456FA007F3565;
 			productRefGroup = 5551374D165456FA007F3565 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 55F7E0051A38AB7700A64017 /* Products */;
-					ProjectRef = 554F1CFC1A307E07009FA237 /* DPTLib.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				5551374B165456FA007F3565 /* MotionMasks */,
@@ -587,23 +543,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		55F7E00A1A38AB7700A64017 /* libDPTLib.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libDPTLib.a;
-			remoteRef = 55F7E0091A38AB7700A64017 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		55F7E00C1A38AB7700A64017 /* DPTLibTest */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = DPTLibTest;
-			remoteRef = 55F7E00B1A38AB7700A64017 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		55513804165460EF007F3565 /* Resources */ = {
@@ -678,16 +617,6 @@
 			isa = PBXTargetDependency;
 			target = 5551374B165456FA007F3565 /* MotionMasks */;
 			targetProxy = 55E9D5F91A30928E00C3FC3B /* PBXContainerItemProxy */;
-		};
-		55F7E00E1A38AB7D00A64017 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DPTLib;
-			targetProxy = 55F7E00D1A38AB7D00A64017 /* PBXContainerItemProxy */;
-		};
-		55F7E0101A38AB8400A64017 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DPTLib;
-			targetProxy = 55F7E00F1A38AB8400A64017 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
